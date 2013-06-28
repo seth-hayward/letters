@@ -9,6 +9,13 @@
     <Target Name="Build" DependsOnTargets="BuildPackage;CopyOutput" />
 
     <Target Name="BuildPackage">
+      <ItemGroup>
+          <_CopyItems Include="C:\Users\ServerAdmin\Desktop\Config\Web.Release.config" />
+      </ItemGroup>
+      <Copy
+          SourceFiles="@(_CopyItems)"
+          DestinationFolder="$(ProjectName)\%(RecursiveDir)"
+          />        
         <MSBuild Projects="$(SolutionFile)" ContinueOnError="false" Targets="Rebuild" Properties="Configuration=$(Configuration)" />
         <MSBuild Projects="$(ProjectFile)" ContinueOnError="false" Targets="Package" Properties="Configuration=$(Configuration)" />
     </Target>
