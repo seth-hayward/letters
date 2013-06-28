@@ -1,17 +1,17 @@
 letters to crushes
 ==================
 
-a brief history of the site
+a brief history of the site.
 
 ### version 1.00
 
-+ released september '08
++ released september '08 as a tumblr at crushes.tumblr.com
 
 ### version 2.00
 
 + released january '10
 + asp.net mvc 1
-+ more page shows letters instantly
++ more page shows letters instantly, previously the front page was 100% moderated
 
 ### version 3.00
 
