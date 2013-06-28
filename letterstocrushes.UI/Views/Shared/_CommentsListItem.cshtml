@@ -1,0 +1,25 @@
+﻿@model letterstocrushes.Core.Model.Comment
+
+<div class="comment">
+
+    <div class="comment_header">
+        
+        <div class="commenter_name">
+            <a href="@Url.Content("~/comment/" + Model.Id.ToString())">@Model.commenterName</a>
+        </div>
+
+        <div class="comment_letter">
+            on <a href="@Url.Content("~/letter/" + Model.letterId.ToString())">letter #@Model.letterId</a>
+        </div>
+
+        <div class="comment_date">
+            @letterstocrushes.Helpers.TimeAgo(Model.commentDate)
+        </div>
+
+    </div>
+
+    <div class="comment_message" id='c@(Model.Id)'>
+        @Model.commentMessage
+    </div>
+
+</div>

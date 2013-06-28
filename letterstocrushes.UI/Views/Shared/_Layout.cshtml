@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<!-- 
+
+dear reader,
+
+letterstocrushes.com is dedicated to the gracious people that help me
+along my bumbling way through life: my friends, family, and teachers.
+thank you so much for your support. 
+
+much love,
+seth
+
+p.s. extra special thank yous to christine and duke, tumblr,
+phillips exeter academy, babson college, the .net stack,
+david foster wallace and elliott smith.
+
+-->
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="icon" type="image/png" href="http://198.57.199.92/favicon.ico?ok" />
+
+    <!-- required for apple icons. !-->
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" href="/touch-icon-iphone.png" />
+
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch-icon-114x114-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/apple-touch-icon-72x72-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" href="/touch-icon-iphone-precomposed.png" />
+
+    <link href="@Url.Content("~/Content/style.css?v=05282013")" rel="stylesheet" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.hotkeys.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jeditable.mini.js")" type="text/javascript"></script>
+
+    <script src="@Url.Content("~/Scripts/jquery.signalR-1.0.1.min.js")" type="text/javascript"></script>
+    <script src="~/signalr/hubs" type="text/javascript"></script>
+
+    @StackExchange.Profiling.MiniProfiler.RenderIncludes()
+
+</head>
+
+<body>
+
+    <div class="page">
+
+        <div id="header">
+            <div id="title">
+                <a href="@Url.Content("/")">letters to crushes</a>
+            </div>
+
+            <div id="menuContainer">
+
+                <ul id="jsddm">
+                    <li>@Html.ActionLink("send", "send", "Home")</li>
+                    <li>@Html.ActionLink("more", "more", "Home")</li>
+                </ul>
+
+            </div>
+        </div>
+
+        <div id="main">
+            @RenderBody()
+
+        </div>
+
+    </div>
+            
+    @RenderSection("Footer", required: false)
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+    var sc_project = 4216742;
+    var sc_invisible = 1;
+    var sc_security = "c57a20a1";
+    var sc_remove_link = 1; 
+</script>
+
+<script type="text/javascript"
+src="http://www.statcounter.com/counter/counter_xhtml.js"></script><noscript><div
+class="statcounter"><img class="statcounter"
+src="http://c.statcounter.com/4216742/0/c57a20a1/1/"
+alt="tumblr counter" /></div></noscript>
+<!-- End of StatCounter Code -->
+
+
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-459727-11");
+        pageTracker._trackPageview();
+    } catch (err) { }</script>
+
+</body>
+</html>

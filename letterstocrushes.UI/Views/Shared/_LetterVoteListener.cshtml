@@ -1,0 +1,20 @@
+﻿<script type="text/javascript" >
+
+    $(document).ready(function () {
+
+        $("a.voterLink").click(function (e) {
+
+            resp = $(this).attr("id").substring(1);
+
+            $.getJSON("@Url.Content("~/Home/Vote/")", { id: resp, c: $.connection.hub.id }, function (incomingLetter) {
+
+                $("#b" + resp).html(incomingLetter.letterUp);
+                $("#h" + resp).addClass("not_selectable");
+                $("#h" + resp).fadeOut(2500);
+
+            });
+        });
+
+    });
+
+</script>

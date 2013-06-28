@@ -1,0 +1,13 @@
+﻿@model letterstocrushes.Core.Model.Letter
+@{
+    ViewBag.Title = "Unsubscribe";
+}
+
+@if (Model == null)
+{
+    <h2>There was an error unsubscribing.</h2>
+}
+else
+{
+    <h2>You have been unsubscribed from letter #@Model.Id</h2>
+}

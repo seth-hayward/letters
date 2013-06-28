@@ -1,0 +1,23 @@
+﻿@model letterstocrushes.Core.Model.Letter
+
+<div class="letterEnvelopeContainer">
+    
+    <ul class="letterNav">
+        <li>
+            <span class="responseLink">
+                @Html.ActionLink("remove", "dequeue", new { id = Model.Id })
+            </span>        
+        </li>
+    </ul>
+
+    <ul class="dateNav">
+        <li>     
+            <a href="/letter/@(Model.Id)">@(Model.letterPostDate.ToString("MMMM d, h:mmtt"))</a>
+        </li>    
+    </ul>
+
+    <div class="letterContainer">
+        @Html.Raw(Model.letterMessage)
+    </div>
+
+</div>

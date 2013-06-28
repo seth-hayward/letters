@@ -1,0 +1,62 @@
+﻿@model letterstocrushes.Core.Model.Comment
+
+<div id="comment-@Model.Id" class="comment">
+
+    <div class="comment_header">
+        
+        <div class="commenter_name">
+            @Model.commenterName
+
+        @if (User.IsInRole("Mod")) {        
+            <text>
+                <a id="c@(Model.Id)" class="comment_hide">hide</a>
+            </text>
+            }
+        </div>
+
+        <div class="comment_date">
+            @letterstocrushes.Helpers.TimeAgo(Model.commentDate)
+        </div>
+
+    </div>
+
+    <div id="@Model.Id" class="comment_message edit">
+        @Model.commentMessage
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        @if (User.IsInRole("Mod")) {
+            
+            <text>
+            //$('.edit').editable("@Url.Content("~/comments/edit")", {
+            //    name: 'commentText'
+            //});
+
+            $("#c@(Model.Id)").click(function (e) {
+
+                $.ajax(
+                {
+                    type: "get",
+                    url: "@Url.Content("~/comment/hide/" + Model.Id)",
+                    success: function (result) {
+                         $("#comment-@(Model.Id)").fadeOut(100);
+                    },
+                    error: function (req, status, error) {
+                        alert("Sorry! There was an error. We could not hide this comment. Please email letters.to.crushes@gmail.com if this happens again. (" + error + ")");
+                    }
+                });
+
+            });
+
+            </text>                 
+                       
+        }
+
+    });
+
+</script>

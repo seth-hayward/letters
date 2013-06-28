@@ -1,0 +1,39 @@
+﻿@using letterstocrushes
+@model IEnumerable<letterstocrushes.Core.Model.Comment>
+@{
+    ViewBag.Title = "letters to crushes: comments";
+}
+
+@foreach (var item in Model) {
+
+    Html.RenderPartial("_CommentsListItem", item);
+   
+}
+
+@Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/comments")))
+
+
+<script type="text/javascript" >
+
+    $(document).ready(function () {
+
+        jQuery(document).bind('keydown', 'left',function (evt){previous_page(); return false; });
+        jQuery(document).bind('keydown', 'right',function (rght){next_page(); return false; });
+
+        var current_page = @ViewBag.CurrentPage;
+
+	    function previous_page() {
+	        var previous_page = current_page - 1;
+	        if (previous_page > 0) {
+	            window.location = "/comments/page/" + previous_page;
+	        }
+	    }
+
+	    function next_page() {
+	        var next_page = current_page + 1;
+	        window.location = "/comments/page/" + next_page;
+	    }
+
+    });
+
+</script>

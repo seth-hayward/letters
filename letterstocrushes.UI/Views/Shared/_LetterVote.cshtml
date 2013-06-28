@@ -1,0 +1,11 @@
+﻿@model letterstocrushes.Core.Model.Letter
+
+<li>
+    <a id='h@(Model.Id)' class='voterLink hearts_left'>
+        <span id="b@(Model.Id)">
+            @(Model.letterUp)
+        </span>
+
+        <img src="@Url.Content("~/Content/heart.png")" class="hearts" alt="hearts" />
+    </a>
+</li>

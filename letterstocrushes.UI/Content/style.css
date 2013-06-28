@@ -1,0 +1,915 @@
+body
+{
+    background-color: #fff;
+    font-family: Helvetica, sans-serif;    
+    margin: 0;
+    padding: 0;
+    color: #000;
+    text-align: center;    
+}
+
+a:link
+{
+    color: #F59696;
+    text-decoration: underline;
+}
+
+a:visited
+{
+    color: #F59696;
+    text-decoration: underline;
+}
+
+a:hover
+{
+    text-decoration: none;
+}
+
+a:active
+{
+    color: #9F3131;
+}
+
+p, ul
+{
+    margin-bottom: 20px;
+    line-height: 1.45em;
+}
+
+/* HEADINGS   
+----------------------------------------------------------*/
+h1, h2, h3, h4, h5, h6
+{
+    font-family: Helvetica, sans-serif;
+}
+
+h2
+{
+    font-size: 1.3em;
+}
+h3
+{
+    font-size: 1.2em;
+}
+h4
+{
+    font-size: 1.1em;
+}
+h5, h6
+{
+    font-size: 1em;
+}
+
+
+/* this rule styles <h2> tags that are the 
+first child of the left and right table columns */
+.rightColumn > h1, .rightColumn > h2, .leftColumn > h1, .leftColumn > h2
+{
+    margin-top: 0;
+}
+
+/* PRIMARY LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+/* you can specify a greater or lesser percentage for the 
+page width. Or, you can specify an exact pixel width. */
+.page
+{
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#ads
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 728px;
+	height: 60px;
+	margin-top: 30px;
+	margin-bottom: 15px;
+}
+
+#header
+{
+    position: relative;
+    color: #000;
+    padding: 0;
+    width: 100%;
+    height: 40px;
+}
+
+#header h1
+{
+    font-weight: bold;
+    padding: 15px;
+    margin: 0;
+    color: #fff;
+    border: none;
+    line-height: 2em;
+    font-family: Helvetica, sans-serif;
+    font-size: 48px !important;
+    text-align: center;
+}
+
+#menuContainer
+{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	font-size: 12px;
+	text-align: right;
+}
+
+div#title
+{
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	font-size: 22px;
+	letter-spacing: 0.5px;
+	text-decoration: none;
+}
+
+div#title a 
+{
+	padding: 15px;
+}
+
+#main
+{
+    padding: 15px 30px 0px 30px;
+    background-color: #fff;
+    margin-bottom: 30px;    	
+    _height: 1px; /* only IE6 applies CSS properties starting with an underscrore */
+    text-align: center;
+}
+
+#footer
+{
+    color: #999;
+    padding: 1px 0 0 0;
+    text-align: center;
+    line-height: normal;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: .7em;
+    /* border-bottom: dotted 1px #ddd; */
+	width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+span#footer_center
+{
+	width: 340px;
+	float: left;
+}
+
+span#footer_left
+{
+	width: 80px;
+	margin-top: 7px;
+	border-top: dotted 1px #aaa;
+	float: left;
+}
+
+span#footer_right 
+{
+	width: 80px;
+	margin-top: 7px;
+	border-top: dotted 1px #aaa;
+	float: left;	
+}
+
+#footer a
+{
+	padding: 10px;
+	color: #999;
+}
+
+#footer a:hover
+{
+	color: #F59696;
+}
+
+/* letter options menu ... adapted from jsddm */
+
+ul.letterNav
+{
+    margin: 0;
+    list-style: none;
+    float: right;
+    position: relative;
+    padding: 0;
+    margin: 0;    
+}
+
+ul.letterNav li
+{
+    float: right;
+    font-size: 12px;
+    width: 55px;
+    text-align: right;
+}
+
+ul.letterNav li a
+{
+    text-decoration: none;
+}
+
+ul.letterNav li a:hover
+{
+    text-decoration: underline;
+}
+
+ul.dateNav
+{
+    list-style: none;
+    float: left;
+    text-align: left;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    
+}
+
+ul.dateNav li 
+{
+    float: left;
+    font-size: 12px;
+    text-align: left;   
+}
+
+ul.dateNav li a
+{
+    text-decoration: none;
+}
+
+ul.dateNav li a:hover
+{
+    text-decoration: underline;
+}
+
+.hearts
+{
+    border: 0px;
+    margin-bottom: -3px;
+    padding-right: 5px;
+}
+
+.hearts_left
+{
+    padding-left: 0px;
+}
+
+.comments
+{
+    border: 0px;
+    margin-bottom: -3px;
+    padding-right: 5px;
+    padding-left: 2px;
+}
+
+/* TAB MENU ... brought to you by jsddm
+----------------------------------------------------------*/
+
+#jsddm
+{	margin: 0;
+ 	padding: 0;
+	
+	}
+	
+	#jsddm li
+	{	float: left;
+		list-style: none;
+		font: 10px;
+		
+		}
+
+	#jsddm li a
+	{	display: block;
+		background: #FFFFFF;
+		text-decoration: underline;
+		text-align: center;
+		margin: 0px 2px 0px 0px;				 
+		width: 75px;
+		color: #000000;
+		white-space: nowrap;
+		padding: 5px;
+		}
+
+	#jsddm li a:hover
+	{	
+	     text-decoration: none;	 	
+	}
+		
+		#jsddm li ul
+		{	margin: 0;	
+		 	padding: 0;
+			position: absolute;
+			visibility: hidden;
+			z-index: 20;
+			background: #FFFFFF;
+			}
+		
+		#jsddm li ul li
+		{	
+			float: none;
+			display: inline;
+			text-align: left}
+		
+		#jsddm li ul li a
+		{
+			width: auto;
+			text-align: left;
+		
+		}
+
+		#jsddm li ul li span
+		{
+			width: auto;
+			text-align: left;
+		
+		}
+		
+		#jsddm li ul li a:hover
+		{	text-decoration: none;}
+
+
+/* LETTER STYLES
+----------------------------------------------------------*/
+
+span.voteLink
+{
+	width: 100px;
+	position: relative;
+	float: right;
+	text-align: right;
+}
+
+span.responseLink
+{
+	width: 100px;
+	float: right;
+}
+
+div.letterDate a
+{
+	text-decoration: none;
+	padding: 5px;
+	text-align: left;
+}
+
+div.letterDate a:hover
+{
+	text-decoration: underline;
+}
+
+div.letterResponses a
+{
+	text-decoration: none;
+	padding: 5px;
+}
+
+div.letterResponses a:hover
+{
+	text-decoration: underline;
+	text-align: right;
+}
+
+a.voterLink
+{
+    color: #F59696;
+    text-decoration: none;
+    padding: 20px;
+    margin: -20px;
+    cursor:pointer;
+}
+
+.not_selectable {
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+a.voterLink:hover
+{
+	color: #B88282;	
+	text-decoration: underline;
+}
+
+.flagContainer 
+{
+
+	width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 5px;
+	padding-bottom: 25px;
+	text-align: center;
+}
+
+.letterEnvelopeContainer 
+{
+
+	width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	text-align: left;
+}
+
+.letterContainer 
+{
+	width: 500px;
+	margin: 0 auto;
+	padding-top: 30px;
+	clear: both;
+	text-align: left;
+}
+
+.letterBookContainer
+{
+	width: 500px;	
+	text-align: left;
+	float: left;
+}
+
+.letterDate
+{
+	float: left;
+    font-size: 12px;
+}
+
+.letterResponses
+{
+	float: right;
+	text-align: right;
+	font-size: 12px;
+	width: 300px;
+}
+
+.letterVote
+{
+	font-size: 12px;
+	text-align: right;
+}
+
+.letterComments
+{
+    padding-bottom: 25px;
+	text-align: left;
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 0.8em;
+}
+
+.letterCommentsOld
+{
+    padding-top: 25px;
+    text-align: left;
+}
+
+.comment_header
+{
+    border-bottom: 1px dotted black;
+    padding-top: 10px;
+    overflow: auto;
+}
+
+.commenter_name
+{
+    float: left;
+    font-weight: bold;
+}
+
+a.comment_hide
+{
+    font-weight: normal;
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+a.comment_hide:hover
+{
+    text-decoration: none;
+}
+
+
+.comment_letter
+{
+    float: left;
+    padding-left: 3px;
+}
+
+.comment_date
+{
+    float: right;
+}
+
+.comment_row
+{
+    clear: both;
+    padding-top: 15px;
+}
+
+    .comment_row label
+    {
+
+    }
+
+    .comment_row span.comment_form
+    {
+
+    }
+
+    .comment_row span input[type="text"]
+    {
+        width: 325px;
+    }
+
+    .comment_row textarea
+    {
+        width: 325px;
+    }
+
+
+
+.comment_message
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+}
+
+
+.letterCommentsForm
+{
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px dotted black;
+}
+
+    .letterCommentsForm h4
+    {
+        padding: 0px;
+        margin: 0px;
+    }
+
+.letterPostScript
+{
+	font-size: 10px;
+	text-align: left;
+}
+
+.pretty_box 
+{
+	/*
+	margin: 5px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border: 1px dotted #F59696;	*/
+    color: #999;
+    padding: 1px 0 0 0;
+    text-align: center;
+    line-height: normal;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: .7em;
+    /* border-bottom: dotted 1px #ddd; */
+	width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.pretty_box a
+{
+	padding: 10px;
+}
+
+span#pretty_box_center
+{
+	width: 300px;
+	float: left;
+}
+
+span#pretty_box_left
+{
+	width: 100px;
+	margin-top: 7px;
+	border-top: dotted 1px #F59696;
+	float: left;
+}
+
+span#pretty_box_right 
+{
+	width: 100px;
+	margin-top: 7px;
+	border-top: dotted 1px #F59696;
+	float: left;	
+}
+
+
+span.letterProblems 
+{
+    color: #999;
+    text-align: left;
+    font-size: 10px;
+}
+
+span.permLink a:hover
+{
+	text-decoration: none;
+}
+
+span.permLink a
+{
+	
+	text-decoration: underline;
+}
+
+/* PAGER
+----------------------------------------------------------*/
+
+.pager 
+{
+
+	padding: 8px 0px 7px 0px;
+	text-align: center;
+	width: 100%;
+	height: 55px;
+}
+
+.pager .back .next
+{	
+	font-size: 30px;
+}
+
+
+.pager .disabled 
+{
+	border:1px solid #ddd;
+	color:#999;
+
+	text-align:center;
+	cursor: pointer;
+
+	padding: 5px;
+
+
+}
+
+.pager a.current
+{
+	/*background-color: #8FC9C9;*/
+	background-color:#F59696;
+	border:1px solid #c0c0c0;
+	padding: 5px;
+	text-align:center;
+	color: #fff;
+}
+
+.pager span, .pager a
+{
+	margin: 4px 3px;
+
+}
+
+.pager a 
+{
+	border:1px solid #c0c0c0;
+/*	padding:3px 5px; */
+	padding: 5px;
+	text-align:center;
+	text-decoration:none;
+}
+
+.pager a:hover
+{
+	border: 1px solid #000000;
+}
+
+
+/* FORM LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+div#errors 
+{
+	margin: 20px;
+	padding: 20px;
+	border: 1px dotted #F59696;	
+}
+
+div.validation-summary-errors
+{
+	font-size: 12px;
+}
+
+div.validation-summary-errors ul
+{
+	list-style-type: none;
+	padding: 10px;
+	margin: 0;
+	border: 1px dotted #F59696;
+}
+
+input[type="text"].input-validation-error
+{
+	border: 1px dotted #F59696;
+}
+
+input[type="password"].input-validation-error
+{
+	border: 1px dotted #F59696;
+}
+
+
+span.field-validation-error
+{
+	color: #333;	
+	clear: both;
+}
+
+fieldset 
+{
+    margin: 1em 0;
+    padding: 1em;
+    border: 1px solid #CCC;
+}
+
+legend 
+{
+    font-size:1.2em;
+    font-weight: bold;
+}
+
+textarea 
+{
+    min-height: 75px;
+}
+
+input[type="text"] 
+{
+    width: 200px;
+    border: 1px solid #CCC;
+}
+
+input[type="password"] 
+{
+    width: 200px;
+    border: 1px solid #CCC;
+}
+
+.submit_button
+{
+
+	background-color:#F59696;
+	padding: 3px;	
+
+}
+
+/* TABLE
+----------------------------------------------------------*/
+
+table 
+{
+  border: solid 1px #e8eef4;
+  border-collapse: collapse;
+}
+
+table td 
+{
+  padding: 5px;   
+  border: solid 1px #e8eef4;
+}
+
+table th
+{
+  padding: 6px 5px;
+  text-align: left;
+  background-color: #e8eef4; 
+  border: solid 1px #e8eef4;   
+}
+
+/* MISC  
+----------------------------------------------------------*/
+.clear
+{
+    clear: both;
+}
+
+.error
+{
+    color:Red;
+}
+
+#menucontainer
+{
+    margin-top:40px;
+}
+
+div#title
+{
+    display:block;
+    float:left;
+    text-align:left;
+}
+
+#logindisplay
+{
+    font-size:1.1em;
+    display:block;
+    text-align:right;
+    margin:10px;
+}
+
+#logindisplay a:link
+{
+    text-decoration: underline;
+}
+
+#logindisplay a:visited
+{
+    text-decoration: underline;
+}
+
+#logindisplay a:hover
+{
+    text-decoration: none;
+}
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
+
+/* Styles for editor and display helpers
+----------------------------------------------------------*/
+.display-label,
+.editor-label
+{
+    margin: 1em 0 0 0;
+}
+
+.display-field,
+.editor-field
+{
+    margin:0.5em 0 0 0;
+}
+
+.text-box
+{
+    width: 30em;
+}
+
+.text-box.multi-line
+{
+    height: 6.5em;
+}
+
+.tri-state
+{
+    width: 6em;
+}
+
+ins.diffmod, ins.diffins
+{
+	color: Red;
+	text-decoration: none;
+}
+
+del.diffmod, del.diffdel
+{
+	color: Blue;
+}

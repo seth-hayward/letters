@@ -1,0 +1,21 @@
+﻿@model letterstocrushes.Core.Model.Letter
+
+<div style="width: 580px; margin-left: auto; margin-right: auto; font-size: 0.8em; line-height: 1.1em">
+    
+    <div class="letterBookContainer">
+        @Html.Raw(Model.letterMessage)
+    </div>
+
+    <div style="float: left; width: 75px; text-align: center" >
+        <p>
+            <span style="color: #ccc">@Model.letterUp</span>
+            <br />
+            <span style="color: #ddd">@Model.Id</span>                
+        </p>
+    </div>
+
+    <div style="width: 25px; padding-top: 25px; padding-bottom: 25px;border-bottom: 1px dashed #aaa; margin-left: auto; margin-right: auto; clear: both">
+
+    </div>
+
+</div>

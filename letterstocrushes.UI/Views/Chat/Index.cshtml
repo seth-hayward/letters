@@ -1,0 +1,494 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <title>letters to crushes chat</title>
+
+    <link rel="icon" type="image/png" href="http://198.57.199.92/favicon.ico?ok" />
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+
+    <script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
+
+	
+    <script src="@Url.Content("/Scripts/jquery.signalR-1.0.1.min.js")" type="text/javascript"></script>
+    <script src="~/signalr/hubs" type="text/javascript"></script>
+
+
+    <style type="text/css">
+
+        body {
+          padding: 0;
+          margin: 0;
+        }
+
+        body, #entry {
+          background-color: #fff;
+          font-family: Helvetica, sans-serif;    
+          margin: 0;
+          padding: 0;
+          color: #000;
+        }
+
+        body, table {
+          font-size: 10pt;
+          line-height: 150%;
+        }
+
+        tr,td,table {
+          padding: 0;
+          margin: 0;
+          outline-width: 0;
+          border-width: 0;
+        }
+
+        table {
+          border-collapse: collapse;
+          border-spacing: 0
+        }
+
+
+        a { text-decoration: none; color: #0B0974; }
+        a:hover { text-decoration: underline; color: #0B0974; }
+
+
+        #loading, #connect {
+          background: #fff;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          padding: 1em;
+        }
+
+        #loading { z-index: 10000000; }
+        #connect { z-index: 10000001; }
+
+        #loading p, #connect fieldset  {
+          font-family: Helvetica, sans-serif;    
+          width: 30em;
+          border: 0;
+          margin-left: auto;
+          margin-right: auto;
+          border: 2px dashed #f995cd;
+          padding-top: 20px;
+          padding-bottom: 20px;
+        }
+
+        #toolbar {
+          position: fixed;
+          color: #fff;
+          width: 100%; 
+          bottom: 0;
+          border-top: dotted 1px #F59696
+        }
+
+        #entry {
+          width: 100%;
+          font-size: inherit;
+          padding: 1em;
+          margin: 0;
+          border: 1px dotted #333;
+          outline-width: 0;
+          /* clear: both; */
+        }
+
+        #log {
+          display: block;
+          /* enough padding to clear the toolbar.. is there a better way to do this? */
+          padding-bottom: 5.1em; 
+          background: inherit;
+          overflow: hidden;
+        }
+
+        /* not very important info */
+        .notice td, .join td, .part td, .message .date { color: #514ED9; }
+        .error td { color: #933; }
+        .personal .nick, .notice .nick { color: #514ED9; }
+
+        .message {
+          margin: 0.1em 0;
+        }
+
+        .message td {
+          vertical-align: top;
+        }
+
+        .nick { 
+          font-weight: bold;
+          padding: 0 1em 0 0.5em;
+        }
+
+        .nick a {
+          color: inherit;
+        }
+
+        #toolbar ul {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          display: none;
+        }
+
+        #toolbar li {
+          display: block; 
+          float: right;
+          margin: 0 2em 0 0;
+          color: #000;
+          font-size: 10pt;
+        }
+
+        #usersLink {
+          color: inherit;
+        }
+
+
+
+
+    </style>
+
+    <script type="text/javascript">
+        $(function () {
+
+            Date.prototype.addHours = function(h) {    
+                this.setTime(this.getTime() + (h*60*60*1000)); 
+                return this;   
+            }
+
+            String.prototype.toDate = function () {
+                "use strict";
+
+                var match = /\/Date\((\d{13})\)\//.exec(this);
+
+                return match === null ? null : new Date(parseInt(match[1], 10));
+            };
+
+            //used to keep the most recent messages visible
+            function scrollDown() {
+
+                window.scrollTo(0, $("#log").height());
+                $("#entry").focus();
+
+            }
+
+            var chat;
+
+            var messsage_counter = 0;
+
+            // first we want to get the user's name
+            // before we make the chat client
+
+            function updateMessage(message) {
+                var output_message = '<table class="message"><tr>';
+                
+                var chat_date = message.ChatDate;
+
+                output_message += '  <td class="date">' + dateFormat(chat_date, "h:MM TT") + '</td>';
+                output_message += '  <td valign="top" class="nick">' + message.Nick + '</td>';
+                output_message += '  <td class="msg-txt">' + message.Message + '</td>'
+                output_message += '</tr></table>'
+                $("#log").append(output_message);
+                scrollDown();
+            }
+
+            function updatePageTitle() {
+
+                if (message_counter >= 1) {
+                    document.title = "(" + message_counter + ") letters to crushes chat";
+                } else {
+                    document.title = "letters to crushes chat";
+                }
+
+            }
+
+            function joinChat() {
+
+                // Proxy created on the fly          
+                chat = $.connection.chat;                
+
+                // Declare a function on the chat hub so the server can invoke it          
+                chat.client.addMessage = function (message) {
+
+                    // handle a special case where we want to 
+                    // reset the history when we join a new chat
+                    if (message.Room == "reset-channel") {
+                        $("#log").empty();
+                        return;
+                    }
+
+                    updateMessage(message);
+
+                    message_counter++;
+                    updatePageTitle();
+
+                };
+
+                // Declare a function on the chat hub so the server can invoke it          
+                chat.client.addBacklog = function (messages) {
+                    for (var i = 0; i < messages.length; i++) {
+                        updateMessage(messages[i]);
+                    }
+                };
+
+                chat.client.errorMessage = function (message) {
+                    $("#name").show();
+                    $("#log").hide();
+                    $("#toolbar").hide();
+                    alert(message);                    
+                };
+
+                chat.client.enterChat = function (message) {
+                    $("#name").hide();
+                    $("#log").show();
+                    $("#toolbar").show();
+                    message_counter = 0;
+                };
+
+                $.connection.hub.stateChanged(function (change) {
+
+                    var date_now = new Date();
+
+                    var message = {
+                        Message: change.newState,
+                        Nick: "Server",
+                        ChatDate: date_now,
+                        Publish: 1,
+                    };
+
+                    if (change.newState === $.signalR.connectionState.reconnecting) {
+                        message.Message = "Reconnecting... Please wait.";
+                    }
+                    else if (change.newState === $.signalR.connectionState.disconnected) {
+                        message.Message = "Disconnected.";
+                    }
+                    else if (change.newState === $.signalR.connectionState.connecting) {
+                        message.Message = "Connecting.";
+                        message.Publish = 0;
+                    }
+                    else if (change.newState === $.signalR.connectionState.connected) {
+                        message.Message = "Connected.";
+                        message.Publish = 0;
+                        chat.server.join($("#chat_name").val());
+                    }
+
+                    if (message.Publish === 1) {
+                        updateMessage(message);
+                    };
+
+                });
+
+                // Start the connection
+                $.connection.hub.start().done(function () {
+
+                    $('#entry').keydown(function (e) {
+                        if (e.keyCode == 13) {
+                            chat.server.send($('#entry').val());
+                            $("#entry").val("");
+                            message_counter = -1;
+
+                            updatePageTitle();
+                            e.preventDefault();
+                        }
+                    })
+
+                    $("#broadcast").click(function () {
+                        // Call the chat method on the server
+                        chat.server.send($('#entry').val());
+                        $("#entry").val("");
+                        message_counter = -1;
+                        updatePageTitle();
+                    });
+                });
+
+                event.preventDefault();
+
+            }
+
+
+
+            $('#chat_name').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    joinChat();
+                    e.preventDefault();
+                    return false;
+                }
+            })
+
+            $("#join").click(function () {
+                joinChat();               
+            });
+
+        });
+
+        /*
+         * Date Format 1.2.3
+         * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
+         * MIT license
+         *
+         * Includes enhancements by Scott Trenda <scott.trenda.net>
+         * and Kris Kowal <cixar.com/~kris.kowal/>
+         *
+         * Accepts a date, a mask, or a date and a mask.
+         * Returns a formatted version of the given date.
+         * The date defaults to the current date/time.
+         * The mask defaults to dateFormat.masks.default.
+         */
+
+        var dateFormat = function () {
+            var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
+                timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
+                timezoneClip = /[^-+\dA-Z]/g,
+                pad = function (val, len) {
+                    val = String(val);
+                    len = len || 2;
+                    while (val.length < len) val = "0" + val;
+                    return val;
+                };
+
+            // Regexes and supporting functions are cached through closure
+            return function (date, mask, utc) {
+                var dF = dateFormat;
+
+                // You can't provide utc if you skip other args (use the "UTC:" mask prefix)
+                if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
+                    mask = date;
+                    date = undefined;
+                }
+
+                // Passing date through Date applies Date.parse, if necessary
+                date = date ? new Date(date) : new Date;
+                if (isNaN(date)) throw SyntaxError("invalid date");
+
+                mask = String(dF.masks[mask] || mask || dF.masks["default"]);
+
+                // Allow setting the utc argument via the mask
+                if (mask.slice(0, 4) == "UTC:") {
+                    mask = mask.slice(4);
+                    utc = true;
+                }
+
+                var _ = utc ? "getUTC" : "get",
+                    d = date[_ + "Date"](),
+                    D = date[_ + "Day"](),
+                    m = date[_ + "Month"](),
+                    y = date[_ + "FullYear"](),
+                    H = date[_ + "Hours"](),
+                    M = date[_ + "Minutes"](),
+                    s = date[_ + "Seconds"](),
+                    L = date[_ + "Milliseconds"](),
+                    o = utc ? 0 : date.getTimezoneOffset(),
+                    flags = {
+                        d: d,
+                        dd: pad(d),
+                        ddd: dF.i18n.dayNames[D],
+                        dddd: dF.i18n.dayNames[D + 7],
+                        m: m + 1,
+                        mm: pad(m + 1),
+                        mmm: dF.i18n.monthNames[m],
+                        mmmm: dF.i18n.monthNames[m + 12],
+                        yy: String(y).slice(2),
+                        yyyy: y,
+                        h: H % 12 || 12,
+                        hh: pad(H % 12 || 12),
+                        H: H,
+                        HH: pad(H),
+                        M: M,
+                        MM: pad(M),
+                        s: s,
+                        ss: pad(s),
+                        l: pad(L, 3),
+                        L: pad(L > 99 ? Math.round(L / 10) : L),
+                        t: H < 12 ? "a" : "p",
+                        tt: H < 12 ? "am" : "pm",
+                        T: H < 12 ? "A" : "P",
+                        TT: H < 12 ? "AM" : "PM",
+                        Z: utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
+                        o: (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
+                        S: ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
+                    };
+
+                return mask.replace(token, function ($0) {
+                    return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
+                });
+            };
+        }();
+
+        // Some common format strings
+        dateFormat.masks = {
+            "default": "ddd mmm dd yyyy HH:MM:ss",
+            shortDate: "m/d/yy",
+            mediumDate: "mmm d, yyyy",
+            longDate: "mmmm d, yyyy",
+            fullDate: "dddd, mmmm d, yyyy",
+            shortTime: "h:MM TT",
+            mediumTime: "h:MM:ss TT",
+            longTime: "h:MM:ss TT Z",
+            isoDate: "yyyy-mm-dd",
+            isoTime: "HH:MM:ss",
+            isoDateTime: "yyyy-mm-dd'T'HH:MM:ss",
+            isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'"
+        };
+
+        // Internationalization strings
+        dateFormat.i18n = {
+            dayNames: [
+                "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
+                "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+            ],
+            monthNames: [
+                "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+                "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+            ]
+        };
+
+        // For convenience...
+        Date.prototype.format = function (mask, utc) {
+            return dateFormat(this, mask, utc);
+        };
+    </script>
+  
+</head>
+<body>
+
+    <div data-role="page">
+
+	    <div data-role="content">	
+
+            <div id="app">
+
+                <div id="name">        
+                    <label for="chat_name">name</label>
+                    <input id="chat_name" class="text" type="text" name="nick" value=""/>                        
+                    <input type="button" id="join" value="join chat"/>                                
+                 </div>
+             
+
+                <div id="loading" style="display: none">
+                    <p>loading</p>
+                </div>
+            
+                <div id="log" style="display: none;">
+
+                </div>
+                        
+            </div>
+
+	    </div><!-- /content -->
+
+        <div data-role="footer" class="ui-bar" style="display:none" id="toolbar" data-position="fixed" >    
+                <input tabindex="1" type="text" id="entry" style="width: 95%"/>        
+        </div>
+
+    </div><!-- /page -->
+
+
+</body>
+</html>

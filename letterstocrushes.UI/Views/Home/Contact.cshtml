@@ -1,0 +1,44 @@
+﻿@model letterstocrushes.Core.Model.Contact
+
+
+@{
+    ViewBag.Title = "Feedback";
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<div class="letterContainer">
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+        <div class="editor-label">
+            your feedback, please:
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Message, 5, 10, new {@style = "width: 350px"})
+            <br />@Html.ValidationMessageFor(model => model.Message, "Please enter a message.", new { @style = "clear: both" })
+        </div>
+
+        <div class="editor-label">
+            email (optional):
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Email, new { @style = "width: 350px" })
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+        <p style="font-size: 0.8em">
+        please consider leaving your email address if you would like a follow up email. 
+        </p>
+    
+        <p>
+            <input type="submit" value="send" class="submit_button" />
+        </p>
+    
+    }
+
+
+</div>
+

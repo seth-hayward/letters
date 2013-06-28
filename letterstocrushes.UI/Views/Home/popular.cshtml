@@ -1,0 +1,43 @@
+@model IEnumerable<letterstocrushes.Core.Model.Letter>
+@using letterstocrushes
+
+@{
+    ViewBag.Title = "letters to crushes: popular now";
+}
+
+@foreach (var item in Model) {
+    
+    Html.RenderPartial("_LetterMoreListItem", item);    
+}
+
+@Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/popular")))
+
+<script type="text/javascript" >
+
+    $(document).ready(function() {
+
+        var offset = new Date().getTimezoneOffset();
+        $.cookie('userTimeZone', offset/60, { expires: 365 });
+
+        jQuery(document).bind('keydown', 'left',function (evt){previous_page(); return false; });
+        jQuery(document).bind('keydown', 'right',function (evt){next_page(); return false; });
+
+        var resp;
+        var current_page = @ViewBag.CurrentPage;
+
+        function previous_page() {
+            var previous_page = current_page - 1;
+            if (previous_page > 0) {
+                window.location = "popular?page=" + previous_page;
+            }
+        }
+
+        function next_page() {
+            var next_page = current_page + 1;
+            window.location = "popular?page=" + next_page;
+        }
+
+    });
+
+
+</script>

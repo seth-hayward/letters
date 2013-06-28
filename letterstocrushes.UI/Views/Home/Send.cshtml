@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "letters to crushes";
+}
+
+<div class="letterContainer" id="input">
+
+    <div id="sendLetterCopy">
+        <p>Write your letter.
+        </p>
+    </div>
+
+    <div id="errors" style="display: none">
+        <p><b>there was an error (<span id="error_name"></span>).</b> something bad happened (<span id="error_message"></span>) and your letter was not sent. please send use a report using the @Html.ActionLink("feedback page", "Contact") if you see this again.</p>
+    </div>
+        
+	<textarea id="letterMessage" rows="12" cols="12" style="width: 100%"></textarea>
+		        	
+	<br />
+		    
+	<input type="button" class="submit_button" value="send" id="btnSend" />
+
+    <div class="letterPostScript">            
+        <p>Please use initials or nicknames, it will be posted for others to see.</p>        
+    </div>            
+
+    <div id="disqus_thread" class="letterComments" style="display: none"></div>
+    		
+</div>
+
+<div class="letterContainer" id="output" style="display: none;">
+
+            <h2>your letter was sent.</h2>
+            <ul>
+                <li><span id="perm">here is it's permanent link</span>.</li>
+                <li>and it is @Html.ActionLink("on top of the more! page", "More")</li>
+                @{                    
+                    if (User.Identity.IsAuthenticated == true) {
+                        <text><li>@Html.ActionLink("and on your bookmarks page", "bookmarks")</li></text>                    
+                    }
+                }
+            </ul> 
+
+</div>
+
+<script src="@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
+    
+<script src="http://www.google.com/jsapi?key=ABQIAAAAldASRj6IH3Y9p1O31t-C9RQCeCEsZXDSZbVjp8UFZVicfsCyEBQ2EQnGirJm-6SOzGyiESqsoOB2eA" type="text/javascript"></script>
+
+<script type="text/javascript">
+   
+tinyMCE.init({
+    theme: "advanced",
+    mode: "textareas",
+    plugins: "preview",
+	theme_advanced_buttons1 : "charmap,separator,bold,italic,underline,strikethrough,separator,bullist,numlist,separator,preview",
+	theme_advanced_buttons2 : "",
+	theme_advanced_buttons3 : "",
+    invalid_elements : "background-color,img,a,font-family,border,font-family,margin,background-image",
+	content_css : "@Url.Content("~/Content/tinymce.css")"
+});
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // ensures the optimizely object is defined globally using window.optimizely. 
+        //window.optimizely = window.optimizely || [];
+
+        $("#btnSend").click(function() {
+
+            $("#btnSend").hide();
+            $("#errors").hide();
+
+            try {
+
+                var c;                                
+                if(google.loader.ClientLocation) { c = google.loader.ClientLocation.address.country_code.toUpperCase(); }
+                else { c = "UNKNOWN"; }
+                                
+                var m = $('#letterMessage').tinymce().getContent();                
+                if (m == '') { $("#btnSend").fadeIn('fast'); return; };
+                
+                var sendArgs = 'letterText=' + escape(m) + '&letterCountry=' + escape(c);
+
+                var linkid;
+
+                $.ajax(
+                {
+                    type: "post",
+                    url: "@Url.Content("~/Home/Mail")",
+                    data: sendArgs,
+                    dataType: "json",
+                    processData: false,
+                    success: function(result)
+                    {                                
+                        // but what happens if it returns a fail from the server here?
+                        if (result.response == '1') {
+                            $.cookie(result.guid, 0, { expires: 365 });
+
+                            // sends a tracking call to Optimizely for the given event name. 
+                            // event name does not need to be 'pre-registered' 
+                            //window.optimizely.push(['trackEvent', 'sent_letter']);
+
+                            $("#perm").html("<a href='@Url.Content("~/letter/")" + result.message + "'>here is a permanent link</a>");
+
+                            $('#input').fadeOut(100, function () { $('#output').fadeIn(100); });
+
+                        } else {
+                            display_errors({ name: 'server error', message: result.message });                            
+                        }
+                                            
+                    },                
+                    error : function(req, status, error)
+                    {
+
+                        // this is shit code... why do i need an error handler here as well?
+                        // how can i fire an error to get this code to run in the first place?
+
+                        throw {
+                            name: 'delivery error',
+                            message: error};
+                    }
+
+                });
+
+            }
+            catch (err) {
+                display_errors(err);                
+            }
+
+        });
+
+
+        function display_errors(err) {
+            $("#error_name").html(err.name);
+            $("#error_message").html(err.message);
+            $("#errors").fadeIn('fast');
+            $("#btnSend").fadeIn('fast');
+        }
+
+    });
+
+</script>

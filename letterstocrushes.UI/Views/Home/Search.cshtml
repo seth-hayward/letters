@@ -1,0 +1,80 @@
+﻿@model IEnumerable<letterstocrushes.Core.Model.Letter>
+@using letterstocrushes
+
+@{
+    ViewBag.Title = "letters to crushes: search";
+}
+    
+<div class="letterContainer" style="text-align: left">
+
+    <form action="@Url.Content("~/search")">
+        <div>
+            <input type="text" style="font-size: 25px" value="@ViewBag.Terms" name="terms" /> <input type="submit" value="search"/>                        
+            @{  if (ViewBag.Results > 0) { <text><span style="font-size: 0.8em">@ViewBag.Results letters.</span></text> } }
+            @{  if (ViewBag.NothingFound == true) { <text><span style="font-size: 0.8em">No letters matched this query.</span></text> } }
+        </div>
+
+
+        </form>
+        
+    <br />
+
+    @{
+    
+        if (ViewBag.NothingFound == false)
+        {
+            
+            foreach (var item in Model) {
+                Html.RenderPartial("_LetterMoreListItem", item);
+            }
+
+            @Html.Raw(Helpers.SearchPager(ViewBag.CurrentPage, ViewBag.Results, Url.Content("~/search"), ViewBag.Terms));
+                
+        }
+
+    
+    }
+
+    
+</div>
+
+<div id="disqus_thread" class="letterComments" style="display: none"></div>
+
+@section Footer {
+    @Html.Partial("_Footer")
+}
+
+<script type="text/javascript" src="http://disqus.com/forums/crushes/embed.js"></script>
+<script type="text/javascript">
+
+    //<![CDATA[
+    (function () {
+
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+
+        for (var i = 0; i < links.length; i++) {
+            if (links[i].href.indexOf('#disqus_thread') >= 0) {
+                query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+            }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/crushes/get_num_replies.js' + query + '"></' + 'script>');
+
+    })();
+    //]]>
+
+</script>
+
+@Html.Partial("_LetterVoteListener")
+
+<script type="text/javascript" >
+
+    $(document).ready(function() {
+
+        var offset = new Date().getTimezoneOffset();
+        $.cookie('userTimeZone', offset/60, { expires: 365 });
+
+    });
+
+
+</script>

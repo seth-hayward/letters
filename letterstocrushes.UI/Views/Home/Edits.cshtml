@@ -1,0 +1,40 @@
+﻿@model IEnumerable<letterstocrushes.Core.Model.Edit>
+@using letterstocrushes
+
+@{
+    ViewBag.Title = "letters to crushes: edit log";
+}
+
+@foreach (var item in Model) {
+
+<div class="letterEnvelopeContainer">
+
+        <div class="letterDate">
+            Edit @item.ID, on @item.editDate by @item.editor (<a href="@Url.Content("~/letter/" + item.letterID)">letter</a>)
+        </div>
+
+        <div class="letterContainer">
+            
+        @if (item.newLetter != " ")
+        {
+            @Html.Raw(item.newLetter)
+        }
+        else { 
+            @Html.Raw(item.previousLetter);
+        }
+                
+        @if (item.editComment != " ")
+        {      
+            <p style="font-size: 0.8em; padding: 10px; border: 1px dotted #ccc;">
+                @item.editComment
+            </p>
+        }
+                        
+        </div>
+    
+</div>
+
+}
+
+@Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/home/edits")))
+

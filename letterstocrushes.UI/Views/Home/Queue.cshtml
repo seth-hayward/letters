@@ -1,0 +1,30 @@
+﻿@model IEnumerable<letterstocrushes.Core.Model.Letter>
+
+@{
+    ViewBag.Title = "letters to crushes: the queue";
+}
+
+<div class="letterContainer">
+
+    <h2>the queue</h2>
+
+    <ul>
+        @if (ViewBag.Count == 0)
+        {        
+            <li>the queue is empty! fill it up with something @Html.ActionLink("good", "popular")</li>    
+        }
+        else
+        {                               
+            foreach (var item in Model) {
+                Html.RenderPartial("_LetterQueueListItem", item);
+            }        
+        }    
+    </ul>
+
+
+</div>
+
+   
+@section Footer {
+    @Html.Partial("_Footer")
+}

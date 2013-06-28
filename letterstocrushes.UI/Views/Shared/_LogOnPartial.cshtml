@@ -1,0 +1,17 @@
+﻿@try
+{
+
+    if (Request.IsAuthenticated)
+    {
+    <text>@Html.ActionLink("logout", "Logout", "Account")</text>
+    }
+    else
+    {
+    <text>@Html.ActionLink("login", "Login", "Account")</text>
+    }
+    
+}
+catch (Exception ex)
+{
+    
+}

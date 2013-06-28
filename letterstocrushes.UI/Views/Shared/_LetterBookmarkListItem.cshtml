@@ -1,0 +1,29 @@
+﻿@model letterstocrushes.Core.Model.Letter
+
+<div class="letterEnvelopeContainer" id="c@(Model.letterLanguage)">
+
+    <ul class="dateNav">
+        <li>
+            <a href="@Url.Content("~/letter/" + Model.Id.ToString())">@Model.letterPostDate.ToString("MMMM d, h:mmtt")</a>              
+        </li>
+    </ul>
+
+    <ul class="letterNav">
+
+        @Html.Partial("_LetterComments", Model)
+        @Html.Partial("_LetterVote", Model)
+
+        <li style="width: 50px">
+            <a id='h@(Model.letterLanguage)' href='/#' onclick='$.post(this.href); return false;' class='hiderLink'>hide</a>        
+        </li>
+
+
+    </ul>
+            
+    <div class="letterContainer">
+
+        @Html.Raw(Model.letterMessage)
+                        
+    </div>
+      
+</div>

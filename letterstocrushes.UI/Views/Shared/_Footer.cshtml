@@ -1,0 +1,58 @@
+﻿<div id="footer">
+
+
+    <span id="footer_left"></span>
+
+    <span id="footer_center">
+
+        @{
+            
+            try
+            {
+                
+                @Html.Partial("_LogOnPartial")
+
+                
+                if (User.Identity.IsAuthenticated == true)
+                {
+                    if (User.IsInRole("Mod") == true)
+                    {
+                    @Html.ActionLink("queue", "queue", "Home")
+                    @Html.ActionLink("popular", "popular", "Home")                
+                    @Html.ActionLink("bookmarks", "Index", "Account")                     
+                    @Html.ActionLink("search", "search", "Home")     
+                    @Html.ActionLink("chat", "Index", "chat")                                                    
+                    }
+                    else
+                    {
+                    @Html.ActionLink("chat", "Index", "chat")                                        
+                    @Html.ActionLink("bookmarks", "Index", "Account")                       
+                    @Html.ActionLink("feedback", "contact", "Home")
+                    @Html.ActionLink("search", "search", "Home")                                            
+                    }
+                }
+                else
+                {
+                @Html.ActionLink("chat", "Index", "Chat")                
+                @Html.ActionLink("feedback", "contact", "Home")
+                @Html.ActionLink("search", "search", "Home")                     
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                //@Html.ActionLink("best", "best", "Home")                
+                //@Html.ActionLink("feedback", "contact", "Home")
+                //@Html.ActionLink("search", "search", "Home")                     
+            }
+                   
+        }     
+
+    </span>
+
+    <span id="footer_right"></span>
+
+    <div style="clear: both"></div>
+
+</div>

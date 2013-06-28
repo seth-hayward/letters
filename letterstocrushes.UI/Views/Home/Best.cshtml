@@ -1,0 +1,65 @@
+﻿@model IEnumerable<letterstocrushes.Core.Model.Letter>
+
+@{
+    ViewBag.Title = "letters to crushes: best";
+}
+
+@foreach (var item in Model) {
+
+    Html.RenderPartial("_LetterHomeListItem", item);
+   
+}
+
+<div id="disqus_thread" class="letterComments" style="display: none"></div>
+
+@section Footer {
+    @Html.Partial("_Footer")
+}
+
+<script type="text/javascript" >
+
+    $(document).ready(function() {
+
+        var offset = new Date().getTimezoneOffset();
+        $.cookie('userTimeZone', offset/60, { expires: 365 });
+
+        var resp;
+ 
+        $("a.voterLink").click(function(e) {
+
+            resp = $(this).attr("id").substring(1);
+
+            $.getJSON("@Url.Content("~/Home/Vote/")" + resp, null, function(incomingLetter) {
+
+                $("#b" + resp).html(incomingLetter.letterUp + " ♥");
+                $("#b" + resp).fadeOut(2500);
+
+            });
+
+        });
+
+    });
+
+
+</script>
+
+<script type="text/javascript" src="http://disqus.com/forums/crushes/embed.js"></script>
+<script type="text/javascript">
+
+    //<![CDATA[
+    (function () {
+
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+
+        for (var i = 0; i < links.length; i++) {
+            if (links[i].href.indexOf('#disqus_thread') >= 0) {
+                query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+            }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/crushes/get_num_replies.js' + query + '"></' + 'script>');
+
+    })();
+    //]]>
+
+</script>
