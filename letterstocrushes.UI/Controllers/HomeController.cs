@@ -95,7 +95,7 @@ namespace letterstocrushes.Controllers
         #region Normal Pages
 
         [CompressFilter]
-        public ActionResult Index(int page = 1)
+        public ActionResult Index(int page = 1, int mobile = 0)
         {
             string time_zone = getUserTimeZone();
            
@@ -154,8 +154,16 @@ namespace letterstocrushes.Controllers
             ViewData.Model = _letterService.fixList(_letters, time_zone);
             ViewBag.CurrentPage = page;
             ViewBag.Pages = _all_letter_count;
+
+            if (mobile == 0)
+            {
+                return View();
+            }
+            else
+            {
+                return View("~/Views/Mobile/Index.cshtml");
+            }
             
-            return View();
         }
 
         [CompressFilter]
