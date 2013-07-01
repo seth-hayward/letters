@@ -162,6 +162,12 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "BookmarksRouteMobile", // Route name
+                "mobile/bookmarks", // URL with parameters
+                new { controller = "Account", action = "Index", mobile = 1 } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "AddBookmarkRoute", // Route name
                 "bookmark/{id}", // URL with parameters
                 new { controller = "Account", action = "Bookmark" } // Parameter defaults

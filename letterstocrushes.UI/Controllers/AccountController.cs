@@ -50,9 +50,20 @@ namespace letterstocrushes.Controllers
         //
 
         #region Bookmarks
-          [Authorize]
         public ActionResult Index(int page=1, int mobile=0)
         {
+
+            if (User.Identity.IsAuthenticated == false)
+            {
+                if (mobile == 0)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                else
+                {
+                    return RedirectToRoute("loginRouteMobile", null);
+                }
+            }
 
             string UserID = "";
             MembershipUser MemUser = Membership.GetUser();
@@ -243,7 +254,8 @@ namespace letterstocrushes.Controllers
 
                     if (model.Mobile == 1)
                     {
-                        return RedirectToAction("Index", "Account", new { mobile = 1 });
+//                        return RedirectToAction("Index", "Account", new { mobile = 1 });
+                        return RedirectToRoute("BookmarksRouteMobile");
                     }
                     else
                     {
