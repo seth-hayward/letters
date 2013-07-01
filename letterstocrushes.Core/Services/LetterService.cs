@@ -175,7 +175,10 @@ namespace letterstocrushes.Core.Services
 
                 Contact msg = new Contact();
                 msg.Email = "seth.hayward@gmail.com";
-                msg.Message = "Sending exception: <br/><br/>" + ex.Message.ToString();
+                msg.Message = "Sending exception: <br/><br/>";
+                msg.Message = msg.Message + "<br/>letterText: " + letterText;
+                msg.Message = msg.Message + "<br/>letterCountry: " + letterCountry;                
+                msg.Message = msg.Message + "<br/><br/>" + ex.Message.ToString();
 
                 if (ex.InnerException != null)
                 {
