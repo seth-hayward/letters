@@ -207,9 +207,16 @@ namespace letterstocrushes.Controllers
         // URL: /Account/LogOn
         // **************************************
 
-        public ActionResult Login()
+        public ActionResult Login(int mobile = 0)
         {
-            return View();
+            if (mobile == 0)
+            {
+                return View();
+            }
+            else
+            {
+                return View("~/Views/Mobile/Login.cshtml");
+            }
         }
 
         [HttpPost]
@@ -247,8 +254,19 @@ namespace letterstocrushes.Controllers
                 }
             }
 
+
             // If we got this far, something failed, redisplay form
-            return View(model);
+            ViewData.Model = model;
+
+            if (model.Mobile == 1)
+            {
+                return View("~/Views/Mobile/Login.cshtml");
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
         // **************************************
