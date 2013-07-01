@@ -115,6 +115,13 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "DetailsMobile", // Route name
+                "letter/{id}/mobile", // URL with parameters
+                new { controller = "Home", action = "Details", mobile = 1 } // Parameter defaults
+            );
+
+
+            routes.MapRoute(
                 "Feedback", // Route name
                 "feedback/", // URL with parameters
                 new { controller = "Home", action = "Contact" } // Parameter defaults

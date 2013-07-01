@@ -237,7 +237,7 @@ namespace letterstocrushes.Controllers
 
         }
 
-        public ActionResult Details(int id = 1)
+        public ActionResult Details(int id = 1, int mobile = 0)
         {
             string time_zone = getUserTimeZone();
 
@@ -304,7 +304,16 @@ namespace letterstocrushes.Controllers
             new_commenter_guid = System.Guid.NewGuid().ToString();
             ViewBag.NewCommenterGuid = new_commenter_guid;
 
-            return View(letterToView);
+            ViewData.Model = letterToView;
+
+            if (mobile == 0)
+            {
+                return View();
+            }
+            else
+            {
+                return View("~/Views/Mobile/Details.cshtml");
+            }
 
         }
 

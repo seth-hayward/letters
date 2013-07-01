@@ -1,0 +1,150 @@
+﻿@model letterstocrushes.Core.Model.Letter
+@using letterstocrushes;
+@{
+    Layout = "~/Views/Shared/_LayoutMobile.cshtml";        
+    ViewBag.Title = "letters to crushes: #" + Model.Id.ToString();
+}
+
+<div class="letterEnvelopeContainer">
+    
+    <ul class="dateNav">
+        <li>
+            <a href="@Url.Content("~/letter/" + Model.Id)">@(Model.letterPostDate.ToString("MMMM d, yyyy h:mmtt"))</a>    
+        </li>
+    </ul>
+
+    <ul class="letterNav">
+
+        @Html.Partial("_LetterVote", Model)
+    
+    </ul>
+
+    <div class="letterContainer">
+        @Html.Raw(Model.letterMessage)
+    </div>
+
+    @if (Convert.ToBoolean(ViewBag.display_pretty_box) == true) {
+        <div class="pretty_box">
+
+            <span id="pretty_box_left"></span>
+
+            <span id="pretty_box_center">
+                @if (Convert.ToBoolean(ViewBag.can_edit) == true)
+                {
+                    @Html.ActionLink("edit letter", "edit", new {id = Model.Id })
+                    @Html.ActionLink("hide", "hide", new {id = Model.Id })
+                }
+                @if (User.IsInRole("Mod") == true)
+                {
+                    @Html.ActionLink("queue", "AddToQueue", new {id = Model.Id})
+                }
+                @if (User.Identity.IsAuthenticated == true)
+                {   
+                    <span id="bookmark"><a id='bm@(Model.Id)' href='/#' onclick='$.post(this.href); return false;' class='bookmarkLink'>bookmark</a></span>
+                }
+
+            </span>
+
+            <span id="pretty_box_right"></span>
+
+            <div style="clear: both"></div>
+
+            @if (User.IsInRole("Mod") == true)
+            {
+                <p style="text-align: center; clear: both">Posted by @Model.senderIP</p>
+            }
+
+
+        </div>    
+    }
+
+    @if (Model.Id < 471085) {
+
+    <div id="disqus_thread" class="letterCommentsOld">
+
+    </div>
+                
+    }
+    else
+    {
+
+    <div class="letterComments">
+
+        <h4>@letterstocrushes.Helpers.CommentTitle(ViewBag.comments.Count) <a href="#add">add comment</a></h4>
+
+        @foreach (@letterstocrushes.Core.Model.Comment item in ViewBag.comments) {
+            Html.RenderPartial("_Comment", item);            
+        }
+
+        <div class="letterCommentsForm">
+
+            @using( Html.BeginForm() )
+            {
+                
+
+                <h4 id="add">add comment</h4>
+                
+                <div class="comment_row">
+                    <label for="commenterName">Name:</label>
+                    <span class="comment_form">@Html.TextBox("commenterName")</span>
+                </div>                
+
+                <div class="comment_row">
+                    <label for="commenterEmail">Email:</label>
+                    <span class="comment_form">@Html.TextBox("commenterEmail", (string)ViewBag.email)</span>
+                     <small>Email is optional and never shown. Leave yours if you want email notifications on new comments for this letter.</small>
+                </div>
+
+                <div class="comment_row">
+                    <label for="comment">Comment:</label>
+                    <span class="comment_form">@Html.TextArea("comment")</span>                
+                </div>
+
+                <div class="comment_row">
+                    <span class="comment_form">
+                        @Html.Hidden("letterId", Model.Id)
+                        <input type="submit" value="send" class="submit_button" />
+                    </span>
+                </div>
+            }
+
+        </div>
+
+    </div>
+        
+    }
+
+</div>
+
+@Html.Partial("_LetterVoteListener")
+
+<script type="text/javascript" >
+
+    $(document).ready(function() {
+
+        var offset = new Date().getTimezoneOffset();
+        $.cookie('userTimeZone', offset/60, { expires: 365 });
+
+        $("a.bookmarkLink").click(function(e) {
+
+            resp = $(this).attr("id").substring(2);
+
+            $.getJSON("@Url.Content("~/Bookmark/")" + resp, null, function(result) {
+
+                if (result.Code == '1') {
+                    $("#bookmark").html("bookmarked!");
+                }
+                else {
+                    alert('An error occurred. Please report this problem using the "contact" page. (Message: ' + result.Message + ')');
+                }
+
+            });
+
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript" src="http://disqus.com/forums/crushes/embed.js"></script>
+

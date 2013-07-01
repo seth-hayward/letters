@@ -395,6 +395,7 @@
     <Content Include="Views\Mobile\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutMobile.cshtml" />
     <Content Include="Views\Mobile\More.cshtml" />
+    <Content Include="Views\Mobile\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
