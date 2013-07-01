@@ -13,6 +13,8 @@
    
 }
 
+@Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/mobile")))
+
 @Html.Partial("_LetterVoteListener")
 
 <script type="text/javascript" >
