@@ -108,3 +108,8 @@ a:active
 {
     color: #9F3131;
 }
+
+span.field-validation-valid
+{
+    display: none;
+}
