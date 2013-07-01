@@ -396,6 +396,8 @@
     <Content Include="Views\Shared\_LayoutMobile.cshtml" />
     <Content Include="Views\Mobile\More.cshtml" />
     <Content Include="Views\Mobile\Details.cshtml" />
+    <Content Include="Views\Shared\_CommentsAdminListItem.cshtml" />
+    <Content Include="Views\Mobile\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

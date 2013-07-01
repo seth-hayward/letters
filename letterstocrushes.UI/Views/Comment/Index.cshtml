@@ -6,7 +6,7 @@
 
 @foreach (var item in Model) {
 
-    Html.RenderPartial("_CommentsListItem", item);
+    Html.RenderPartial("_CommentsAdminListItem", item);
    
 }
 
@@ -33,6 +33,44 @@
 	        var next_page = current_page + 1;
 	        window.location = "/comments/page/" + next_page;
 	    }
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        @if (User.IsInRole("Mod")) {
+            
+            <text>
+        //$('.edit').editable("@Url.Content("~/comments/edit")", {
+        //    name: 'commentText'
+        //});
+
+        $("a.comment_hide").click(function (e) {
+
+            resp = $(this).attr("id").substring(1);
+            
+            $.ajax(
+                {
+                    type: "get",
+                    url: "@Url.Content("~/comment/hide/")" + resp,
+                    success: function (result) {
+                        $("#comment-" + resp).fadeOut();
+                        },
+                    error: function (req, status, error) {
+                        alert("Sorry! There was an error. We could not hide this comment. Please email letters.to.crushes@gmail.com if this happens again. (" + error + ")");
+                    }
+                });
+
+        });
+
+
+        </text>                 
+                       
+        }
 
     });
 
