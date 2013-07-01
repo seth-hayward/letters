@@ -10,7 +10,7 @@
 packages/
 
 # ignoring changes to Web.config for now
-letterstocrushes.UI/Web.config
+Web.config
 
 # Build results
 
