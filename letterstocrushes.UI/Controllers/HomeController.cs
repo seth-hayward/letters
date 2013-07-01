@@ -1033,7 +1033,18 @@ namespace letterstocrushes.Controllers
 
                 Core.Model.Contact msg = new Core.Model.Contact();
                 msg.Email = "seth.hayward@gmail.com";
-                msg.Message = "state: " + hubConnection.State + "<br><br>" + ex.Message.ToString();
+
+
+                string hub_state = "";
+                if (hubConnection != null)
+                {
+                    hub_state = hubConnection.State.ToString();
+                }
+                else
+                {
+                    hub_state = "null";
+                }
+                msg.Message = "state: " + hub_state + "<br><br>" + ex.Message.ToString();
                 if (ex.InnerException != null)
                 {
                     msg.Message = msg.Message + "<br><br>" + ex.InnerException.Message.ToString();
