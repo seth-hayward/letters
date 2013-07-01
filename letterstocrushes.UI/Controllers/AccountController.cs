@@ -51,7 +51,7 @@ namespace letterstocrushes.Controllers
 
         #region Bookmarks
           [Authorize]
-        public ActionResult Index(int page=1)
+        public ActionResult Index(int page=1, int mobile=0)
         {
 
             string UserID = "";
@@ -106,8 +106,18 @@ namespace letterstocrushes.Controllers
             {
                 ViewBag.db1 = _letterService.getLetterCount();
             }
+
+            ViewData.Model = bookmarks;
+
+            if (mobile == 0)
+            {
+                return View();
+            }
+            else
+            {
+                return View("~/Views/Mobile/Bookmarks.cshtml");
+            }
                         
-            return View(bookmarks);
           }
 
           public ActionResult Bookmark(string id)
@@ -231,7 +241,14 @@ namespace letterstocrushes.Controllers
                     
                     FormsAuthentication.RedirectFromLoginPage(model.UserName, true);
 
-                    return RedirectToAction("Index", "Account", null);
+                    if (model.Mobile == 1)
+                    {
+                        return RedirectToAction("Index", "Account", new { mobile = 1 });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Account", null);
+                    }
 
                     //
                     // I do not understand the purpose for the next check...?

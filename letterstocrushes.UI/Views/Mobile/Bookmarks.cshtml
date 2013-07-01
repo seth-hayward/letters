@@ -1,0 +1,119 @@
+﻿@model IEnumerable<letterstocrushes.Core.Model.Letter>
+@using letterstocrushes
+
+@{
+    Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+    ViewBag.Title = "letters to crushes: your bookmarks";
+}
+  
+@if (User.Identity.Name == "seth")
+{
+    <h2>stats</h2>
+    <ul>
+        <li>letter count: @ViewBag.db1</li>
+    </ul>
+}
+
+    <h2>bookmarks</h2>
+
+    @if (Model.Count() == 0)
+    {
+        <ul>
+            <li>no bookmarks yet :(
+            <br /> 
+            you can bookmark any letter on the site by going to the individual letter page and clicking the "bookmark" link below the letter (above the comment section.)</li>
+        </ul>        
+    }
+    else
+    {
+
+        foreach (var item in Model)
+        {
+            Html.RenderPartial("_LetterBookmarkListItem", item);
+        }
+
+        @Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/bookmarks")))
+        
+    }
+
+@Html.Partial("_LetterVoteListener")
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        var offset = new Date().getTimezoneOffset();
+        $.cookie('userTimeZone', offset/60, { expires: 365 });
+
+        var resp;
+
+        $("a.hiderLink").click(function(e) {
+
+            resp = $(this).attr("id").substring(1);
+
+            var publishArgs = "id=" + resp;
+
+            $.ajax(
+                {
+                    type: "post",
+                    url: "@Url.Content("~/Account/HideBookmark")",
+                    data: publishArgs,
+                    dataType: "json",
+                    processData: false,
+                    success: function(result)
+                    {
+                        // if the result.Code == 1, success, if result.Code == 0, failure
+                        //alert(result.Code + ' - ' + result.Message);                                
+                        $("#c" + resp).fadeOut(100);
+                    },                
+                    error : function(req, status, error)
+                    {
+                        alert("Sorry! There was an error. We could not hide this bookmark. Please email letters.to.crushes@gmail.com if this happens again. (" + error + ")");   
+                    }
+                });
+
+        });
+
+        var visitor_update;
+
+        // first we want to get the user's name
+        // before we make the chat client
+
+        // Proxy created on the fly          
+        visitor_update = $.connection.visitorUpdate;
+
+        // Declare a function on the chat hub so the server can invoke it          
+        visitor_update.client.addMessage = function (message) {
+            var current_hearts = parseInt($("#b" + message).html());
+            $("#b" + message).html(current_hearts + 1);            
+        };
+
+        // Start the connection
+        $.connection.hub.start().done(function () {
+            visitor_update.server.join(@Html.Raw(ViewBag.Highest), @Html.Raw(ViewBag.Lowest), "more");
+        });
+
+    });
+    
+</script>
+
+<script type="text/javascript" src="http://disqus.com/forums/crushes/embed.js"></script>
+<script type="text/javascript">
+
+    //<![CDATA[
+    (function () {
+
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+
+        for (var i = 0; i < links.length; i++) {
+            if (links[i].href.indexOf('#disqus_thread') >= 0) {
+                query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+            }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/crushes/get_num_replies.js' + query + '"></' + 'script>');
+
+    })();
+    //]]>
+
+</script>
