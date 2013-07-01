@@ -1,4 +1,9 @@
-﻿ul.letterNav
+﻿body
+{
+    padding-top: 15px;
+}
+
+ul.letterNav
 {
     margin: 0;
     list-style: none;
