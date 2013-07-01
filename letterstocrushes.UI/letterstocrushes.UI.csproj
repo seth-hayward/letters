@@ -392,6 +392,7 @@
     <Content Include="Views\Shared\_CommentsListItem.cshtml" />
     <Content Include="Views\Comment\Details.cshtml" />
     <Content Include="Views\Mobile\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutMobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

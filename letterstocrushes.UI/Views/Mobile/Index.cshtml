@@ -1,19 +1,16 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@model IEnumerable<letterstocrushes.Core.Model.Letter>
+@using letterstocrushes;
+
+@{
+    Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+    ViewBag.Title = "home";
 }
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>letters to crushes</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="@Url.Content("~/Scripts/bootstrap/css/bootstrap.min.css")" rel="stylesheet" media="screen">
 
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap/js/bootstrap.min.js")"></script>
-  </body>
-</html>
+@foreach (var item in Model) {
+
+    Html.RenderPartial("_LetterHomeListItem", item);
+   
+}
+
+
