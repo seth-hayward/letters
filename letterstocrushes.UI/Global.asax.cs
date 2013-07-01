@@ -42,6 +42,12 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "MoreMobile", // Route name
+                "mobile/more", // URL with parameters
+                new { controller = "Home", action = "More", mobile = 1 } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "Comments", // Route name
                 "comments/", // URL with parameters
                 new { controller = "Comment", action = "Index" } // Parameter defaults
@@ -64,7 +70,6 @@ namespace letterstocrushes
                 "comment/{id}/hide", // URL with parameters
                 new { controller = "Comment", action = "Hide" } // Parameter defaults
             );
-
 
             routes.MapRoute(
                 "CommentPages", // Route name
@@ -116,10 +121,9 @@ namespace letterstocrushes
 
             routes.MapRoute(
                 "DetailsMobile", // Route name
-                "letter/{id}/mobile", // URL with parameters
+                "mobile/letter/{id}", // URL with parameters
                 new { controller = "Home", action = "Details", mobile = 1 } // Parameter defaults
             );
-
 
             routes.MapRoute(
                 "Feedback", // Route name
@@ -151,7 +155,6 @@ namespace letterstocrushes
                 new { controller = "Home", action = "Password" } // Parameter defaults
             );
 
-
             routes.MapRoute(
                 "BookmarksRoute", // Route name
                 "bookmarks/", // URL with parameters
@@ -176,7 +179,6 @@ namespace letterstocrushes
                 new { controller = "Home", action = "RSS" } // Parameter defaults
             );
 
-
             routes.MapRoute(
                 "SongsAddRoute", // Route name
                 "songs/add/", // URL with parameters
@@ -189,7 +191,6 @@ namespace letterstocrushes
                 new { controller = "Song", action = "Add" } // Parameter defaults
             );
 
-
             routes.MapRoute(
                 "loginRoute", // Route name
                 "login/", // URL with parameters
@@ -197,9 +198,21 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "loginRouteMobile", // Route name
+                "mobile/login", // URL with parameters
+                new { controller = "Account", action = "Login", mobile = 1 } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "logoutRoute", // Route name
                 "logout/", // URL with parameters
                 new { controller = "Account", action = "Logout" } // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "DefaultMobile", // Route name
+                "mobile", // URL with parameters
+                new { controller = "Home", action = "Index", mobile = 1 } // Parameter defaults
             );
 
             routes.MapRoute(
