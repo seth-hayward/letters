@@ -57,7 +57,7 @@ namespace letterstocrushes.Core.Services
             _queryLetters.AddLetter(letter);
         }
 
-        public Letter Mail(string letterText, string letterCountry, string user_ip, string user_id, ref string error_message)
+        public Letter Mail(string letterText, string letterCountry, string user_ip, string user_id, int mobile, ref string error_message)
         {
 
             Letter new_letter = new Letter();
@@ -80,6 +80,35 @@ namespace letterstocrushes.Core.Services
 
                 new_letter.letterMessage = new_letter.letterMessage.Replace("text-decoration%3a%20line-through%3b", "text-decoration: line-through");
                 new_letter.letterMessage = new_letter.letterMessage.Replace("text-decoration%3a%20underline%3b", "text-decoration: underline;");
+
+                // if this is a mobile submission, we want to make it look
+                // basic with some html
+                // output goal:
+                // <p>{para1}
+                //  </p>
+                //  <p>{para2}
+                //  </p>
+                //
+
+                if (mobile == 1)
+                {
+
+                    string basic_text = new_letter.letterMessage;
+
+                    // first, we make sure that the first line
+                    // is a paragraph
+                    basic_text = "<p>" + basic_text;
+
+                    // then we make sure the last line closes it
+                    basic_text = basic_text + "</p>";
+
+                    // now all line breaks in the middle should
+                    // start new paragraphs
+                    basic_text = basic_text.Replace("\r\n", "</p><p>");
+
+                    new_letter.letterMessage = basic_text;
+
+                }
 
                 new_letter.letterUp = 1;
                 new_letter.senderCountry = letterCountry;

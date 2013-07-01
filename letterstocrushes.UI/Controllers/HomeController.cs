@@ -903,7 +903,7 @@ namespace letterstocrushes.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult Mail(string letterText, string letterCountry)
+        public JsonResult Mail(string letterText, string letterCountry, int mobile = 0)
         {
 
             String error_message = string.Empty;
@@ -920,7 +920,7 @@ namespace letterstocrushes.Controllers
                 userid = MemUser.ProviderUserKey.ToString();
             }
 
-            Core.Model.Letter letter = _letterService.Mail(Server.HtmlDecode(letterText), letterCountry, userip, userid, ref error_message);
+            Core.Model.Letter letter = _letterService.Mail(Server.HtmlDecode(letterText), letterCountry, userip, userid, mobile, ref error_message);
 
             if (letter != null)
             {
