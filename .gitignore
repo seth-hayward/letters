@@ -9,6 +9,9 @@
 # NuGet packages -- users will download these automatically
 packages/
 
+# ignoring changes to Web.config for now
+letterstocrushes.UI/Web.config
+
 # Build results
 
 [Dd]ebug/
