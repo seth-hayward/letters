@@ -904,7 +904,7 @@ namespace letterstocrushes.Controllers
             }
             else
             {
-                return Json(new { response = 0, message = error_message, guid = "error" }, JsonRequestBehavior.AllowGet);
+                return Json(new { response = 0, message = error_message, guid = "Error in response" }, JsonRequestBehavior.AllowGet);
             }
         }
 
