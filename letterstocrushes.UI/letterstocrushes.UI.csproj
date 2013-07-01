@@ -194,6 +194,7 @@
     </Content>
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
+    <Content Include="Content\mobile.css" />
     <None Include="Properties\PublishProfiles\hostgator v2.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap\css\bootstrap-responsive.css" />

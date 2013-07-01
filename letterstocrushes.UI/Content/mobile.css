@@ -1,0 +1,105 @@
+﻿ul.letterNav
+{
+    margin: 0;
+    list-style: none;
+    float: right;
+    position: relative;
+    padding: 0;
+    margin: 0;    
+}
+
+ul.letterNav li
+{
+    float: right;
+    font-size: 12px;
+    width: 55px;
+    text-align: right;
+}
+
+ul.letterNav li a
+{
+    text-decoration: none;
+}
+
+ul.letterNav li a:hover
+{
+    text-decoration: underline;
+}
+
+.hearts_left
+{
+    padding-left: 0px;
+}
+
+a.voterLink
+{
+    color: #F59696;
+    text-decoration: none;
+    padding: 20px;
+    margin: -20px;
+    cursor:pointer;
+}
+
+a.voterLink:hover
+{
+	color: #B88282;	
+	text-decoration: underline;
+}
+
+
+ul.dateNav
+{
+    list-style: none;
+    float: left;
+    text-align: left;
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+
+ul.dateNav li 
+{
+    float: left;
+    font-size: 12px;
+    text-align: left;   
+}
+
+ul.dateNav li a
+{
+    text-decoration: none;
+}
+
+ul.dateNav li a:hover
+{
+    text-decoration: underline;
+}
+
+.letterContainer 
+{
+    padding-top: 10px;
+    width: 100%;
+    clear: both;
+	text-align: left;
+}
+
+a:link
+{
+    color: #F59696;
+    text-decoration: underline;
+}
+
+a:visited
+{
+    color: #F59696;
+    text-decoration: underline;
+}
+
+a:hover
+{
+    text-decoration: none;
+}
+
+a:active
+{
+    color: #9F3131;
+}
