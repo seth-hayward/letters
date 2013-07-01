@@ -987,7 +987,6 @@ namespace letterstocrushes.Controllers
 
             string signalr_hub = "http://localhost:" + Request.Url.Port + VirtualPathUtility.ToAbsolute("~/signalr/hubs");
 
-            Debug.Print("signalr_hub: " + signalr_hub);
             Letter letter = new Letter();
 
             letter.letterMessage = "Testing.";
@@ -997,8 +996,6 @@ namespace letterstocrushes.Controllers
                 int current_upvotes = _voteService.Vote(id, userip);
 
                 letter.letterUp = current_upvotes;
-
-                return Json(letter, JsonRequestBehavior.AllowGet);
 
                 // announce the vote to the voting realtime service
                 if (c != "")
@@ -1026,7 +1023,10 @@ namespace letterstocrushes.Controllers
                         hubConnection.Stop();
                     }
 
-                }   
+                }
+
+                return Json(letter, JsonRequestBehavior.AllowGet);
+
             }
             catch (Exception ex)
             {
