@@ -1,0 +1,14 @@
+﻿@model IEnumerable<letterstocrushes.Core.Model.Letter>
+@using letterstocrushes;
+
+@{
+    Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+    ViewBag.Title = "more";
+}
+
+
+@foreach (var item in Model) {
+
+    Html.RenderPartial("_LetterMoreListItem", item);
+   
+}

@@ -167,7 +167,7 @@ namespace letterstocrushes.Controllers
         }
 
         [CompressFilter]
-        public ActionResult More(int page = 1)
+        public ActionResult More(int page = 1, int mobile = 0)
         {
 
             string time_zone = getUserTimeZone();
@@ -226,7 +226,14 @@ namespace letterstocrushes.Controllers
             ViewBag.CurrentPage = page;
             ViewBag.Pages = _all_letter_count;
 
-            return View();
+            if (mobile == 0)
+            {
+                return View();
+            }
+            else
+            {
+                return View("~/Views/Mobile/Index.cshtml");
+            }
 
         }
 
