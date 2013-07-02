@@ -57,6 +57,11 @@ namespace letterstocrushes.Controllers
                 msg.Message = msg.Message + "<br><br>" + ex.InnerException.Message.ToString();
             }
 
+            if (ex.StackTrace != null)
+            {
+                msg.Message = msg.Message + "<br><br>Stack trace:<br/>" + ex.StackTrace.ToString();
+            }
+
             if (handled == false)
             {
                 _mailService.SendContact(msg.Message, msg.Email);                
