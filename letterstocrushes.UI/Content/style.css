@@ -476,6 +476,12 @@ a.voterLink:hover
     text-align: left;
 }
 
+.comment
+{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .comment_header
 {
     border-bottom: 1px dotted black;
@@ -546,6 +552,11 @@ a.comment_hide:hover
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: left;
+}
+
+.comment_level_-1
+{
+    background-color: #eee;
 }
 
 
