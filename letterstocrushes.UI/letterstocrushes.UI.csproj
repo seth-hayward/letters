@@ -207,6 +207,11 @@
     <Content Include="Scripts\bootstrap\js\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\jquery-mobile\images\ajax-loader.gif" />
+    <Content Include="Scripts\jquery-mobile\images\icons-18-black.png" />
+    <Content Include="Scripts\jquery-mobile\images\icons-18-white.png" />
+    <Content Include="Scripts\jquery-mobile\images\icons-36-black.png" />
+    <Content Include="Scripts\jquery-mobile\images\icons-36-white.png" />
     <Content Include="Scripts\jquery-mobile\jquery.mobile.custom.js" />
     <Content Include="Scripts\jquery-mobile\jquery.mobile.custom.min.js" />
     <Content Include="Scripts\jquery-mobile\jquery.mobile.custom.structure.css" />
