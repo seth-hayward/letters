@@ -30,13 +30,13 @@
 	    function previous_page() {
 		    var previous_page = current_page - 1;
 		    if (previous_page > 0) {
-			    window.location = "@Url.Content("~/mobile/page/")" + previous_page;
+		        $.mobile.changePage("@Url.Content("~/mobile/page/")" + next_page, "slide");
 		    }
 	    }
 
 	    function next_page() {
 		    var next_page = current_page + 1;
-		    window.location = "@Url.Content("~/mobile/page/")" + next_page;
+	        $.mobile.changePage("@Url.Content("~/mobile/page/")" + next_page, "slide");
 	    }
 
         // Bind the swipeleftHandler callback function to the swipe event on div.box
