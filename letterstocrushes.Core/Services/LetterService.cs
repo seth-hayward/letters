@@ -178,6 +178,7 @@ namespace letterstocrushes.Core.Services
                     Contact msg = new Contact();
                     msg.Email = "blocked " + user_ip;
                     msg.Message = string.Format("blocked: \n{0}", new_letter.letterMessage.ToString());
+                    msg.Message = msg.Message + "\nmobile: " + mobile;
                     _mailService.SendContact(msg.Message, msg.Email);
 
                     new_letter.letterLevel = -1;
