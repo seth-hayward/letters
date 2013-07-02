@@ -476,6 +476,10 @@ namespace letterstocrushes
 
         public void Join(int start_id, int end_id, string page_type)
         {
+
+            if(Connection_Ids.Contains(Context.ConnectionId)) {
+                return;
+            }
             Global_Connections++;
 
             Visitor current_visitor = new Visitor();
