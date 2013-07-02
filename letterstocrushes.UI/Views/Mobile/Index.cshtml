@@ -4,6 +4,21 @@
 @{
     Layout = "~/Views/Shared/_LayoutMobile.cshtml";
     ViewBag.Title = "home";
+
+    string host = "";
+
+    switch (Request.Url.Port)
+    {
+        case 80:
+            host = "http://" + Request.Url.Host + VirtualPathUtility.ToAbsolute("~/mobile/page/");
+            break;
+        default:
+            host = "http://" + Request.Url.Host + ":" + Request.Url.Port + VirtualPathUtility.ToAbsolute("~/mobile/page/");
+            break;
+    }
+
+    ViewBag.PageLocation = host;
+    
 }
 
 
@@ -30,13 +45,13 @@
 	    function previous_page() {
 		    var previous_page = current_page - 1;
 		    if (previous_page > 0) {
-		        $.mobile.changePage("@Url.Content("~/mobile/page/")" + next_page, "slide");
+		        $.mobile.changePage("@Html.Raw(ViewBag.PageLocation)" + previous_page, "slide");
 		    }
 	    }
 
 	    function next_page() {
 		    var next_page = current_page + 1;
-	        $.mobile.changePage("@Url.Content("~/mobile/page/")" + next_page, "slide");
+		    $.mobile.changePage("@Html.Raw(ViewBag.PageLocation)" + next_page, "slide");
 	    }
 
         // Bind the swipeleftHandler callback function to the swipe event on div.box
