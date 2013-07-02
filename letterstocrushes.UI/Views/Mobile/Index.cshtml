@@ -45,7 +45,7 @@
 	    function previous_page() {
 		    var previous_page = current_page - 1;
 		    if (previous_page > 0) {
-		        $.mobile.changePage("@Html.Raw(ViewBag.PageLocation)" + previous_page, { transition: "slide" });
+		        $.mobile.changePage("@Html.Raw(ViewBag.PageLocation)" + previous_page, { transition: "slide", reverse: true });
 		    }
 	    }
 
