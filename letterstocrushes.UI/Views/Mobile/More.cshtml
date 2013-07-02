@@ -30,13 +30,13 @@
 	    function previous_page() {
 		    var previous_page = current_page - 1;
 		    if (previous_page > 0) {
-			    window.location = "mobile/more/page/" + previous_page;
+		        window.location = "@Url.Content("~/mobile/more/page/")" + previous_page;
 		    }
 	    }
 
 	    function next_page() {
 		    var next_page = current_page + 1;
-		    window.location = "mobile/more/page/" + next_page;
+		    window.location = "@Url.Content("~/mobile/more/page/")" + next_page;
 	    }
 
         // Bind the swipeleftHandler callback function to the swipe event on div.box

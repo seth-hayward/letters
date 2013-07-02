@@ -30,6 +30,12 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "HomeMobilePages", // Route name
+                "mobile/page/{page}", // URL with parameters
+                new { controller = "Home", action = "Index", mobile = 1 } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "More", // Route name
                 "more/", // URL with parameters
                 new { controller = "Home", action = "More", id = UrlParameter.Optional } // Parameter defaults
@@ -44,6 +50,12 @@ namespace letterstocrushes
             routes.MapRoute(
                 "MoreMobile", // Route name
                 "mobile/more", // URL with parameters
+                new { controller = "Home", action = "More", mobile = 1 } // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "MoreMobilePages", // Route name
+                "mobile/more/page/{page}", // URL with parameters
                 new { controller = "Home", action = "More", mobile = 1 } // Parameter defaults
             );
 
