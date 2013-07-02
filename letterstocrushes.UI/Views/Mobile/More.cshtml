@@ -30,13 +30,26 @@
 	    function previous_page() {
 		    var previous_page = current_page - 1;
 		    if (previous_page > 0) {
-			    window.location = "/page/" + previous_page;
+			    window.location = "mobile/more/page/" + previous_page;
 		    }
 	    }
 
 	    function next_page() {
 		    var next_page = current_page + 1;
-		    window.location = "/page/" + next_page;
+		    window.location = "mobile/more/page/" + next_page;
+	    }
+
+        // Bind the swipeleftHandler callback function to the swipe event on div.box
+	    $('div.container').on( 'swipeleft', swipeleftHandler );
+	    $('div.container').on( 'swiperight', swiperightHandler );
+ 
+        // Callback function references the event target and adds the 'swipeleft' class to it
+	    function swipeleftHandler(event){
+	        previous_page();
+	    }
+
+	    function swiperightHandler(event){
+	        next_page();
 	    }
 
         var visitor_update;
