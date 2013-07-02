@@ -232,7 +232,7 @@ namespace letterstocrushes.Controllers
             }
             else
             {
-                return View("~/Views/Mobile/Index.cshtml");
+                return View("~/Views/Mobile/More.cshtml");
             }
 
         }
