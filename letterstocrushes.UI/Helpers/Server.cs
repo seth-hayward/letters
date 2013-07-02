@@ -379,7 +379,6 @@ namespace letterstocrushes
 
         public override Task OnReconnected()
         {
-            //Clients.Others.addMessage("<b>" + Handles[Context.ConnectionId] + " reconnected</b>");
             return Clients.All.rejoined(Context.ConnectionId, DateTime.Now.ToString());
         }
 
@@ -585,9 +584,14 @@ namespace letterstocrushes
 
         public override Task OnReconnected()
         {
-            return Clients.All.rejoined(Context.ConnectionId, DateTime.Now.ToString());
-        }
 
+            if(Connection_Ids.Contains(Context.ConnectionId)) {
+                return Clients.All.rejoined(Context.ConnectionId, DateTime.Now.ToString());
+            } else {
+                return Clients.All.joined(Context.ConnectionId, DateTime.Now.ToString());
+            }
+
+        }
 
     }
 }
