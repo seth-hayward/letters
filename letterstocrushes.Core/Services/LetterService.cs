@@ -104,7 +104,6 @@ namespace letterstocrushes.Core.Services
 
                     // now all line breaks in the middle should
                     // start new paragraphs
-                    basic_text = basic_text.Replace("\r\n", "</p><p>");
                     basic_text = basic_text.Replace("\n", "</p><p>");
 
                     new_letter.letterMessage = basic_text;
