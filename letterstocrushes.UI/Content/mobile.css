@@ -1,7 +1,6 @@
 ﻿div.container
 {
     margin-top: 20px;
-    margin-left: 15px;
 }
 
 ul.letterNav
@@ -167,7 +166,7 @@ span#pretty_box_right
 
 div.letterComments
 {
-    margin: 50px;
+    margin: 25px;
 }
 
 
