@@ -215,9 +215,7 @@
     <Content Include="Scripts\jquery-mobile\jquery.mobile.custom.js" />
     <Content Include="Scripts\jquery-mobile\jquery.mobile.custom.min.js" />
     <Content Include="Scripts\jquery-mobile\jquery.mobile.custom.structure.css" />
-    <Content Include="Scripts\jquery-mobile\jquery.mobile.custom.structure.min.css" />
     <Content Include="Scripts\jquery-mobile\jquery.mobile.custom.theme.css" />
-    <Content Include="Scripts\jquery-mobile\jquery.mobile.custom.theme.min.css" />
     <Content Include="Scripts\jquery.cookie.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
