@@ -1,6 +1,8 @@
-﻿body
+﻿div.container
 {
     padding-top: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 ul.letterNav
@@ -112,4 +114,53 @@ a:active
 span.field-validation-valid
 {
     display: none;
+}
+
+
+.pretty_box 
+{
+	/*
+	margin: 5px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border: 1px dotted #F59696;	*/
+    color: #999;
+    padding: 1px 0 0 0;
+    text-align: center;
+    line-height: normal;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: .7em;
+    /* border-bottom: dotted 1px #ddd; */
+	width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.pretty_box a
+{
+	padding: 10px;
+}
+
+span#pretty_box_center
+{
+	width: 300px;
+	float: left;
+}
+
+span#pretty_box_left
+{
+	width: 100px;
+	margin-top: 7px;
+	border-top: dotted 1px #F59696;
+	float: left;
+}
+
+span#pretty_box_right 
+{
+	width: 100px;
+	margin-top: 7px;
+	border-top: dotted 1px #F59696;
+	float: left;	
 }

@@ -5,116 +5,113 @@
     ViewBag.Title = "letters to crushes: #" + Model.Id.ToString();
 }
 
-<div class="letterEnvelopeContainer">
     
-    <ul class="dateNav">
-        <li>
-            <a href="@Url.Content("~/letter/" + Model.Id)">@(Model.letterPostDate.ToString("MMMM d, yyyy h:mmtt"))</a>    
-        </li>
-    </ul>
+<ul class="dateNav">
+    <li>
+        <a href="@Url.Content("~/letter/" + Model.Id)">@(Model.letterPostDate.ToString("MMMM d, yyyy h:mmtt"))</a>    
+    </li>
+</ul>
 
-    <ul class="letterNav">
+<ul class="letterNav">
 
-        @Html.Partial("_LetterVote", Model)
+    @Html.Partial("_LetterVote", Model)
     
-    </ul>
+</ul>
 
-    <div class="letterContainer">
-        @Html.Raw(Model.letterMessage)
-    </div>
+<div class="letterContainer">
+    @Html.Raw(Model.letterMessage)
+</div>
 
-    @if (Convert.ToBoolean(ViewBag.display_pretty_box) == true) {
-        <div class="pretty_box">
+@if (Convert.ToBoolean(ViewBag.display_pretty_box) == true) {
+    <div class="pretty_box">
 
-            <span id="pretty_box_left"></span>
+        <span id="pretty_box_left"></span>
 
-            <span id="pretty_box_center">
-                @if (Convert.ToBoolean(ViewBag.can_edit) == true)
-                {
-                    @Html.ActionLink("edit letter", "edit", new {id = Model.Id })
-                    @Html.ActionLink("hide", "hide", new {id = Model.Id })
-                }
-                @if (User.IsInRole("Mod") == true)
-                {
-                    @Html.ActionLink("queue", "AddToQueue", new {id = Model.Id})
-                }
-                @if (User.Identity.IsAuthenticated == true)
-                {   
-                    <span id="bookmark"><a id='bm@(Model.Id)' href='/#' onclick='$.post(this.href); return false;' class='bookmarkLink'>bookmark</a></span>
-                }
-
-            </span>
-
-            <span id="pretty_box_right"></span>
-
-            <div style="clear: both"></div>
-
+        <span id="pretty_box_center">
+            @if (Convert.ToBoolean(ViewBag.can_edit) == true)
+            {
+                @Html.ActionLink("edit letter", "edit", new {id = Model.Id })
+                @Html.ActionLink("hide", "hide", new {id = Model.Id })
+            }
             @if (User.IsInRole("Mod") == true)
             {
-                <p style="text-align: center; clear: both">Posted by @Model.senderIP</p>
+                @Html.ActionLink("queue", "AddToQueue", new {id = Model.Id})
+            }
+            @if (User.Identity.IsAuthenticated == true)
+            {   
+                <span id="bookmark"><a id='bm@(Model.Id)' href='/#' onclick='$.post(this.href); return false;' class='bookmarkLink'>bookmark</a></span>
             }
 
+        </span>
 
-        </div>    
-    }
+        <span id="pretty_box_right"></span>
 
-    @if (Model.Id < 471085) {
+        <div style="clear: both"></div>
 
-    <div id="disqus_thread" class="letterCommentsOld">
-
-    </div>
-                
-    }
-    else
-    {
-
-    <div class="letterComments">
-
-        <h4>@letterstocrushes.Helpers.CommentTitle(ViewBag.comments.Count) <a href="#add">add comment</a></h4>
-
-        @foreach (@letterstocrushes.Core.Model.Comment item in ViewBag.comments) {
-            Html.RenderPartial("_Comment", item);            
+        @if (User.IsInRole("Mod") == true)
+        {
+            <p style="text-align: center; clear: both">Posted by @Model.senderIP</p>
         }
 
-        <div class="letterCommentsForm">
 
-            @using( Html.BeginForm() )
-            {
-                
+    </div>    
+}
 
-                <h4 id="add">add comment</h4>
-                
-                <div class="comment_row">
-                    <label for="commenterName">Name:</label>
-                    <span class="comment_form">@Html.TextBox("commenterName")</span>
-                </div>                
+@if (Model.Id < 471085) {
 
-                <div class="comment_row">
-                    <label for="commenterEmail">Email:</label>
-                    <span class="comment_form">@Html.TextBox("commenterEmail", (string)ViewBag.email)</span>
-                     <small>Email is optional and never shown. Leave yours if you want email notifications on new comments for this letter.</small>
-                </div>
-
-                <div class="comment_row">
-                    <label for="comment">Comment:</label>
-                    <span class="comment_form">@Html.TextArea("comment")</span>                
-                </div>
-
-                <div class="comment_row">
-                    <span class="comment_form">
-                        @Html.Hidden("letterId", Model.Id)
-                        <input type="submit" value="send" class="submit_button" />
-                    </span>
-                </div>
-            }
-
-        </div>
-
-    </div>
-        
-    }
+<div id="disqus_thread" class="letterCommentsOld">
 
 </div>
+                
+}
+else
+{
+
+<div class="letterComments well well-small">
+
+    <h6>@letterstocrushes.Helpers.CommentTitle(ViewBag.comments.Count) <a href="#add">add comment</a></h6>
+
+    @foreach (@letterstocrushes.Core.Model.Comment item in ViewBag.comments) {
+        Html.RenderPartial("_Comment", item);            
+    }
+
+    <div class="letterCommentsForm">
+
+        @using( Html.BeginForm() )
+        {
+                
+
+            <h6 id="add">add comment</h6>
+                
+            <div class="comment_row">
+                <label for="commenterName">Name:</label>
+                <span class="comment_form">@Html.TextBox("commenterName")</span>
+            </div>                
+
+            <div class="comment_row">
+                <label for="commenterEmail">Email:</label>
+                <span class="comment_form">@Html.TextBox("commenterEmail", (string)ViewBag.email)</span>
+                    <small>Email is optional and never shown. Leave yours if you want email notifications on new comments for this letter.</small>
+            </div>
+
+            <div class="comment_row">
+                <label for="comment">Comment:</label>
+                <span class="comment_form">@Html.TextArea("comment")</span>                
+            </div>
+
+            <div class="comment_row">
+                <span class="comment_form">
+                    @Html.Hidden("letterId", Model.Id)
+                    <input type="submit" value="send" class="submit_button" />
+                </span>
+            </div>
+        }
+
+    </div>
+
+</div>
+        
+}
 
 @Html.Partial("_LetterVoteListener")
 
