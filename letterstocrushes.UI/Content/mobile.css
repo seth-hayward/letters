@@ -164,3 +164,70 @@ span#pretty_box_right
 	border-top: dotted 1px #F59696;
 	float: left;	
 }
+
+div.letterComments
+{
+    margin: 50px;
+}
+
+
+.comment
+{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.comment_header
+{
+    border-bottom: 1px dotted black;
+    padding-top: 10px;
+    overflow: auto;
+}
+
+.commenter_name
+{
+    float: left;
+    font-weight: bold;
+}
+
+a.comment_hide
+{
+    font-weight: normal;
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+a.comment_hide:hover
+{
+    text-decoration: none;
+}
+
+
+.comment_letter
+{
+    float: left;
+    padding-left: 3px;
+}
+
+.comment_date
+{
+    float: right;
+}
+
+
+.comment_message
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+}
+
+legend + .control-group
+{
+    margin: 0;
+}
+
+.control-group
+{
+    margin: 0;
+}

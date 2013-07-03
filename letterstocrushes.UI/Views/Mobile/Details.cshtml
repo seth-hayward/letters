@@ -67,7 +67,7 @@
 else
 {
 
-<div class="letterComments well well-small">
+<div class="letterComments">
 
     <h6>@letterstocrushes.Helpers.CommentTitle(ViewBag.comments.Count) <a href="#add">add comment</a></h6>
 
@@ -75,36 +75,48 @@ else
         Html.RenderPartial("_Comment", item);            
     }
 
-    <div class="letterCommentsForm">
+    <div class="letterCommentsForm well well-small">
 
-        @using( Html.BeginForm() )
+        @using (Html.BeginForm("Details", "Home", FormMethod.Post, new {@class="form-vertical" }))
         {
+            <fieldset>
+                <legend>add comment</legend>
+
+                <div class="control-group">
+                    @Html.Label("commenterName", "Name:", new { @class="control-label" })
+                    <div class="controls">
+                        @Html.TextBox("commenterName", "", new { placeholder = "" })
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.Label("commenterEmail", "Email:", new { @class="control-label" })
+                    <div class="controls">
+                        @Html.TextBox("commenterEmail", (string)ViewBag.email, new { placeholder = "" })
+
+                        <span class="help-block">
+                            Email is optional and never shown. Leave yours if you want email notifications on new comments for this letter.
+                        </span>
+
+                    </div>
+                </div>
                 
+                <div class="control-group">
+                    @Html.Label("comment", "Comment:", new { @class="control-label" })
+                    <div class="controls">
+                        @Html.TextArea("comment", "", new { placeholder = "" })
+                    </div>
+                </div>
 
-            <h6 id="add">add comment</h6>
+                <div class="comment_row">
+                    <span class="comment_form">
+                        @Html.Hidden("letterId", Model.Id)
+                        <button type="button" class="btn btn-primary">Send</button>
+                    </span>
+                </div>
+
+            </fieldset>
                 
-            <div class="comment_row">
-                <label for="commenterName">Name:</label>
-                <span class="comment_form">@Html.TextBox("commenterName")</span>
-            </div>                
-
-            <div class="comment_row">
-                <label for="commenterEmail">Email:</label>
-                <span class="comment_form">@Html.TextBox("commenterEmail", (string)ViewBag.email)</span>
-                    <small>Email is optional and never shown. Leave yours if you want email notifications on new comments for this letter.</small>
-            </div>
-
-            <div class="comment_row">
-                <label for="comment">Comment:</label>
-                <span class="comment_form">@Html.TextArea("comment")</span>                
-            </div>
-
-            <div class="comment_row">
-                <span class="comment_form">
-                    @Html.Hidden("letterId", Model.Id)
-                    <input type="submit" value="send" class="submit_button" />
-                </span>
-            </div>
         }
 
     </div>
