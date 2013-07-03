@@ -82,7 +82,7 @@
 
         // Start the connection
         $.connection.hub.start().done(function () {
-            visitor_update.server.join(@Html.Raw(Model.First().Id), @Html.Raw(Model.Last().Id), "home");
+            visitor_update.server.join(@Html.Raw(Model.First().Id), @Html.Raw(Model.Last().Id), "more");
         });
 
     });
