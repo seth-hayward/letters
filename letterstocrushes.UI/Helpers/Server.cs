@@ -52,7 +52,7 @@ namespace letterstocrushes
         }
 
         private static List<ChatMessage> messages;
-        private static Dictionary<String, ChatVisitor> visitors;
+        private static Dictionary<String, ChatVisitor> _visitors;
 
         private static Core.Services.ChatService _chatService;
         public static Core.Services.ChatService chatService
@@ -79,7 +79,6 @@ namespace letterstocrushes
                 {
                     messages = new List<ChatMessage>();
 
-
                     _chatService = new Core.Services.ChatService(new Infrastructure.Data.EfQueryChats());
 
                     List<Core.Model.Chat> database_chats = new List<Core.Model.Chat>();
@@ -96,6 +95,13 @@ namespace letterstocrushes
                         Messages.Add(new_mgs);
                     }
 
+                    ChatMessage reboot = new ChatMessage();
+                    reboot.ChatDate = DateTime.UtcNow;
+                    reboot.Room = "1";
+                    reboot.Nick = "chatbot";
+                    reboot.Message = "The server was rebooted. If it's acting weird, it's seth's fault.";
+                    reboot.StoredInDB = false;
+                    Messages.Add(reboot);                    
                 }
                 return messages;
             }
@@ -109,15 +115,15 @@ namespace letterstocrushes
         {
             get
             {
-                if (visitors == null)
+                if (_visitors == null)
                 {
-                    visitors = new Dictionary<String,ChatVisitor>();
+                    _visitors = new Dictionary<String,ChatVisitor>();
                 }
-                return visitors;
+                return _visitors;
             }
             set
             {
-                visitors = value;
+                _visitors = value;
             }
         }
 
@@ -149,6 +155,11 @@ namespace letterstocrushes
             // join the new room
             JoinGroup(room);
 
+        }
+
+        public void AnnounceRestart()
+        {
+            Clients.All.errorMessage("The server was rebooted. You may need to refresh this page.");
         }
 
         public void JoinGroup(string room)
@@ -204,19 +215,32 @@ namespace letterstocrushes
 
             if (existing_user != null)
             {
-                Clients.Caller.errorMessage("Someone is using this name. Please use another.");
-                return;
+                // allow the person back in with this new name, but
+                // update the connection id
+
+                Debug.Print("previous existing user detected: " + existing_user.ConnectionId);
+
+                // maybe we remove it now instead?
+                Visitors.Remove(existing_user.ConnectionId);
+
+                // let's send the connection a message just
+                // in case it is still active
+                Clients.Client(existing_user.ConnectionId).errorMessage("Another person has logged in with your name. You have been disconnected.");
+                //Clients.AllExcept(existing_user.ConnectionId).addMessage(existing_user.Handle + "has logged in with the same handle. The previous handle has been disconnected");
             }
-            else
-            {
-                Clients.Caller.enterChat(1);
-            }
+
+            Clients.Caller.enterChat(1);
 
             // create a new user
             ChatVisitor chatter = new ChatVisitor();
             chatter.ConnectionId = Context.ConnectionId;
             chatter.Handle = name;
             chatter.Room = "1";
+
+            if (Visitors == null)
+            {
+                Debug.Print("Visitors was null.");
+            }
 
             Visitors.Add(chatter.ConnectionId, chatter);
             JoinGroup("1");
@@ -236,7 +260,9 @@ namespace letterstocrushes
         public void UpdateDatabase()
         {
 
-            foreach (ChatMessage msg in Messages)
+            List<ChatMessage> temp_messages = new List<ChatMessage>(Messages);
+
+            foreach (ChatMessage msg in temp_messages)
             {
 
                 if (msg.StoredInDB == false)
@@ -251,6 +277,8 @@ namespace letterstocrushes
                 }
 
             }
+
+            Messages = temp_messages;
         
         }
 
