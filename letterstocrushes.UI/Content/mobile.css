@@ -1,5 +1,9 @@
 ﻿div.container
 {
+}
+
+div.letterEnvelopeContainer
+{
     margin-top: 20px;
 }
 
@@ -39,8 +43,8 @@ ul.letterNav li a:hover
 
 a.voterLink
 {
-    color: #F59696;
-    text-decoration: none;
+    color: #F59696 !important;
+    text-decoration: underline !important;
     padding: 20px;
     margin: -20px;
     cursor:pointer;
@@ -48,7 +52,7 @@ a.voterLink
 
 a.voterLink:hover
 {
-	color: #B88282;	
+	color: #B88282 !important;	
 	text-decoration: underline;
 }
 
@@ -59,7 +63,7 @@ ul.dateNav
     float: left;
     text-align: left;
     position: relative;
-    padding: 0;
+    padding-left: 20px;
     margin: 0;
 }
 
@@ -77,37 +81,39 @@ ul.dateNav li a
 
 ul.dateNav li a:hover
 {
-    text-decoration: underline;
+    text-decoration: underline !important;
 }
 
 .letterContainer 
 {
     padding-top: 10px;
-    width: 100%;
     clear: both;
 	text-align: left;
+    position: relative;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 a:link
 {
-    color: #F59696;
-    text-decoration: underline;
+    color: #F59696 !important;
+    text-decoration: underline !important;
 }
 
 a:visited
 {
-    color: #F59696;
+    color: #F59696 !important;
     text-decoration: underline;
 }
 
 a:hover
 {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 a:active
 {
-    color: #9F3131;
+    color: #9F3131 !important;
 }
 
 span.field-validation-valid
