@@ -460,36 +460,60 @@
 </head>
 <body>
 
-    <div data-role="page">
+    @{
+        if(User.Identity.IsAuthenticated == true) {
+          
+            <text>
 
-	    <div data-role="content">	
+                <div data-role="page">
 
-            <div id="app">
+	                <div data-role="content">	
 
-                <div id="name">        
-                    <label for="chat_name">name</label>
-                    <input id="chat_name" class="text" type="text" name="nick" value=""/>                        
-                    <input type="button" id="join" value="join chat"/>                                
-                 </div>
+                        <div id="app">
+
+                            <div id="name">        
+                                <label for="chat_name">name</label>
+                                <input id="chat_name" class="text" type="text" name="nick" value=""/>                        
+                                <input type="button" id="join" value="join chat"/>                                
+                             </div>
              
 
-                <div id="loading" style="display: none">
-                    <p>loading</p>
-                </div>
+                            <div id="loading" style="display: none">
+                                <p>loading</p>
+                            </div>
             
-                <div id="log" style="display: none;">
+                            <div id="log" style="display: none;">
 
-                </div>
+                            </div>
                         
-            </div>
+                        </div>
 
-	    </div><!-- /content -->
+	                </div><!-- /content -->
 
-        <div data-role="footer" class="ui-bar" style="display:none" id="toolbar" data-position="fixed" >    
-                <input tabindex="1" type="text" id="entry" style="width: 95%"/>        
-        </div>
+                    <div data-role="footer" class="ui-bar" style="display:none" id="toolbar" data-position="fixed" >    
+                            <input tabindex="1" type="text" id="entry" style="width: 95%"/>        
+                    </div>
 
-    </div><!-- /page -->
+                </div><!-- /page -->
+    
+            </text>         
+    }
+    
+        else {
+            
+            <text>
+                
+    <h3>
+        Please <a href="http://www.letterstocrushes.com/login">login</a> or <a href="http://letterstocrushes.com/Account/Register" alt="register">create an account</a> in order to join the chat.
+    </h3>
+
+    <p>Also, don't be a troll.</p>
+                
+                </text>    
+         }
+                          
+        }
+                    
 
 
 </body>
