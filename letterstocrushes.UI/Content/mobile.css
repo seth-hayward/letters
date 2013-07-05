@@ -124,11 +124,6 @@ span.field-validation-valid
 
 .pretty_box 
 {
-	/*
-	margin: 5px;
-	padding-left: 20px;
-	padding-right: 20px;
-	border: 1px dotted #F59696;	*/
     color: #999;
     padding: 1px 0 0 0;
     text-align: center;
@@ -136,8 +131,6 @@ span.field-validation-valid
     margin-top: 15px;
     margin-bottom: 15px;
     font-size: .7em;
-    /* border-bottom: dotted 1px #ddd; */
-	width: 500px;
     margin-left: auto;
     margin-right: auto;
 
@@ -156,15 +149,19 @@ span#pretty_box_center
 
 span#pretty_box_left
 {
-	width: 100px;
+    display: none;
+	width: 50%;
 	margin-top: 7px;
 	border-top: dotted 1px #F59696;
 	float: left;
+    position: relative;
+    margin-left: 20px;
 }
 
 span#pretty_box_right 
 {
-	width: 100px;
+    display: none;
+	width: 50%;
 	margin-top: 7px;
 	border-top: dotted 1px #F59696;
 	float: left;	
