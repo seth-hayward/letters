@@ -3,18 +3,16 @@
 
 @{
     Layout = "~/Views/Shared/_LayoutMobile.cshtml";
-    ViewBag.Title = "letters to crushes: your bookmarks";
+    ViewBag.Title = "bookmarks";
 }
   
-@if (User.Identity.Name == "seth")
-{
-    <h2>stats</h2>
-    <ul>
-        <li>letter count: @ViewBag.db1</li>
-    </ul>
-}
-
-    <h2>bookmarks</h2>
+    @if (User.Identity.Name == "seth")
+    {
+        <h2>stats</h2>
+        <ul style="display:none">
+            <li>letter count: @ViewBag.db1</li>
+        </ul>
+    }
 
     @if (Model.Count() == 0)
     {
