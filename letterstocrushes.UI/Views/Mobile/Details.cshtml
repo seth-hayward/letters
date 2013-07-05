@@ -148,6 +148,7 @@ else
         $('div.container').on('swiperight', swiperightHandler);
 
         function swiperightHandler() {
+            event.stopImmediatePropagation();
             $.mobile.back();
         }
 

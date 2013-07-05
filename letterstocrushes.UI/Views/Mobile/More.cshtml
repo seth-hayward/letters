@@ -59,10 +59,12 @@
  
         // Callback function references the event target and adds the 'swipeleft' class to it
 	    function swipeleftHandler(event){
+	        event.stopImmediatePropagation();
 	        next_page();
 	    }
 
 	    function swiperightHandler(event){
+	        event.stopImmediatePropagation();
 	        previous_page();
 	    }
 
