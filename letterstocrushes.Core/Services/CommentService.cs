@@ -30,6 +30,17 @@ namespace letterstocrushes.Core.Services
         {
             Letter lucky_letter = _queryLetters.getLetter(comment.letterId);
 
+            // time to ban people
+            List<String> banned_commenters = new List<String>();
+            banned_commenters.Add("10315e2a-e671-4c1c-91be-4aff797bf852");
+            banned_commenters.Add("26ace590-d40e-4a03-a968-d160744437f5");
+
+            if (banned_commenters.Contains(comment.commenterGuid))
+            {
+                _mailService.SendContact("Banned comment: <br><br>" + comment.commenterName + " (" + comment.commenterGuid + "): " + comment.commentMessage, "seth.hayward@gmail.com");
+                return;
+            }
+
             // Send notifications before the latest comment is added.
             // this means the newest commenter does not get a notification,
             // which is what we want -- they already know they
@@ -37,7 +48,6 @@ namespace letterstocrushes.Core.Services
             SendNotifications(comment.letterId, host);
 
             _queryComments.AddComment(comment, lucky_letter);
-
         }
 
         public void SendNotifications(int letter_id, string host)
