@@ -411,6 +411,7 @@
     <Content Include="Views\Shared\_CommentsAdminListItem.cshtml" />
     <Content Include="Views\Mobile\Login.cshtml" />
     <Content Include="Views\Mobile\Bookmarks.cshtml" />
+    <Content Include="Views\Shared\_LetterMobileHomeListItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
