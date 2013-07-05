@@ -5,34 +5,26 @@
     Layout = "~/Views/Shared/_LayoutMobile.cshtml";
     ViewBag.Title = "bookmarks";
 }
-  
-    @if (User.Identity.Name == "seth")
+
+@if (Model.Count() == 0)
+{
+    <ul>
+        <li>no bookmarks yet :(
+        <br /> 
+        you can bookmark any letter on the site by going to the individual letter page and clicking the "bookmark" link below the letter (above the comment section.)</li>
+    </ul>        
+}
+else
+{
+
+    foreach (var item in Model)
     {
-        <h2>stats</h2>
-        <ul style="display:none">
-            <li>letter count: @ViewBag.db1</li>
-        </ul>
+        Html.RenderPartial("_LetterBookmarkListItem", item);
     }
 
-    @if (Model.Count() == 0)
-    {
-        <ul>
-            <li>no bookmarks yet :(
-            <br /> 
-            you can bookmark any letter on the site by going to the individual letter page and clicking the "bookmark" link below the letter (above the comment section.)</li>
-        </ul>        
-    }
-    else
-    {
-
-        foreach (var item in Model)
-        {
-            Html.RenderPartial("_LetterBookmarkListItem", item);
-        }
-
-        @Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/mobile/bookmarks")))
+    @Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/mobile/bookmarks")))
         
-    }
+}
 
 @Html.Partial("_LetterVoteListener")
 
