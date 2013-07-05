@@ -6,7 +6,13 @@
         
         <div class="commenter_name">
             <a href="@Url.Content("~/comment/" + Model.Id.ToString())">@Model.commenterName</a>
-            <a id="c@(Model.Id)" class="comment_hide">hide</a>
+
+            @if(User.IsInRole("mod")) {
+                <text>
+                    <small>@Model.commenterGuid</small>
+                    <a id="c@(Model.Id)" class="comment_hide">hide</a>                    
+                </text>
+            }
         </div>
 
         <div class="comment_letter">
