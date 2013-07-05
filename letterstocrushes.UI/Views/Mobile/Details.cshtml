@@ -140,6 +140,12 @@ else
         var offset = new Date().getTimezoneOffset();
         $.cookie('userTimeZone', offset/60, { expires: 365 });
 
+        $('div.container').on('swiperight', swiperightHandler);
+
+        function swiperightHandler() {
+            $.mobile.back();
+        }
+
         $("a.bookmarkLink").click(function(e) {
 
             resp = $(this).attr("id").substring(2);
