@@ -23,7 +23,7 @@
 
 @foreach (var item in Model) {
 
-    Html.RenderPartial("_LetterMoreListItem", item);
+    Html.RenderPartial("_LetterMobileMoreListItem", item);
    
 }
 
@@ -64,6 +64,15 @@
 
 	    function swiperightHandler(event){
 	        previous_page();
+	    }
+
+	    $("div.container a").on("click", clickHandler);
+
+	    function clickHandler(fx) {
+	        console.log("called.");
+	        var addressValue = $(this).attr("href");
+	        $.mobile.changePage(addressValue, { transition: "slide" });
+
 	    }
 
         var visitor_update;
