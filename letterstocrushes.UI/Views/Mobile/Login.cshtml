@@ -6,61 +6,67 @@
     ViewBag.Title = "letters to crushes: login";
 }
 
-<div class="well well-small">
 
-    <form class="form-horizontal" data-role="none">
-        <fieldset>
-            <legend>@Html.ActionLink("sign up", "Register", "Account") </legend>
+<div class="letterEnvelopeContainer">
 
-            <p>
-                letters will <i>always</i> be anonymous.<br />
-                signing up allows you to bookmark letters so you can find them again easily. 
-            </p>
+    <div class="well well-small">
 
-        </fieldset>
-    </form>
+        <form class="form-horizontal" data-role="none">
+            <fieldset>
+                <legend>@Html.ActionLink("sign up", "Register", "Account") </legend>
 
-</div>
+                <p>
+                    letters will <i>always</i> be anonymous.<br />
+                    signing up allows you to bookmark letters so you can find them again easily. 
+                </p>
 
-<div class="well well-small">
+            </fieldset>
+        </form>
 
-    <form action="@Url.Content("~/mobile/login")" method="post" class="form-horizontal" data-role="none">
-        <fieldset>
-            <legend>login</legend>
+    </div>
 
-            <div class="control-group">
-                <label class="control-label" for="inputEmail">email</label>
-                <div class="controls">
-                    <input data-val="true" id="UserName" name="UserName" type="text" value="" placeholder="email" data-role="none">
-                    @Html.ValidationMessageFor(m => m.UserName, "Email is required.", new { @class = "control-group error" })
+    <div class="well well-small">
+
+        <form action="@Url.Content("~/mobile/login")" method="post" class="form-horizontal" data-role="none">
+            <fieldset>
+                <legend>login</legend>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputEmail">email</label>
+                    <div class="controls">
+                        <input data-val="true" id="UserName" name="UserName" type="text" value="" placeholder="email" data-role="none">
+                        @Html.ValidationMessageFor(m => m.UserName, "Email is required.", new { @class = "control-group error" })
+                    </div>
                 </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="inputPassword">password</label>
-                <div class="controls">
-                    <input data-val="true" id="Password" name="Password" type="password" placeholder="password" data-role="none">
-                    @Html.ValidationMessageFor(m => m.Password, "Password required.", new { @class = "control-group error" })
+                <div class="control-group">
+                    <label class="control-label" for="inputPassword">password</label>
+                    <div class="controls">
+                        <input data-val="true" id="Password" name="Password" type="password" placeholder="password" data-role="none">
+                        @Html.ValidationMessageFor(m => m.Password, "Password required.", new { @class = "control-group error" })
+                    </div>
                 </div>
-            </div>
-            <div class="control-group">
-                <div class="controls">
-                    <button type="submit" class="btn" data-role="none">Sign in</button>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn" data-role="none">Sign in</button>
 
-                    <p>
-                        @Html.ActionLink("lost password", "Password", "Home")                                 
-                    </p>
+                        <p>
+                            @Html.ActionLink("lost password", "Password", "Home")                                 
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="control-group">
-                <input type="hidden" value="1" id="mobile" />
+                <div class="control-group">
+                    <input type="hidden" value="1" id="mobile" />
 
-                <div class="editor-field">
-                    @Html.ValidationSummary(true, "")
+                    <div class="editor-field">
+                        @Html.ValidationSummary(true, "")
+                    </div>
                 </div>
-            </div>
 
-        </fieldset>
-    </form>
+            </fieldset>
+        </form>
       
+    </div>
+
+
 </div>
