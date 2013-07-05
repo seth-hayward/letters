@@ -8,7 +8,7 @@
 
 <div class="well well-small">
 
-    <form class="form-horizontal">
+    <form class="form-horizontal" data-role="none">
         <fieldset>
             <legend>@Html.ActionLink("sign up", "Register", "Account") </legend>
 
@@ -24,27 +24,27 @@
 
 <div class="well well-small">
 
-    <form action="@Url.Content("~/mobile/login")" method="post" class="form-horizontal">
+    <form action="@Url.Content("~/mobile/login")" method="post" class="form-horizontal" data-role="none">
         <fieldset>
             <legend>login</legend>
 
             <div class="control-group">
                 <label class="control-label" for="inputEmail">email</label>
                 <div class="controls">
-                    <input data-val="true" id="UserName" name="UserName" type="text" value="" placeholder="email">
+                    <input data-val="true" id="UserName" name="UserName" type="text" value="" placeholder="email" data-role="none">
                     @Html.ValidationMessageFor(m => m.UserName, "Email is required.", new { @class = "control-group error" })
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="inputPassword">password</label>
                 <div class="controls">
-                    <input data-val="true" id="Password" name="Password" type="password" placeholder="password">
+                    <input data-val="true" id="Password" name="Password" type="password" placeholder="password" data-role="none">
                     @Html.ValidationMessageFor(m => m.Password, "Password required.", new { @class = "control-group error" })
                 </div>
             </div>
             <div class="control-group">
                 <div class="controls">
-                    <button type="submit" class="btn">Sign in</button>
+                    <button type="submit" class="btn" data-role="none">Sign in</button>
 
                     <p>
                         @Html.ActionLink("lost password", "Password", "Home")                                 
