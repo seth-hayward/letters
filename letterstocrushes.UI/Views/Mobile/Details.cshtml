@@ -67,7 +67,7 @@
 else
 {
 
-<div class="letterComments">
+<div class="letterComments" data-role="none">
 
     <h6>@letterstocrushes.Helpers.CommentTitle(ViewBag.comments.Count) <a href="#add">add comment</a></h6>
 
@@ -77,7 +77,7 @@ else
 
     <div class="letterCommentsForm well well-small">
 
-        @using (Html.BeginForm("Details", "Home", FormMethod.Post, new {@class="form-vertical" }))
+        @using (Html.BeginForm("Details", "Home", FormMethod.Post, new {@class="form-vertical"}))
         {
             <fieldset>
                 <legend>add comment</legend>
@@ -85,14 +85,18 @@ else
                 <div class="control-group">
                     @Html.Label("commenterName", "Name:", new { @class="control-label" })
                     <div class="controls">
-                        @Html.TextBox("commenterName", "", new { placeholder = "" })
+                        @Html.TextBox("commenterName", "", new Dictionary<string, object> { 
+                                { "data-role", "none" } 
+                        })
                     </div>
                 </div>
 
                 <div class="control-group">
                     @Html.Label("commenterEmail", "Email:", new { @class="control-label" })
                     <div class="controls">
-                        @Html.TextBox("commenterEmail", (string)ViewBag.email, new { placeholder = "" })
+                        @Html.TextBox("commenterEmail", (string)ViewBag.email, new Dictionary<string, object> { 
+                                { "data-role", "none" } 
+                        })
 
                         <span class="help-block">
                             Email is optional and never shown. Leave yours if you want email notifications on new comments for this letter.
@@ -104,14 +108,16 @@ else
                 <div class="control-group">
                     @Html.Label("comment", "Comment:", new { @class="control-label" })
                     <div class="controls">
-                        @Html.TextArea("comment", "", new { placeholder = "" })
+                        @Html.TextArea("comment", "", new Dictionary<string, object> { 
+                                { "data-role", "none" } 
+                        })
                     </div>
                 </div>
 
                 <div class="comment_row">
                     <span class="comment_form">
                         @Html.Hidden("letterId", Model.Id)
-                        <button type="button" class="btn btn-primary">Send</button>
+                        <button type="button" class="btn btn-primary" data-role="none">Send</button>
                     </span>
                 </div>
 
