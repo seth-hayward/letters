@@ -266,7 +266,7 @@
                     };
 
                     if (change.newState === $.signalR.connectionState.reconnecting) {
-                        message.Message = "Reconnecting... Please wait.";
+                        message.Message = "Reconnecting... chat server reboot. Please reload page.";
                     }
                     else if (change.newState === $.signalR.connectionState.disconnected) {
                         message.Message = "Disconnected.";
