@@ -2,7 +2,7 @@
 
 <li>
     @if (Model.Id > 471085) {
-        <a href="@Url.Content("~/mobile/letter/" + Model.Id)">@(Model.letterComments)</a><a href="@Url.Content("~/letter/" + Model.Id)"><img src="@Url.Content("~/Content/comment.png")" style="border: 0px" class="comments" alt="comment" /></a>                                               
+        <a href="@Url.Content("~/mobile/letter/" + Model.Id)" data-ajax="false">@(Model.letterComments)</a><a href="@Url.Content("~/letter/" + Model.Id)"><img src="@Url.Content("~/Content/comment.png")" style="border: 0px" class="comments" alt="comment" /></a>                                               
     } else {
         <a href="@Url.Content("~/mobile/letter/" + Model.Id + "#disqus_thread")">0</a><a href="@Url.Content("~/letter/" + Model.Id)"><img src="@Url.Content("~/Content/comment.png")" style="border: 0px" class="comments" alt="comment" /></a>                                               
     }
