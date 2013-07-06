@@ -58,12 +58,6 @@
 	    $('div.container').on( 'swipeleft', swipeleftHandler );
 	    $('div.container').on( 'swiperight', swiperightHandler );
 
-	    $("div.container a").on("click", clickHandler);
-
-	    function clickHandler(fx) {
-	        var addressValue = $(this).attr("href");
-	        $.mobile.changePage(addressValue, { transition: "slide" });
-	    }
  
         // Callback function references the event target and adds the 'swipeleft' class to it
 	    function swipeleftHandler(event){

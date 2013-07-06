@@ -68,15 +68,6 @@
 	        previous_page();
 	    }
 
-	    $("div.container a").on("click", clickHandler);
-
-	    function clickHandler(fx) {
-	        console.log("called.");
-	        var addressValue = $(this).attr("href");
-	        $.mobile.changePage(addressValue, { transition: "slide" });
-
-	    }
-
     });
 
 </script>
