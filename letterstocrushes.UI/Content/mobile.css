@@ -92,6 +92,18 @@ ul.dateNav li a:hover
     position: relative;
     padding-left: 20px;
     padding-right: 20px;
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.normal{
+
+}
+.loved{
+    background-color: #F59595;
 }
 
 a:link
@@ -233,3 +245,4 @@ legend + .control-group
 {
     margin: 0;
 }
+

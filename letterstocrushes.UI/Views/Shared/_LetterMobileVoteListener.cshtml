@@ -1,0 +1,34 @@
+﻿<script type="text/javascript" >
+
+    $(document).ready(function () {
+
+        $("a.voterLink").click(function (e) {
+            vote_letter($(this).attr("id").substring(1));
+        });
+
+        $("div.letterContainer").click(function (e) {
+            vote_letter($(this).attr("id").substring(1));
+        });
+
+
+
+        function vote_letter(id) {
+            resp = id;
+
+            $.getJSON("@Url.Content("~/Home/Vote/")", { id: resp }, function (incomingLetter) {
+
+                $("#b" + resp).html(incomingLetter.letterUp);
+                $("#h" + resp).addClass("not_selectable");
+                $("#h" + resp).fadeOut(2500);
+
+                $("#z" + resp).addClass("loved");
+                //setTimeout(100);
+                //$("#z" + resp).removeClass("loved");
+
+            });
+
+        }
+
+    });
+
+</script>
