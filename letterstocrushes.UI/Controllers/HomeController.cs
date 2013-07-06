@@ -325,6 +325,11 @@ namespace letterstocrushes.Controllers
             string name = fc["commenterName"].ToString();
             string email = fc["commenterEmail"].ToString();
             string message = fc["comment"].ToString();
+            bool using_mobile = false;
+            
+            if(fc["mobile"].ToString() == "1") {
+                using_mobile = true;
+            }
 
             Core.Model.Comment comm = new Core.Model.Comment();
             comm.commentDate = DateTime.UtcNow;
@@ -369,7 +374,14 @@ namespace letterstocrushes.Controllers
 
             _commentService.AddComment(comm, host);
 
-            return RedirectToAction("Details", new { id = letterId });
+            if (using_mobile == true)
+            {
+                return RedirectToRoute("DetailsMobile", new { id = letterId, mobile = 1 });
+            }
+            else
+            {
+                return RedirectToAction("Details", new { id = letterId });
+            }
         }
 
         public ActionResult Unsubscribe(string email, int id=0)

@@ -79,7 +79,11 @@ else
 
     <div class="letterCommentsForm well well-small">
 
-        @using (Html.BeginForm("Details", "Home", FormMethod.Post, new {@class="form-vertical"}))
+        @using (Html.BeginForm("Details", "Home", FormMethod.Post,new Dictionary<string, object> { 
+                                { "id", "add_comment_form" },
+                                { "class", "form-vertical" },
+                                { "data-ajax", "false" }
+                        }))
         {
             <fieldset>
                 <legend>add comment</legend>
@@ -119,7 +123,8 @@ else
                 <div class="comment_row">
                     <span class="comment_form">
                         @Html.Hidden("letterId", Model.Id)
-                        <button type="button" class="btn btn-primary" data-role="none">Send</button>
+                        @Html.Hidden("mobile", "1")
+                        <button type="button" id="add_comment" class="btn btn-primary" data-role="none">Send</button>
                     </span>
                 </div>
 
@@ -152,6 +157,10 @@ else
             $.mobile.back();
         }
 
+        $("#add_comment").on("click", function () {
+            $("#add_comment_form").submit();
+        });
+
         $("a.bookmarkLink").click(function(e) {
 
             resp = $(this).attr("id").substring(2);
@@ -172,6 +181,4 @@ else
     });
 
 </script>
-
-<script type="text/javascript" src="http://disqus.com/forums/crushes/embed.js"></script>
 
