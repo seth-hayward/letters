@@ -414,6 +414,7 @@
     <Content Include="Views\Shared\_LetterMobileHomeListItem.cshtml" />
     <Content Include="Views\Shared\_LetterMobileMoreListItem.cshtml" />
     <Content Include="Views\Shared\_LetterMobileVoteListener.cshtml" />
+    <Content Include="Views\Shared\_LetterMobileBookmarkListItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
