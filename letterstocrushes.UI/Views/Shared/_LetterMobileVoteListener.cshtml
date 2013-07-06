@@ -18,12 +18,13 @@
             $.getJSON("@Url.Content("~/Home/Vote/")", { id: resp }, function (incomingLetter) {
 
                 $("#b" + resp).html(incomingLetter.letterUp);
-                $("#h" + resp).addClass("not_selectable");
-                $("#h" + resp).fadeOut(2500);
 
-                $("#z" + resp).addClass("loved");
-                //setTimeout(100);
-                //$("#z" + resp).removeClass("loved");
+                var box = "#z" + resp;
+                if($(box).hasClass("loved")){
+                    $(box).removeClass("loved");
+                } else { 
+                    $(box).addClass("loved");
+                };
 
             });
 
