@@ -504,31 +504,52 @@ namespace letterstocrushes.Controllers
             return View();
         }
 
-        [OutputCache(Duration = 30, VaryByParam = "*")]
-        public ActionResult Search(string terms = "", int page=1)
+        public ActionResult Search(FormCollection fc, int mobile = 0, int page = 1, string terms = "")
         {
+
+            if (terms == "")
+            {
+
+                ViewBag.Results = 0;
+
+                if (mobile == 0)
+                {
+                    return View();
+                }
+                else
+                {
+                    return View("~/Views/Mobile/Search.cshtml");
+                }           
+
+            }
 
             ViewBag.Results = 0;
             ViewBag.Terms = terms;
 
             var profiler = MiniProfiler.Current;
 
-            if (terms == "")
-            {
-                ViewBag.Results = 0;
-                return View();
-            }
+            string cached_search_result = "search-" + terms;
 
             List<Core.Model.Letter> results = new List<Core.Model.Letter>();
 
-            using (profiler.Step("SEARCH db1"))
+            if (HttpContext.Cache[cached_search_result] == null)
             {
-                results = _letterService.search(terms);
+                // not in cache, so we search db for it
+                using (profiler.Step("SEARCH db1"))
+                {
+                    results = _letterService.search(terms);
+                }
+
+                HttpContext.Cache.Insert(cached_search_result, results, null, DateTime.UtcNow.AddSeconds(90), TimeSpan.Zero);
+            }
+            else
+            {
+                // found the search results in the cache
+                results = (List<Core.Model.Letter>)HttpContext.Cache[cached_search_result];
             }
 
             ViewBag.Results = results.Count();
             results = results.Skip((page - 1) * _pagesize).Take(_pagesize).ToList();
-
 
             if (ViewBag.Results == 0)
             {
@@ -543,8 +564,16 @@ namespace letterstocrushes.Controllers
             double pages = Math.Ceiling((double)ViewBag.Results / 10);
             ViewBag.Pages = pages;
 
-            return View(results);
-            
+            ViewData.Model = results;
+
+            if (mobile == 0)
+            {
+                return View();
+            }
+            else
+            {
+                return View("~/Views/Mobile/Search.cshtml");
+            }            
         }
 
         public ActionResult Queue()

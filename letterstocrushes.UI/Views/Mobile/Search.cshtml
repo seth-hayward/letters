@@ -1,0 +1,61 @@
+﻿@model IEnumerable<letterstocrushes.Core.Model.Letter>
+@using letterstocrushes
+
+@{
+    Layout = "~/Views/Shared/_LayoutMobile.cshtml";        
+    ViewBag.Title = "search";
+}
+    
+<div class="letterContainer" style="text-align: left">
+
+    <form action="@Url.Content("~/mobile/search")" method="get" data-ajax="false">
+        <div>
+            <input type="text" style="font-size: 25px; margin-top: 10px;" data-role="none" value="@ViewBag.Terms" name="terms" />
+            <input type="submit" value="search" class="btn btn-primary" data-role="none"/>                        
+            @{  if (ViewBag.Results > 0) { <text><span style="font-size: 0.8em">@ViewBag.Results letters.</span></text> } }
+            @{  if (ViewBag.NothingFound == true) { <text><span style="font-size: 0.8em">No letters matched this query.</span></text> } }
+
+
+        </div>
+
+
+        </form>
+        
+    <br />
+
+    @{
+    
+        if (ViewBag.NothingFound == false)
+        {
+            
+            foreach (var item in Model) {
+                Html.RenderPartial("_LetterMobileMoreListItem", item);
+            }
+
+            @Html.Raw(Helpers.SearchPager(ViewBag.CurrentPage, ViewBag.Results, Url.Content("~/mobile/search"), ViewBag.Terms));
+                
+        }
+
+    
+    }
+
+    
+</div>
+
+@section Footer {
+    @Html.Partial("_Footer")
+}
+
+@Html.Partial("_LetterMobileVoteListener")
+
+<script type="text/javascript" >
+
+    $(document).ready(function() {
+
+        var offset = new Date().getTimezoneOffset();
+        $.cookie('userTimeZone', offset/60, { expires: 365 });
+
+    });
+
+
+</script>
