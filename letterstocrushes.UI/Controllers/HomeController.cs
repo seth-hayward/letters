@@ -855,7 +855,7 @@ namespace letterstocrushes.Controllers
         #region Supporting Functions
 
         [HttpGet]
-        public ActionResult Hide(string id)
+        public ActionResult Hide(string id, int mobile = 0)
         {
             int lucky_id = Convert.ToInt32(id);
 
@@ -897,7 +897,14 @@ namespace letterstocrushes.Controllers
                 ViewBag.Message = "The letter was not found or you are not authorized to make this change.";
             }
 
-            return View("Hidden");
+            if (mobile == 0)
+            {
+                return View("Hidden");
+            }
+            else
+            {
+                return View("~/Views/Mobile/Hidden.cshtml");
+            }
 
         }
 

@@ -32,8 +32,8 @@
         <span id="pretty_box_center">
             @if (Convert.ToBoolean(ViewBag.can_edit) == true)
             {
-                @Html.ActionLink("edit letter", "edit", new {id = Model.Id })
-                @Html.ActionLink("hide", "hide", new {id = Model.Id })
+                @Html.ActionLink("edit letter", "edit", new {id = Model.Id})
+                <a href="@Url.Content("~/hide/" + Model.Id + "/1")" data-ajax="false">hide</a>
             }
             @if (User.IsInRole("Mod") == true)
             {
