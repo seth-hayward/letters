@@ -909,6 +909,60 @@ namespace letterstocrushes.Controllers
         }
 
         [HttpGet]
+        public ActionResult Unhide(string id, int mobile = 0)
+        {
+            int lucky_id = Convert.ToInt32(id);
+
+            bool is_user_mod = User.IsInRole("Mod");
+            string userip = "anonymous letter sender";
+            userip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (userip == null)
+                userip = Request.ServerVariables["REMOTE_ADDR"];
+
+            string user_name;
+            if (User.Identity.IsAuthenticated == true)
+            {
+                user_name = User.Identity.Name;
+            }
+            else
+            {
+                user_name = userip;
+            }
+
+            Core.Model.Letter lucky = _letterService.getLetter(lucky_id);
+
+            HttpCookie check_cookie = Request.Cookies[lucky.letterTags];
+            string check_value = null;
+            if (check_cookie != null)
+            {
+                check_value = check_cookie.Value;
+            }
+
+            Boolean hidden = _letterService.unhideLetter(lucky_id, userip, check_value, user_name, is_user_mod);
+
+            if (hidden == true)
+            {
+                ViewBag.Header = "Letter shown again.";
+                ViewBag.Message = "This letter will now appear on the more pages again.";
+            }
+            else
+            {
+                ViewBag.Header = "Unable to unhide letter.";
+                ViewBag.Message = "The letter was not found or you are not authorized to make this change.";
+            }
+
+            if (mobile == 0)
+            {
+                return View("Hidden");
+            }
+            else
+            {
+                return View("~/Views/Mobile/Hidden.cshtml");
+            }
+
+        }
+
+        [HttpGet]
         public ActionResult AddToQueue(string id)
         {
 

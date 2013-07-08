@@ -143,6 +143,12 @@ namespace letterstocrushes
                 new { controller = "Home", action = "Hide" } // Parameter defaults
             );
 
+            routes.MapRoute(
+                "UnhideLetter", // Route name
+                "unhide/{id}/{mobile}", // URL with parameters
+                new { controller = "Home", action = "Hide" } // Parameter defaults
+            );
+
 
             routes.MapRoute(
                 "Feedback", // Route name

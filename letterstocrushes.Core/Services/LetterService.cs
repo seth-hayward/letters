@@ -270,6 +270,7 @@ namespace letterstocrushes.Core.Services
         {
             return _queryLetters.getPopularLetters(latest_front_page);
         }
+
         public Boolean hideLetter(int lucky_id, string userip, string cookie_value, string user_name, bool is_user_mod)
         {
 
@@ -282,6 +283,23 @@ namespace letterstocrushes.Core.Services
             else
             {
                 _queryLetters.hideLetter(lucky_id, userip, cookie_value, user_name, is_user_mod);
+                return true;
+            }
+
+        }
+
+        public Boolean unhideLetter(int lucky_id, string userip, string cookie_value, string user_name, bool is_user_mod)
+        {
+
+            Boolean can_edit = this.canEdit(cookie_value, is_user_mod);
+
+            if (can_edit == false)
+            {
+                return false;
+            }
+            else
+            {
+                _queryLetters.unhideLetter(lucky_id, userip, cookie_value, user_name, is_user_mod);
                 return true;
             }
 

@@ -54,6 +54,42 @@ namespace letterstocrushes.Infrastructure.Data
             db_mysql.SaveChanges();
         }
 
+        public void unhideLetter(int lucky_id, string userip, string cookie_value, string user_name, bool is_user_mod)
+        {
+
+            db_mysql db_mysql = new db_mysql();
+            db_mssql db_mssql = new db_mssql();
+
+            Letter lucky = getLetter(lucky_id);
+
+            if (lucky == null) { return; }
+
+            edit new_edit = new edit();
+            new_edit.editComment = "Unhidden by " + user_name;
+            new_edit.editor = user_name;
+
+            new_edit.newLetter = lucky.letterMessage;
+            new_edit.previousLetter = lucky.letterMessage;
+            new_edit.status = "accepted";
+            new_edit.letterID = lucky.Id;
+            new_edit.editDate = DateTime.UtcNow;
+
+            db_mssql.edits.Add(new_edit);
+
+            letter transformed;
+            transformed = Mapper.Map<Letter, letter>(lucky);
+
+            db_mysql.letters.Attach(transformed);
+            var letter = db_mysql.Entry(transformed);
+
+            letter.Property(e => e.letterLevel).IsModified = true;
+            transformed.letterLevel = 0;
+
+            letter.CurrentValues.SetValues(transformed);
+
+            db_mysql.SaveChanges();
+        }
+
         public bool editLetter(int letter_id, string new_letter, string userip, string cookie_value, string user_name, bool is_user_mod)
         {
 

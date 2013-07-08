@@ -10,6 +10,7 @@ namespace letterstocrushes.Core.Interfaces
     public interface IQueryLetters
     {
         void hideLetter(int lucky_id, string userip, string cookie_value, string user_name, bool is_user_mod);
+        void unhideLetter(int lucky_id, string userip, string cookie_value, string user_name, bool is_user_mod);
         Boolean editLetter(int letter_id, string new_letter, string userip, string cookie_value, string user_name, bool is_user_mod);
         Letter getLetter(int id);
         int getLetterCount();

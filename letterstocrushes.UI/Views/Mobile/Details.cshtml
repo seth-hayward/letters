@@ -33,7 +33,16 @@
             @if (Convert.ToBoolean(ViewBag.can_edit) == true)
             {
                 @Html.ActionLink("edit letter", "edit", new {id = Model.Id})
-                <a href="@Url.Content("~/hide/" + Model.Id + "/1")" data-ajax="false">hide</a>
+
+                if (Model.letterLevel == -1)
+                {
+                    <a href="@Url.Content("~/unhide/" + Model.Id + "/1")" data-ajax="false">unhide</a>
+                }
+                else
+                {
+                    <a href="@Url.Content("~/hide/" + Model.Id + "/1")" data-ajax="false">hide</a>
+                }
+                
             }
             @if (User.IsInRole("Mod") == true)
             {
