@@ -32,7 +32,7 @@
         <span id="pretty_box_center">
             @if (Convert.ToBoolean(ViewBag.can_edit) == true)
             {
-                @Html.ActionLink("edit letter", "edit", new {id = Model.Id})
+                <a href="@Url.Content("~/edit/" + Model.Id)" data-ajax="false">edit letter</a>
 
                 if (Model.letterLevel == -1)
                 {

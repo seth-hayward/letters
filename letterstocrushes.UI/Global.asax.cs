@@ -113,11 +113,16 @@ namespace letterstocrushes
                 new { controller = "Home", action = "Search", mobile = 1 } // Parameter defaults
             );
 
-
             routes.MapRoute(
                 "Popular", // Route name
                 "popular/", // URL with parameters
                 new { controller = "Home", action = "Popular" } // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "EditRoute", // Route name
+                "edit/{id}", // URL with parameters
+                new { controller = "Home", action = "Edit" } // Parameter defaults
             );
 
             routes.MapRoute(
