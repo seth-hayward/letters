@@ -146,7 +146,7 @@ namespace letterstocrushes
             routes.MapRoute(
                 "UnhideLetter", // Route name
                 "unhide/{id}/{mobile}", // URL with parameters
-                new { controller = "Home", action = "Hide" } // Parameter defaults
+                new { controller = "Home", action = "Unhide" } // Parameter defaults
             );
 
 
