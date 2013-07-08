@@ -108,6 +108,13 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "MobileSearch", // Route name
+                "mobile/search/", // URL with parameters
+                new { controller = "Home", action = "Search", mobile = 1 } // Parameter defaults
+            );
+
+
+            routes.MapRoute(
                 "Popular", // Route name
                 "popular/", // URL with parameters
                 new { controller = "Home", action = "Popular" } // Parameter defaults
@@ -148,7 +155,6 @@ namespace letterstocrushes
                 "unhide/{id}/{mobile}", // URL with parameters
                 new { controller = "Home", action = "Unhide" } // Parameter defaults
             );
-
 
             routes.MapRoute(
                 "Feedback", // Route name
