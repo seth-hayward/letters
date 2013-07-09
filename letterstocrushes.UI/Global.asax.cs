@@ -252,6 +252,12 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "logoutMobileRoute", // Route name
+                "logout/{mobile}", // URL with parameters
+                new { controller = "Account", action = "Logout" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "DefaultMobile", // Route name
                 "mobile", // URL with parameters
                 new { controller = "Home", action = "Index", mobile = 1 } // Parameter defaults

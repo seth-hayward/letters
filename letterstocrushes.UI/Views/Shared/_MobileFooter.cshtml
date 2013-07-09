@@ -4,41 +4,49 @@
     <span id="footer_left"></span>
 
     <span id="footer_center">
-
         @{
             
             try
             {
                 
-                @Html.Partial("_LogOnPartial")
+                @Html.Partial("_LogOnMobilePartial")
 
                 
                 if (User.Identity.IsAuthenticated == true)
                 {
                     if (User.IsInRole("Mod") == true)
                     {
+                    <text>
                     <a href="@Url.Content("~/queue/")" data-ajax="false">queue</a>
                     <a href="@Url.Content("~/popular/")" data-ajax="false">popular</a>
                     <a href="@Url.Content("~/bookmarks/")" data-ajax="false">bookmarks</a>
                     <a href="@Url.Content("~/search/")" data-ajax="false">search</a>
                     <a href="@Url.Content("~/chat/")" data-ajax="false">chat</a>
                     <a href="@Url.Content("~/feedback/")" data-ajax="false">feedback</a>
+                    </text>
 
                     }
                     else
                     {
+                    <text>
+                        
                     <a href="@Url.Content("~/chat/")" data-ajax="false">chat</a>
                     <a href="@Url.Content("~/bookmarks/")" data-ajax="false">bookmarks</a>
                     <a href="@Url.Content("~/feedback/")" data-ajax="false">feedback</a>
                     <a href="@Url.Content("~/search/")" data-ajax="false">search</a>                                    
+                    </text>
+
                     }
                 }
                 else
                 {
+                    <text>
+
                     <a href="@Url.Content("~/chat/")" data-ajax="false">chat</a>
                     <a href="@Url.Content("~/feedback/")" data-ajax="false">feedback</a>
                     <a href="@Url.Content("~/search/")" data-ajax="false">search</a>                                    
                     
+                    </text>
 
                 }
 

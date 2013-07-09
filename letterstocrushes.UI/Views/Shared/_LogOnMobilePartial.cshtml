@@ -1,0 +1,19 @@
+﻿@try
+{
+
+    if (Request.IsAuthenticated)
+    {
+    <text>
+        <a href="@Url.Content("~/logout/1")" data-ajax="false">logout</a>
+    </text>
+    }
+    else
+    {
+    <text>@Html.ActionLink("login", "Login", "Account")</text>
+    }
+    
+}
+catch (Exception ex)
+{
+    
+}

@@ -302,11 +302,19 @@ namespace letterstocrushes.Controllers
         // URL: /Account/LogOff
         // **************************************
 
-        public ActionResult Logout()
+        public ActionResult Logout(int mobile = 0)
         {
             FormsService.SignOut();
 
-            return RedirectToAction("Index", "Home");
+            if (mobile == 0)
+            {
+                return RedirectToRoute("HomePages", new { page = 1 });
+            }
+            else
+            {
+                return RedirectToRoute("DefaultMobile");
+            }
+
         }
 
         // **************************************
