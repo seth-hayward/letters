@@ -12,8 +12,8 @@
         <div>
             <input type="text" style="font-size: 25px; margin-top: 10px; width: 150px" data-role="none" value="@ViewBag.Terms" name="terms" />
             <input type="submit" value="search" class="btn btn-primary" data-role="none"/>                        
-            @{  if (ViewBag.Results > 0) { <text><span style="font-size: 0.8em">@ViewBag.Results letters.</span></text> } }
-            @{  if (ViewBag.NothingFound == true) { <text><span style="font-size: 0.8em">No letters matched this query.</span></text> } }
+            @{  if (ViewBag.Results > 0) { <text><p><span style="font-size: 0.8em">@ViewBag.Results letters.</span></p></text> } }
+            @{  if (ViewBag.NothingFound == true) { <text><p><span style="font-size: 0.8em">No letters matched this query.</span></p></text> } }
 
 
         </div>
