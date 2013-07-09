@@ -1071,35 +1071,49 @@ namespace letterstocrushes.Controllers
         [ValidateInput(false)]
         public JsonResult EditLetter(string letterText, string id, string mobile = "0")
         {
-            int lucky_id = Convert.ToInt32(id);
 
-            bool is_user_mod = User.IsInRole("Mod");
+            Boolean edit_successful = false;
+            String fail_message = "";
 
-            string userip = "anonymous letter sender";
-            userip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            if (userip == null)
-                userip = Request.ServerVariables["REMOTE_ADDR"];
-
-            string user_name;
-            if (User.Identity.IsAuthenticated == true)
+            try
             {
-                user_name = User.Identity.Name;
+
+                int lucky_id = Convert.ToInt32(id);
+
+                bool is_user_mod = User.IsInRole("Mod");
+
+                string userip = "anonymous letter sender";
+                userip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                if (userip == null)
+                    userip = Request.ServerVariables["REMOTE_ADDR"];
+
+                string user_name;
+                if (User.Identity.IsAuthenticated == true)
+                {
+                    user_name = User.Identity.Name;
+                }
+                else
+                {
+                    user_name = userip;
+                }
+
+                Core.Model.Letter lucky = _letterService.getLetter(lucky_id);
+
+                HttpCookie check_cookie = Request.Cookies[lucky.letterTags];
+                string check_value = null;
+                if (check_cookie != null)
+                {
+                    check_value = check_cookie.Value;
+                }
+
+                edit_successful = _letterService.editLetter(lucky_id, Server.HtmlDecode(letterText), userip, check_value, user_name, is_user_mod);
+
             }
-            else
+            catch (Exception ex)
             {
-                user_name = userip;
+                fail_message = ex.Message;
+                _mailService.SendContact("Edit error: <br />" + ex.Message, "seth.hayward@gmail.com");
             }
-
-            Core.Model.Letter lucky = _letterService.getLetter(lucky_id);
-
-            HttpCookie check_cookie = Request.Cookies[lucky.letterTags];
-            string check_value = null;
-            if (check_cookie != null)
-            {
-                check_value = check_cookie.Value;
-            }
-
-            Boolean edit_successful = _letterService.editLetter(lucky_id, Server.HtmlDecode(letterText), userip, check_value, user_name, is_user_mod);
 
             if (edit_successful == true)
             {
@@ -1107,9 +1121,8 @@ namespace letterstocrushes.Controllers
             }
             else
             {
-                return Json(new { response = 0, message = "Unable to edit letter." }, JsonRequestBehavior.AllowGet);
+                return Json(new { response = 0, message = "Unable to edit letter: " + fail_message }, JsonRequestBehavior.AllowGet);
             }
-
         }
 
         public JsonResult Vote(int id, string c = "")
