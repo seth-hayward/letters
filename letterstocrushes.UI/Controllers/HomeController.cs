@@ -388,7 +388,31 @@ namespace letterstocrushes.Controllers
         public JsonResult GetLetter(int id)
         {
             Core.Model.Letter letterToView;
-            letterToView = _letterService.getLetter(id);
+            letterToView = _letterService.getLetter(id).Clone();
+
+            // now, we need to remove/replace all html elements
+            // so that we can edit the device on iOS...
+            // elements to replace:
+            //    - <ul> </ul>
+            //    - <li> </li>
+            //    - <p> </p>
+            //    - <b> </b>
+            //    - <i> </i>
+
+            Dictionary<string, string> ignored_html_elements_with_replacements = new Dictionary<string, string>();
+            ignored_html_elements_with_replacements.Add("<ul>", "");
+            ignored_html_elements_with_replacements.Add("</ul>", "");
+            ignored_html_elements_with_replacements.Add("<p>", "");
+            ignored_html_elements_with_replacements.Add("</p>", "\n");
+            ignored_html_elements_with_replacements.Add("<i>", "");
+            ignored_html_elements_with_replacements.Add("</i>", "");
+            ignored_html_elements_with_replacements.Add("<b>", "");
+            ignored_html_elements_with_replacements.Add("</b>", "");
+
+            foreach (KeyValuePair<string, string> oops in ignored_html_elements_with_replacements)
+            {
+                letterToView.letterMessage = letterToView.letterMessage.Replace(oops.Key, oops.Value);
+            }
 
             return Json(letterToView, JsonRequestBehavior.AllowGet);
         }
