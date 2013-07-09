@@ -248,3 +248,50 @@ legend + .control-group
     margin: 0;
 }
 
+#footer
+{
+    color: #999;
+    padding: 1px 0 0 0;
+    text-align: center;
+    line-height: normal;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: .7em;
+    /* border-bottom: dotted 1px #ddd; */
+	width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+span#footer_center
+{
+	width: 340px;
+	float: left;
+}
+
+span#footer_left
+{
+	width: 80px;
+	margin-top: 7px;
+	border-top: dotted 1px #aaa;
+	float: left;
+}
+
+span#footer_right 
+{
+	width: 80px;
+	margin-top: 7px;
+	border-top: dotted 1px #aaa;
+	float: left;	
+}
+
+#footer a
+{
+	padding: 10px;
+	color: #999;
+}
+
+#footer a:hover
+{
+	color: #F59696;
+}

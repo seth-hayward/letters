@@ -37,11 +37,10 @@
 </head>
 <body>
     <div class="container" data-role="page">
-            @RenderBody()
+        @RenderBody()
+
+        @RenderSection("Footer", required: false)
     </div>
-
-
-    @RenderSection("Footer", required: false)
 
 
     <!-- Start of StatCounter Code -->
