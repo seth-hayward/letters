@@ -1106,7 +1106,7 @@ namespace letterstocrushes.Controllers
                     check_value = check_cookie.Value;
                 }
 
-                edit_successful = _letterService.editLetter(lucky_id, Server.HtmlDecode(letterText), userip, check_value, user_name, is_user_mod);
+                edit_successful = _letterService.editLetter(lucky_id, Server.HtmlDecode(letterText), userip, check_value, user_name, is_user_mod, int.Parse(mobile));
 
             }
             catch (Exception ex)

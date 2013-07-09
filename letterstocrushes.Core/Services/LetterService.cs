@@ -270,7 +270,6 @@ namespace letterstocrushes.Core.Services
         {
             return _queryLetters.getPopularLetters(latest_front_page);
         }
-
         public Boolean hideLetter(int lucky_id, string userip, string cookie_value, string user_name, bool is_user_mod)
         {
 
@@ -358,7 +357,7 @@ namespace letterstocrushes.Core.Services
 
         }
 
-        public Boolean editLetter(int letter_id, string new_letter, string userip, string cookie_value, string user_name, bool is_user_mod)
+        public Boolean editLetter(int letter_id, string new_letter, string userip, string cookie_value, string user_name, bool is_user_mod, int mobile = 0)
         {
 
             Letter lucky = _queryLetters.getLetter(letter_id);
@@ -375,6 +374,26 @@ namespace letterstocrushes.Core.Services
             if (can_edit == false)
             {
                 return false;
+            }
+
+            if (mobile == 1)
+            {
+
+                string basic_text = new_letter;
+
+                // first, we make sure that the first line
+                // is a paragraph
+                basic_text = "<p>" + basic_text;
+
+                // then we make sure the last line closes it
+                basic_text = basic_text + "</p>";
+
+                // now all line breaks in the middle should
+                // start new paragraphs
+                basic_text = basic_text.Replace("\n", "</p><p>");
+
+                new_letter = basic_text;
+
             }
 
             edited = _queryLetters.editLetter(letter_id, new_letter, userip, cookie_value, user_name, is_user_mod);
