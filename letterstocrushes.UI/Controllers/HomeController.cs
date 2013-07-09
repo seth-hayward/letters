@@ -384,6 +384,15 @@ namespace letterstocrushes.Controllers
             }
         }
 
+        [HttpGet]
+        public JsonResult GetLetter(int id)
+        {
+            Core.Model.Letter letterToView;
+            letterToView = _letterService.getLetter(id);
+
+            return Json(letterToView, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Unsubscribe(string email, int id=0)
         {
             if (id == 0)
