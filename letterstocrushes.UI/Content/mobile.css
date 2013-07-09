@@ -265,12 +265,12 @@ legend + .control-group
 
 span#footer_center
 {
-	width: 340px;
 	float: left;
 }
 
 span#footer_left
 {
+    display: none;
 	width: 80px;
 	margin-top: 7px;
 	border-top: dotted 1px #aaa;
@@ -279,6 +279,7 @@ span#footer_left
 
 span#footer_right 
 {
+    display: none;
 	width: 80px;
 	margin-top: 7px;
 	border-top: dotted 1px #aaa;
