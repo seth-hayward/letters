@@ -418,6 +418,7 @@
     <Content Include="Views\Shared\_LetterMobileComments.cshtml" />
     <Content Include="Views\Mobile\Hidden.cshtml" />
     <Content Include="Views\Mobile\Search.cshtml" />
+    <Content Include="Views\Shared\_MobileFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
