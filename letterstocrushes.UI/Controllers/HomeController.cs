@@ -1069,7 +1069,7 @@ namespace letterstocrushes.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult EditLetter(string letterText, string id)
+        public JsonResult EditLetter(string letterText, string id, string mobile = "0")
         {
             int lucky_id = Convert.ToInt32(id);
 
