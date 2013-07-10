@@ -383,7 +383,17 @@ namespace letterstocrushes.Controllers
 
             // If we got this far, something failed, redisplay form
             ViewBag.PasswordLength = MembershipService.MinPasswordLength;
-            return View(model);
+            ViewData.Model = model;
+
+            if (model.Mobile == 0)
+            {
+                return View();
+            }
+            else
+            {
+                return View("~/Views/Mobile/Register.cshtml");
+            }
+
         }
 
         // **************************************
