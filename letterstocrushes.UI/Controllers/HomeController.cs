@@ -222,37 +222,6 @@ namespace letterstocrushes.Controllers
                 _letters = (List<Core.Model.Letter>)HttpContext.Cache[cache_key_list];
             }
 
-            
-            ViewBag.list = "";
-
-            if (mobile == 1)
-            {
-                // very slow code, only on mobile site until it works
-                // test code for seeing what letters the anon user has write access
-                List<HttpCookie> cookies = new List<HttpCookie>();
-
-                string list = "";
-
-                list = "<ul>";
-                list += "<li>" + Request.Cookies.Keys.Count + "cookies </li>";
-
-                foreach (string cookie_name in Request.Cookies.Keys)
-                {
-                    Core.Model.Letter test_letter = _letterService.getLetterByTag(cookie_name);
-                    if (test_letter != null)
-                    {
-                        list += "<li>letter #" + test_letter.Id + "</li>";
-                    }
-                    else
-                    {
-                        list += "<li>couldn't get letter from cookie:" + cookie_name + "</li>";
-                    }
-                }
-
-                ViewBag.list = list;
-
-            }
-
             ViewData.Model = _letterService.fixList(_letters, time_zone);
             ViewBag.CurrentPage = page;
             ViewBag.Pages = _all_letter_count;
