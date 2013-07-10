@@ -356,7 +356,15 @@ namespace letterstocrushes.Controllers
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     FormsService.SignIn(model.UserName, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
+
+                    if (model.Mobile == 0)
+                    {
+                        return RedirectToAction("Index", "Account", null);
+                    }
+                    else
+                    {
+                        return RedirectToRoute("BookmarksRouteMobile");
+                    }
                 }
                 else
                 {

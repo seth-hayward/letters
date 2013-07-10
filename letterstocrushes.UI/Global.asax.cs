@@ -246,6 +246,12 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "signupRoute", // Route name
+                "signup", // URL with parameters
+                new { controller = "Account", action = "Register", mobile = 0 } // Parameter defaults
+            );
+            
+            routes.MapRoute(
                 "signupRouteMobile", // Route name
                 "mobile/signup", // URL with parameters
                 new { controller = "Account", action = "Register", mobile = 1 } // Parameter defaults
