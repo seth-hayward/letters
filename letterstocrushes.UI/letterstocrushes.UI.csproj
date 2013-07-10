@@ -420,6 +420,7 @@
     <Content Include="Views\Mobile\Search.cshtml" />
     <Content Include="Views\Shared\_MobileFooter.cshtml" />
     <Content Include="Views\Shared\_LogOnMobilePartial.cshtml" />
+    <Content Include="Views\Mobile\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

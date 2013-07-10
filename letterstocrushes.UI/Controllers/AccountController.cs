@@ -321,10 +321,18 @@ namespace letterstocrushes.Controllers
         // URL: /Account/Register
         // **************************************
 
-        public ActionResult Register()
+        public ActionResult Register(int mobile = 0)
         {
             ViewBag.PasswordLength = MembershipService.MinPasswordLength;
-            return View();
+
+            if (mobile == 0)
+            {
+                return View();
+            }
+            else
+            {
+                return View("~/Views/Mobile/Register.cshtml");
+            }
         }
 
         [HttpPost]
