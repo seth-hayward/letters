@@ -242,7 +242,20 @@ namespace letterstocrushes
                 Debug.Print("Visitors was null.");
             }
 
-            Visitors.Add(chatter.ConnectionId, chatter);
+            if (chatter == null || chatter.ConnectionId == null)
+            {
+                Debug.Print("Chatter or chatter.connectionId was null");
+            }
+
+            if (Visitors.ContainsKey(chatter.ConnectionId))
+            {
+                // this really shouldn't happen, but it seems to happen
+                // after a reboot
+                Visitors[chatter.ConnectionId] = chatter;
+            } else {
+                Visitors.Add(chatter.ConnectionId, chatter);
+            }
+
             JoinGroup("1");
 
             if (Max < Visitors.Count) { Max = Visitors.Count; }

@@ -257,6 +257,7 @@
                 $.connection.hub.stateChanged(function (change) {
 
                     var date_now = new Date();
+                    var reconnecting = false;
 
                     var message = {
                         Message: change.newState,
@@ -266,7 +267,8 @@
                     };
 
                     if (change.newState === $.signalR.connectionState.reconnecting) {
-                        message.Message = "Reconnecting... chat server reboot. Please reload page.";
+                        message.Message = "RECONNECTING... chat server reboot. Sorry!";
+                        reconnecting = true;
                     }
                     else if (change.newState === $.signalR.connectionState.disconnected) {
                         message.Message = "Disconnected.";
@@ -278,7 +280,15 @@
                     else if (change.newState === $.signalR.connectionState.connected) {
                         message.Message = "Connected.";
                         message.Publish = 0;
-                        chat.server.join($("#chat_name").val());
+
+                        if (reconnecting == true) {
+                            chat.server.send(" -- reconnected.");
+                        } else {
+                            chat.server.join($("#chat_name").val());
+                        }
+
+                        reconnecting = false;
+
                     }
 
                     if (message.Publish === 1) {
