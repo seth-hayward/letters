@@ -256,5 +256,13 @@ namespace letterstocrushes.Infrastructure.Data
             db_mysql.letters.Add(new_letter);
             db_mysql.SaveChanges();
         }
+
+
+        public Letter getLetterByTag(string guid)
+        {
+            db_mysql db_mysql = new db_mysql();
+            letter letter = (from m in db_mysql.letters where m.letterTags.Equals(guid) select m).FirstOrDefault();
+            return Mapper.Map<letter, Letter>(letter);
+        }
     }
 }

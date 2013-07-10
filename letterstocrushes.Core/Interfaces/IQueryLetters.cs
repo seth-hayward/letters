@@ -20,6 +20,7 @@ namespace letterstocrushes.Core.Interfaces
         Letter getLatestFrontPageLetter();
         Letter getLastLetterSent();
         Letter getLastLetterFromIP(string ip);
+        Letter getLetterByTag(string guid);
         List<Letter> getPopularLetters(Letter latest_front_page);
         List<Letter> search(string terms);
         void AddLetter(Letter letter);

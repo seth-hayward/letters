@@ -42,6 +42,12 @@ namespace letterstocrushes.Core.Services
             return _queryLetters.getLetter(id);
         }
 
+        public Letter getLetterByTag(string guid)
+        {
+            return _queryLetters.getLetterByTag(guid);
+        }
+
+
         public Letter getLastLetterSent()
         {
             return _queryLetters.getLastLetterSent();

@@ -41,6 +41,14 @@ namespace letterstocrushes.Core.Services
                 return;
             }
 
+            //
+            // sanitize the input
+            //
+
+            // 
+            // add some basic html to the comment to make it look better 
+            // 
+
             // Send notifications before the latest comment is added.
             // this means the newest commenter does not get a notification,
             // which is what we want -- they already know they
