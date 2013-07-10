@@ -22,17 +22,20 @@ namespace letterstocrushes.Controllers
 
         private readonly Core.Services.LetterService _letterService;
         private readonly Core.Services.BookmarkService _bookmarkService;
+        private readonly Core.Services.MailService _mailService;
 
         public AccountController(Core.Services.LetterService letterService,
-                                 Core.Services.BookmarkService bookmarkService)
+                                 Core.Services.BookmarkService bookmarkService,
+                                 Core.Services.MailService mailService)
         {
             _letterService = letterService;
             _bookmarkService = bookmarkService;
+            _mailService = mailService;
         }
 
         public AccountController()
             : this(new Core.Services.LetterService(new Infrastructure.Data.EfQueryLetters(), new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]), new Core.Services.BookmarkService(new Infrastructure.Data.EfQueryBookmarks())),
-                   new Core.Services.BookmarkService(new Infrastructure.Data.EfQueryBookmarks()))
+                   new Core.Services.BookmarkService(new Infrastructure.Data.EfQueryBookmarks()), new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]))
         {
         }
 
@@ -356,7 +359,8 @@ namespace letterstocrushes.Controllers
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     FormsService.SignIn(model.UserName, false /* createPersistentCookie */);
-
+                    _mailService.SendContact("New user joined: " + model.Email, "seth.hayward@gmail.com");
+                    
                     if (model.Mobile == 0)
                     {
                         return RedirectToAction("Index", "Account", null);
