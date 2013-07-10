@@ -270,7 +270,6 @@
                     }
                     else if (change.newState === $.signalR.connectionState.disconnected) {
                         message.Message = "Disconnected.";
-                        location.reload();
                     }
                     else if (change.newState === $.signalR.connectionState.connecting) {
                         message.Message = "Connecting.";
