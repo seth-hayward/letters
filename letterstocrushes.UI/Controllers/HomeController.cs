@@ -243,6 +243,10 @@ namespace letterstocrushes.Controllers
                     {
                         list += "<li>letter #" + test_letter.Id + "</li>";
                     }
+                    else
+                    {
+                        list += "<li>couldn't get letter from cookie:" + cookie_name + "</li>";
+                    }
                 }
 
                 ViewBag.list = list;
