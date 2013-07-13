@@ -47,6 +47,7 @@
 
     <script type="text/javascript">
 
+        console.log("mylayout initalized.");
         var myLayout;
 
 
@@ -63,7 +64,7 @@
                 , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
                 , north__togglerLength_closed: '100%'	// toggle-button is full-width of resizer-bar
                 , north__spacing_closed: 10		// big resizer-bar when open (zero height)
-                , north__size: 200
+                , north__minSize: 200
                 , north__showOverflowOnHover: false                , north__onopen_start: function () {
                     console.log("onopen_start");
                     $("#chat_history").load("@Url.Content("~/chat/history")");                }                , north__initClosed: true                , center__showOverflowOnHover: false                , south__initHidden: true
