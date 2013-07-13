@@ -1,5 +1,34 @@
-﻿@{
+﻿@using letterstocrushes.Core.Model;
+@{
     Layout = null;
+    
+}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>letters to crushes - chat log</title>
+    <link href="@Url.Content("~/Content/chat.css")" rel="stylesheet">
+
+</head>
+
+<body>
+
+@foreach(Chat history_chat in Model)
+{
+    <text>
+    <table class="message">
+            <tr>
+                <td class="date">[room @history_chat.Room]</td>
+                <td class="nick">@history_chat.Nick</td>
+                <td class="msg-txt">@history_chat.Message</td>                
+            </tr>            
+    </table>
+    </text>
 }
 
-<p>hi</p>
+</body>
+
+</html>
+
