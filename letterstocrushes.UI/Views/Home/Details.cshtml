@@ -69,7 +69,12 @@
 
     <div class="letterComments">
 
-        <h4>@letterstocrushes.Helpers.CommentTitle(ViewBag.comments.Count) <a href="#add">add comment</a></h4>
+        @if (ViewBag.comments.Count > 0)
+        {
+            <text>
+                <h4>@letterstocrushes.Helpers.CommentTitle(ViewBag.comments.Count) <a href="#add">add comment</a></h4>
+            </text>
+        }
 
         @foreach (@letterstocrushes.Core.Model.Comment item in ViewBag.comments) {
             Html.RenderPartial("_Comment", item);            
