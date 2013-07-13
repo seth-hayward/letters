@@ -63,6 +63,7 @@
                 , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
                 , north__togglerLength_closed: '100%'	// toggle-button is full-width of resizer-bar
                 , north__spacing_closed: 10		// big resizer-bar when open (zero height)
+                , north__size: 200
                 , north__showOverflowOnHover: false                , north__onopen_start: function () {
                     $("#chat_history").load("chat/history");                }                , north__initClosed: true                , center__showOverflowOnHover: false                , south__initHidden: true
 
@@ -90,7 +91,7 @@
             function scrollDown(loading) {
                 if (loading == true) { return; }
 
-                $("#chat_container").animate({ scrollTop: $("#log").height() }, 10);
+                $("#chat_container").animate({ scrollTop: $("#log").height() + 100 }, 10);
 
                 $("#entry").focus();
             }
@@ -152,6 +153,8 @@
                     for (var i = 0; i < messages.length; i++) {
                         updateMessage(messages[i], true);
                     }
+
+                    scrollDown(false);
                 };
 
                 chat.client.errorMessage = function (message) {
@@ -224,13 +227,7 @@
 
                             if (chat_message == "/history") {
                                 myLayout.show("north");
-                                $("#chat_history").load("chat/history");
-                                $("#entry").val("");
-                                return;
-                            }
-
-                            if (chat_message == "/close") {
-                                myLayout.hide("north");
+                                $("#chat_history").load("@Url.Content("~/chat/history")");
                                 $("#entry").val("");
                                 return;
                             }
@@ -250,18 +247,10 @@
                         var chat_message = $("#entry").val();
 
                         if (chat_message == "/history") {
-                            myLayout.show("north");
-                            $("#chat_history").load("chat/history");
+                            $("#chat_history").load("@Url.Content("~/chat/history")");
                             $("#entry").val("");
                             return;
                         }
-
-                        if (chat_message == "/close") {
-                            myLayout.hide("north");
-                            $("#entry").val("");
-                            return;
-                        }
-
 
                         // Call the chat method on the server
                         chat.server.send($('#entry').val());
