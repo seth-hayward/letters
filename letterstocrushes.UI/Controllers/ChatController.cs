@@ -9,8 +9,17 @@ namespace letterstocrushes.Controllers
 {
     public class ChatController : Controller
     {
-        //
-        // GET: /Chat/
+
+        private readonly Core.Services.ChatService _chatService;
+
+        public ChatController(Core.Services.ChatService chatService)
+        {
+            _chatService = chatService;
+        }
+
+        public ChatController() : this(new Core.Services.ChatService(new Infrastructure.Data.EfQueryChats()))
+        {
+        }
 
         public ActionResult Index()
         {
@@ -24,6 +33,8 @@ namespace letterstocrushes.Controllers
 
         public ActionResult History()
         {
+            List<Core.Model.Chat> chats = _chatService.PopulateChatMessagesFromDatabase();
+            ViewData.Model = chats;
             return View();
         }
 
