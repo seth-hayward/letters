@@ -50,6 +50,26 @@ namespace letterstocrushes.Core.Services
             // add some basic html to the comment to make it look better 
             // 
 
+            string basic_text = comment.commentMessage;
+
+            // first, we make sure that the first line
+            // is a paragraph
+            basic_text = "<p>" + basic_text;
+
+            // then we make sure the last line closes it
+            basic_text = basic_text + "</p>";
+
+            // now all line breaks in the middle should
+            // start new paragraphs
+            basic_text = basic_text.Replace("\n", "</p><p>");
+
+            comment.commentMessage = basic_text;
+
+            if (comment.commenterName.Length == 0)
+            {
+                comment.commenterName = "anonymous lover";
+            }
+
             // Send notifications before the latest comment is added.
             // this means the newest commenter does not get a notification,
             // which is what we want -- they already know they
