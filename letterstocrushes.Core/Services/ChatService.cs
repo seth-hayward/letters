@@ -17,9 +17,9 @@ namespace letterstocrushes.Core.Services
             _queryChats = queryChats;
         }
 
-        public List<Chat> PopulateChatMessagesFromDatabase()
+        public List<Chat> PopulateChatMessagesFromDatabase(string room)
         {
-            return _queryChats.PopulateChatMessagesFromDatabase();
+            return _queryChats.PopulateChatMessagesFromDatabase(room);
         }
 
         public void AddChatToDatabase(Chat chat)

@@ -33,7 +33,7 @@ namespace letterstocrushes.Controllers
 
         public ActionResult History()
         {
-            List<Core.Model.Chat> chats = _chatService.PopulateChatMessagesFromDatabase();
+            List<Core.Model.Chat> chats = _chatService.PopulateChatMessagesFromDatabase("1");
             ViewData.Model = chats;
             return View();
         }

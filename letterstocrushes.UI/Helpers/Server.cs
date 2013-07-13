@@ -82,7 +82,7 @@ namespace letterstocrushes
                     _chatService = new Core.Services.ChatService(new Infrastructure.Data.EfQueryChats());
 
                     List<Core.Model.Chat> database_chats = new List<Core.Model.Chat>();
-                    database_chats = _chatService.PopulateChatMessagesFromDatabase();
+                    database_chats = _chatService.PopulateChatMessagesFromDatabase("1");
                     
                     foreach (Core.Model.Chat msg in database_chats)
                     {

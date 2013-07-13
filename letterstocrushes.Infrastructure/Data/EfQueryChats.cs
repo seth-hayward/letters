@@ -18,7 +18,7 @@ namespace letterstocrushes.Infrastructure.Data
             Mapper.CreateMap<chat, Chat>();
         }
 
-        public List<Chat> PopulateChatMessagesFromDatabase()
+        public List<Chat> PopulateChatMessagesFromDatabase(string room)
         {
 
             // check the database to see if there
@@ -33,6 +33,7 @@ namespace letterstocrushes.Infrastructure.Data
             database_chats = (from m in db.chats
                               orderby m.id ascending
                               where m.id > most_recent.id - 200
+                              && m.Room.Equals(room)
                               select m).ToList();
 
             return Mapper.Map<List<chat>, List<Chat>>(database_chats);
