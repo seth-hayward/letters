@@ -65,7 +65,7 @@
                 , north__spacing_closed: 10		// big resizer-bar when open (zero height)
                 , north__size: 200
                 , north__showOverflowOnHover: false                , north__onopen_start: function () {
-                    $("#chat_history").load("chat/history");                }                , north__initClosed: true                , center__showOverflowOnHover: false                , south__initHidden: true
+                    $("#chat_history").load("@Url.Content("~/chat/history")");                }                , north__initClosed: true                , center__showOverflowOnHover: false                , south__initHidden: true
 
                                 //	enable state management
                 , stateManagement__enabled: false // automatic cookie load & save enabled by default
