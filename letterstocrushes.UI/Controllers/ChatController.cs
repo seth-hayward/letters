@@ -19,9 +19,12 @@ namespace letterstocrushes.Controllers
 
         public ActionResult Active()
         {
-
             return View();
+        }
 
+        public ActionResult History()
+        {
+            return View();
         }
 
     }
