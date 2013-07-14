@@ -30,11 +30,23 @@ namespace letterstocrushes.Infrastructure.Data
             chat most_recent = (from m in db.chats orderby m.id descending select m).First();
 
             List<chat> database_chats = new List<chat>();
-            database_chats = (from m in db.chats
-                              orderby m.id ascending
-                              where m.id > most_recent.id - 200
-                              && m.Room.Equals(room)
-                              select m).ToList();
+
+            if (room == "")
+            {
+                database_chats = (from m in db.chats
+                                  orderby m.id ascending
+                                  where m.id > most_recent.id - 200
+                                  select m).ToList();
+
+            }
+            else
+            {
+                database_chats = (from m in db.chats
+                                  orderby m.id ascending
+                                  where m.id > most_recent.id - 200
+                                  && m.Room.Equals(room)
+                                  select m).ToList();
+            }
 
             return Mapper.Map<List<chat>, List<Chat>>(database_chats);
         }
