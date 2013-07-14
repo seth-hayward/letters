@@ -111,3 +111,12 @@
 {
     overflow: auto;
 }
+
+#please_login
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 450px;
+    border: 1px dotted #eee;
+    margin-top: 200px;
+}

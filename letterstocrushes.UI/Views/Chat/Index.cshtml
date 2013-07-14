@@ -18,29 +18,7 @@
 
     <script type="text/javascript" src="http://layout.jquery-dev.net/lib/js/jquery-ui-latest.js"></script>
 	<script type="text/javascript" src="http://layout.jquery-dev.net/lib/js/jquery-ui-latest.js"></script>
-	<script type="text/javascript" src="http://layout.jquery-dev.net/lib/js/jquery.layout-latest.js"></script>    <link type="text/css" rel="stylesheet" href="http://layout.jquery-dev.net/lib/css/layout-default-latest.css" />
-    	<style type="text/css">
-
-	p {
-		font-size:		1em;
-		margin:			1ex 0;
-	}
-	p.buttons {
-		text-align:		center;
-		line-height:	2.5em;
-	}
-	button {
-		line-height:	normal;
-	}
-	.hidden {
-		display:		none;
-	}
-
-
-
-	</style>
-
-	
+	<script type="text/javascript" src="http://layout.jquery-dev.net/lib/js/jquery.layout-latest.js"></script>    <link type="text/css" rel="stylesheet" href="http://layout.jquery-dev.net/lib/css/layout-default-latest.css" />	
     <script src="@Url.Content("/Scripts/jquery.signalR-1.0.1.min.js")" type="text/javascript"></script>
 
     <script src="~/signalr/hubs" type="text/javascript"></script>
@@ -491,14 +469,20 @@
             
             <text>
 
-    <div class="ui-layout-center">
-        <h3>
-            Please <a href="http://www.letterstocrushes.com/login">login</a> or <a href="http://letterstocrushes.com/Account/Register" alt="register">create an account</a> in order to join the chat.
-        </h3>
+                <div class="ui-layout-center">
 
-        <p>Also, don't be a troll.</p>
+                    <div id="please_login">
 
-    </div>
+                    <h3>
+                        Please <a href="http://www.letterstocrushes.com/login">login</a> or <a href="http://letterstocrushes.com/Account/Register" alt="register">create an account</a> to chat.
+                    </h3>
+
+                    <p>Also, don't be a troll.</p>
+
+                    </div>
+
+
+                </div>
                                 
                 </text>    
          }
