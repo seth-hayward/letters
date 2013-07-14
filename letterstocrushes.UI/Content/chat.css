@@ -116,7 +116,8 @@
 {
     margin-left: auto;
     margin-right: auto;
-    width: 450px;
-    border: 1px dotted #eee;
+    width: 475px;
+    border: 1px dotted black;
     margin-top: 200px;
+    padding: 20px;
 }
