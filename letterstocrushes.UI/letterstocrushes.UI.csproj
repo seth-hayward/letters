@@ -185,6 +185,7 @@
     <Content Include="Content\comment.png" />
     <Content Include="Content\heart.png" />
     <Content Include="Content\owl.ico" />
+    <Content Include="Content\rainbow.JPG" />
     <Content Include="Content\style.css" />
     <Content Include="Content\tinymce.css" />
     <Content Include="apple-touch-icon-precomposed.png">
