@@ -252,24 +252,39 @@ namespace letterstocrushes
         public void Join(string name)
         {
 
+            if (name == null) { return; }
+
             // check to see if a user with this name is on the chat
             ChatVisitor existing_user = (from m in Visitors.Values where m.Handle.Equals(name) select m).FirstOrDefault();
 
             if (existing_user != null)
             {
+
+
                 // allow the person back in with this new name, but
                 // update the connection id
 
-                Debug.Print("previous existing user detected: " + existing_user.ConnectionId);
+                // BUT ONLY ... IF... that old connection no longer exists?
 
-                // maybe we remove it now instead?
-                Visitors.Remove(existing_user.ConnectionId);
+                String previous_id = existing_user.ConnectionId;
 
-                // let's send the connection a message just
+                existing_user.ConnectionId = Context.ConnectionId;
+
+                // remove the old id, we're going to 
+                // add a new one after this
+                Visitors.Remove(previous_id);
+
+                Visitors.Add(Context.ConnectionId, existing_user);
+
+                Clients.Client(previous_id).errorMessage("Someone else has reconnected with your name. This session has been disconnected.");
+
+                 // let's send the connection a message just
                 // in case it is still active
-                Clients.Client(existing_user.ConnectionId).errorMessage("Another person has logged in with your name. You have been disconnected.");
-                //Clients.AllExcept(existing_user.ConnectionId).addMessage(existing_user.Handle + "has logged in with the same handle. The previous handle has been disconnected");
+                Clients.AllExcept(existing_user.ConnectionId).addMessage(existing_user.Handle + " reconnected.");
+
             }
+
+
 
             Clients.Caller.enterChat(1);
 
