@@ -46,7 +46,6 @@
                 , north__minSize: 200
                 , north__showOverflowOnHover: false
                 , north__onopen_start: function () {
-                    console.log("onopen_start");
                     $("#chat_history").load("@Url.Content("~/chat/history")");
                 }
                 , north__initClosed: true
@@ -212,7 +211,6 @@
                     $('#entry').keydown(function (e) {
                         if (e.keyCode == 13) {
 
-
                             var chat_message = $("#entry").val();
 
                             if (chat_message == "/history") {
@@ -232,7 +230,6 @@
                     })
 
                     $("#broadcast").click(function () {
-
 
                         var chat_message = $("#entry").val();
 
@@ -258,9 +255,6 @@
 
             $('#chat_name').keydown(function (e) {
 
-                console.log("chat_name keydown");
-
-
                 if ($('#chat_name').val().length == 0) {
                     return;
                 }
@@ -273,9 +267,6 @@
             })
 
             $("#join").click(function () {
-
-                console.log("join click");
-
 
                 if ($('#chat_name').val().length == 0) {
                     return;
