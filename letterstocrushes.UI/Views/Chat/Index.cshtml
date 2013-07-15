@@ -26,9 +26,7 @@
 
     <script type="text/javascript">
 
-        console.log("mylayout initalized.");
         var myLayout;
-
 
         $(function () {
             myLayout = $('body').layout({
@@ -38,7 +36,6 @@
                 , resizable: true	// when open, pane can be resized 
                 , slidable: true	// when closed, pane can 'slide' open over other panes - closes on mouse-out
                 , livePaneResizing: true
-
                                 //	some resizing/toggling settings
                 , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
                 , north__togglerLength_closed: '100%'	// toggle-button is full-width of resizer-bar
@@ -49,14 +46,11 @@
                     $("#chat_history").load("@Url.Content("~/chat/history")");
                 }
                 , north__initClosed: true
+                , north__closable: true
                 , center__showOverflowOnHover: false
                 , south__initHidden: true
-
-
-
-                                //	enable state management
+                //	enable state management
                 , stateManagement__enabled: false // automatic cookie load & save enabled by default
-
                 , showDebugMessages: false // log and/or display messages from debugging & testing code
             });
 
@@ -158,6 +152,7 @@
                     $("#name").hide();
                     $("#log").show();
                     $("#toolbar").show();
+                    myLayout.show("north");
                     myLayout.show("south");
                     message_counter = 0;
                 };
@@ -232,12 +227,6 @@
                     $("#broadcast").click(function () {
 
                         var chat_message = $("#entry").val();
-
-                        if (chat_message == "/history") {
-                            $("#chat_history").load("@Url.Content("~/chat/history")");
-                            $("#entry").val("");
-                            return;
-                        }
 
                         // Call the chat method on the server
                         chat.server.send($('#entry').val());
