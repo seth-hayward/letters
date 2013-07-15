@@ -227,6 +227,7 @@
     <Content Include="Scripts\jquery.cookie.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\jquery.date-format.js" />
     <Content Include="Scripts\jquery.hotkeys.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
