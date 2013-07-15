@@ -108,7 +108,49 @@ namespace letterstocrushes
             set
             {
                 messages = value;
+
+                // now we just want to check to make sure that
+                // there are not more than 200 chat messages
+                // per room... if there are,
+                // we want to remove the oldest ones
+
+
+                // how processing intensive is this?
+                // it's probably way worse to just
+                // take up tons of memory... but this may be slow too
+                // -- whatever, gogogogo
+
+                // steps:
+                // - get list of rooms in use
+                // - loop through each room in use
+                //     - get count of messages in room
+                //     - remove oldest if there are more than 200 in each room
+
+                List<String> room_list = (from m in messages select m.Room).Distinct().ToList();
+
+                foreach (string room in room_list)
+                {
+                    int message_count = getRoomMessageCount(room);
+
+                    while (getRoomMessageCount(room) > 200)
+                    {
+                        // remove oldest from the room
+                        ChatMessage oldest = (from m in messages where m.Room.Equals(room) orderby m.ChatDate ascending select m).FirstOrDefault();
+
+                        if(oldest != null) {
+                            messages.Remove(oldest);
+                        }
+                    }
+
+                }
+
             }
+        }
+
+
+        public static int getRoomMessageCount(string room)
+        {
+            return (from m in messages where m.Room.Equals(room) select m).Count();
         }
 
         public static Dictionary<String, ChatVisitor> Visitors
