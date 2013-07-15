@@ -41,7 +41,8 @@
                 , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
                 , north__togglerLength_closed: '100%'	// toggle-button is full-width of resizer-bar
                 , north__spacing_closed: 10		// big resizer-bar when open (zero height)
-                , north__minSize: 200
+                , north__minSize: 100
+                , north__size: 300
                 , north__showOverflowOnHover: false
                 , north__onopen_start: function () {
                     $("#chat_history").load("@Url.Content("~/chat/history")");
@@ -76,7 +77,7 @@
             function scrollDown(loading) {
                 if (loading == true) { return; }
 
-                $("#chat_container").animate({ scrollTop: $("#log").height() + 100 }, 10);
+                $("#chat_container").animate({ scrollTop: $("#log").height() + 100 }, 1);
 
                 $("#entry").focus();
             }
@@ -157,6 +158,8 @@
                     $("#name").hide();
                     $("#log").show();
                     $("#toolbar").show();
+                    myLayout.toggle("north");
+                    myLayout.hide("north");
                     myLayout.show("south");
                     message_counter = 0;
                 };
@@ -211,13 +214,6 @@
                         if (e.keyCode == 13) {
 
                             var chat_message = $("#entry").val();
-
-                            if (chat_message == "/history") {
-                                myLayout.show("north");
-                                $("#chat_history").load("@Url.Content("~/chat/history")");
-                                $("#entry").val("");
-                                return;
-                            }
 
                             chat.server.send($('#entry').val());
                             $("#entry").val("");
