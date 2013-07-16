@@ -12,14 +12,6 @@ using letterstocrushes.Core.Services;
 
 namespace letterstocrushes
 {
-    public class MyConnection : PersistentConnection
-    {
-        protected override Task OnReceived(IRequest request, string connectionId, string data)
-        {
-            // Broadcast data to all clients
-            return Connection.Broadcast(data);
-        }
-    }
 
     public class Chat : Hub
     {
@@ -262,7 +254,6 @@ namespace letterstocrushes
             if (existing_user != null)
             {
 
-
                 // allow the person back in with this new name, but
                 // update the connection id
 
@@ -289,8 +280,6 @@ namespace letterstocrushes
                 Clients.AllExcept(existing_user.ConnectionId).addMessage(join_error);
 
             }
-
-
 
             Clients.Caller.enterChat(1);
 
@@ -424,6 +413,65 @@ namespace letterstocrushes
                     handled = true;
                 }
 
+            }
+
+            if (message.StartsWith("/ask "))
+            {
+
+                message = message.Replace("/ask ", "");
+
+                List<String> magic_8_ball = new List<String>();
+                magic_8_ball.Add("It is certain");
+                magic_8_ball.Add("It is decidedly so");
+                magic_8_ball.Add("Without a doubt");
+                magic_8_ball.Add("Yes, definitely");
+                magic_8_ball.Add("You may rely on it");
+                magic_8_ball.Add("As I see it, yes");
+                magic_8_ball.Add("Most likely");
+                magic_8_ball.Add("Outlook is good");
+                magic_8_ball.Add("Yes");
+                magic_8_ball.Add("Signs point to yes");
+
+                magic_8_ball.Add("Reply hazy, try again");
+                magic_8_ball.Add("Ask again later");
+                magic_8_ball.Add("Better not tell you now");
+                magic_8_ball.Add("Cannot predict now");
+                magic_8_ball.Add("Concentrate and ask again");
+
+
+                magic_8_ball.Add("Don't count on it");
+                magic_8_ball.Add("My reply is no");
+                magic_8_ball.Add("My sources say no");
+                magic_8_ball.Add("Outlook not so good");
+                magic_8_ball.Add("Very doubtful");
+
+                ChatMessage chat_1 = new ChatMessage();
+
+                chat_1.Nick = "chatbot";
+                chat_1.Message = current_user.Handle + " asked the magic 8-ball: " + message;
+                chat_1.ChatDate = DateTime.UtcNow;
+                chat_1.StoredInDB = false;
+                chat_1.Room = current_user.Room;
+
+                // Call the addMessage method on all the clients in the room
+                Clients.Group(current_user.Room).addMessage(chat_1);
+
+                ChatMessage chat_2 = new ChatMessage();
+
+                Random rand = new Random();
+
+                chat_2.Nick = "magic 8 ball";
+                chat_2.Message = "And the answer is: " + magic_8_ball[rand.Next(magic_8_ball.Count)];
+                chat_2.ChatDate = DateTime.UtcNow;
+                chat_2.StoredInDB = false;
+                chat_2.Room = current_user.Room;
+
+                Clients.Group(current_user.Room).addMessage(chat_2);
+
+                Messages.Add(chat_1);
+                Messages.Add(chat_2);
+
+                handled = true;
             }
 
             if (handled == false)
