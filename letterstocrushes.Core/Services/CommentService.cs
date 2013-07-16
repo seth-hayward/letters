@@ -34,6 +34,7 @@ namespace letterstocrushes.Core.Services
             List<String> banned_commenters = new List<String>();
             banned_commenters.Add("10315e2a-e671-4c1c-91be-4aff797bf852");
             banned_commenters.Add("33ce0d70-cf48-49c9-9ab2-0fe61ebc84f8");
+            banned_commenters.Add("82f7c276-bdee-4e09-943e-39b45f3e7a07");
             //banned_commenters.Add("26ace590-d40e-4a03-a968-d160744437f5");
 
             if (banned_commenters.Contains(comment.commenterGuid))
