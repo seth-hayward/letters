@@ -355,9 +355,20 @@ namespace letterstocrushes
         public void Send(string message)
         {
 
-            // ignore blank messages
+            ChatMessage error = new ChatMessage();
+            error.ChatDate = DateTime.UtcNow;
+            error.Nick = "";
+
+            // ignore blank messages and long messages
             if (message.Length == 0)
             {
+                return;
+            }
+
+            if (message.Length > 300)
+            {
+                error.Message = "Message was too long.";
+                Clients.Caller.addMessage(error);
                 return;
             }
 
@@ -365,9 +376,6 @@ namespace letterstocrushes
             ChatVisitor current_user;
             bool get_user = Visitors.TryGetValue(Context.ConnectionId, out current_user);
 
-            ChatMessage error = new ChatMessage();
-            error.ChatDate = DateTime.UtcNow;
-            error.Nick = "";
 
             if (get_user == false)
             {
