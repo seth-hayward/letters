@@ -21,8 +21,10 @@ namespace letterstocrushes.Controllers
         {
         }
 
+        // disable caching on index page
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Index()
-        {
+        {            
             return View();
         }
 
