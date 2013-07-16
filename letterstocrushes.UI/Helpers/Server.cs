@@ -280,7 +280,11 @@ namespace letterstocrushes
 
                  // let's send the connection a message just
                 // in case it is still active
-                Clients.AllExcept(existing_user.ConnectionId).addMessage(existing_user.Handle + " reconnected.");
+                ChatMessage join_error = new ChatMessage();
+                join_error.Nick = "chatbot";
+                join_error.Message = existing_user.Handle + " reconnected.";
+
+                Clients.AllExcept(existing_user.ConnectionId).addMessage(join_error);
 
             }
 
