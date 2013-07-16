@@ -256,6 +256,8 @@ namespace letterstocrushes
 
             // check to see if a user with this name is on the chat
             ChatVisitor existing_user = (from m in Visitors.Values where m.Handle.Equals(name) select m).FirstOrDefault();
+            
+            // check to see if this connection id already has a user associated with it...
 
             if (existing_user != null)
             {

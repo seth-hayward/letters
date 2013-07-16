@@ -146,6 +146,11 @@
                 chat.client.errorMessage = function (message) {
                     $("#name").show();
                     $("#log").hide();
+                    $("#toolbar").hide();
+
+                    myLayout.hide("north");
+                    myLayout.hide("south");
+
                     alert(message);
 
                     // currently only error messages
@@ -340,7 +345,7 @@
                     <div id="please_login">
 
                         <h3>
-                            Please <a href="http://www.letterstocrushes.com/login">login</a> or <a href="http://letterstocrushes.com/Account/Register" alt="register">create an account</a> to chat.
+                            Please <a href="@Url.Content("~/login")">login</a> or <a href="http://letterstocrushes.com/Account/Register" alt="register">create an account</a> to chat.
                         </h3>
 
                         <p>Also, don't be a troll.</p>
