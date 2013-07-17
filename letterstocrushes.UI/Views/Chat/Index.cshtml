@@ -94,6 +94,11 @@
                 
                 var chat_date = message.ChatDate;
 
+                var urlRE = /https?:\/\/([-\w\.]+)+(:\d+)?(\/([^\s]*(\?\S+)?)?)?/g;
+
+                // replace URLs with links
+                message.Message = message.Message.replace(urlRE, '<a target="_blank" href="$&">$&</a>');
+
                 output_message += '  <td class="date">' + dateFormat(chat_date, "h:MM TT") + '</td>';
                 output_message += '  <td valign="top" class="nick">' + message.Nick + '</td>';
                 output_message += '  <td class="msg-txt">' + message.Message + '</td>'
