@@ -9,6 +9,7 @@ namespace letterstocrushes.Core.Interfaces
 {
     public interface IQueryChats
     {
+        String GetStats(string name);
         List<Chat> PopulateChatMessagesFromDatabase(string room);
         void AddChatToDatabase(Chat chat);
     }

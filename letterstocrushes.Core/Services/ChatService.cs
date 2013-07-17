@@ -27,5 +27,10 @@ namespace letterstocrushes.Core.Services
             _queryChats.AddChatToDatabase(chat);
         }
 
+        public String GetStats(string name)
+        {
+            return _queryChats.GetStats(name);
+        }
+
     }
 }

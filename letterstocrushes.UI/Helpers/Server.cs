@@ -379,6 +379,8 @@ namespace letterstocrushes
                 return;
             }
 
+
+            ChatMessage chat_1 = new ChatMessage();
             ChatMessage chat = new ChatMessage();
             chat.Nick = current_user.Handle + ":";
             chat.Message = message;
@@ -445,8 +447,6 @@ namespace letterstocrushes
                 magic_8_ball.Add("Outlook not so good");
                 magic_8_ball.Add("Very doubtful");
 
-                ChatMessage chat_1 = new ChatMessage();
-
                 chat_1.Nick = "chatbot";
                 chat_1.Message = current_user.Handle + " asked the magic 8-ball: " + message;
                 chat_1.ChatDate = DateTime.UtcNow;
@@ -472,6 +472,32 @@ namespace letterstocrushes
                 Messages.Add(chat_2);
 
                 handled = true;
+            }
+
+            if(message.StartsWith("/stats")) {
+
+                String stats_message = "";
+                String stats_intro = "General stats: ";
+                String check_user = "";
+                chat_1 = new ChatMessage();
+
+                if (message != "/stats")
+                {
+                    check_user = message.Replace("/stats ", "");
+                    stats_intro = "Stats for " + check_user + ": ";
+                }
+
+                message = _chatService.GetStats(check_user);
+                                
+                chat_1.Nick = "chatbot";
+                chat_1.Message = stats_intro + message;
+
+                chat_1.ChatDate = DateTime.UtcNow;
+                chat_1.StoredInDB = false;
+                chat_1.Room = current_user.Room;
+                Clients.Caller.addMessage(chat_1);
+                handled = true;
+
             }
 
             if (handled == false)

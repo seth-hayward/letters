@@ -58,5 +58,29 @@ namespace letterstocrushes.Infrastructure.Data
             db.chats.Add(transposed);
             db.SaveChanges();
         }
+
+        public string GetStats(string name)
+        {
+
+            String stats = "";
+            db_mysql db = new db_mysql();
+
+            if (name == "")
+            {
+                // return general stats
+                stats = (from m in db.chats select m).Count() + " chats total.";
+            }
+            else
+            {
+                // ugh bad seth
+                String fixed_name = name + ":";
+
+                // return user based stats
+                stats = (from m in db.chats where m.Nick.ToLower().Equals(fixed_name.ToLower()) select m).Count() + " chats from '" + name + "'";
+            }
+
+            return stats;
+
+        }
     }
 }
