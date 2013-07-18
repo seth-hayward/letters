@@ -120,7 +120,15 @@
             function joinChat() {
 
                 // Proxy created on the fly          
-                chat = $.connection.chat;                
+                chat = $.connection.chat;
+
+                // let's just show the stuff right away
+                $("#name").hide();
+                $("#log").show();
+                $("#toolbar").show();
+                myLayout.toggle("north");
+                myLayout.hide("north");
+                myLayout.show("south");
 
                 // Declare a function on the chat hub so the server can invoke it          
                 chat.client.addMessage = function (message) {
@@ -165,12 +173,6 @@
                 };
 
                 chat.client.enterChat = function (message) {
-                    $("#name").hide();
-                    $("#log").show();
-                    $("#toolbar").show();
-                    myLayout.toggle("north");
-                    myLayout.hide("north");
-                    myLayout.show("south");
                     message_counter = 0;
                 };
 
