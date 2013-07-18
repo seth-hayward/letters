@@ -1057,6 +1057,37 @@ namespace letterstocrushes.Controllers
 
             Core.Model.Letter letter = _letterService.Mail(Server.HtmlDecode(letterText), letterCountry, userip, userid, int.Parse(mobile), ref error_message);
 
+            if (User.Identity.IsAuthenticated == true)
+            {
+                // add an invisible comment so that the user will receive email notifications
+
+                Comment invisa_comment = new Comment();
+                invisa_comment.level = -1;
+                invisa_comment.letterId = letter.Id;
+                invisa_comment.sendEmail = true;
+                invisa_comment.commentDate = DateTime.UtcNow;
+                invisa_comment.commenterEmail = User.Identity.Name;
+
+
+                // add comment, 
+                // notify all users who are subscribed to that letter
+                string host = "";
+
+                switch (Request.Url.Port)
+                {
+                    case 80:
+                        host = "http://" + Request.Url.Host + VirtualPathUtility.ToAbsolute("~/");
+                        break;
+                    default:
+                        host = "http://" + Request.Url.Host + ":" + Request.Url.Port + VirtualPathUtility.ToAbsolute("~/");
+                        break;
+                }
+
+                _commentService.AddComment(invisa_comment, host);
+
+            }
+
+
             if (letter != null)
             {
                 return Json(new { response = 1, message = letter.Id, guid = letter.letterTags }, JsonRequestBehavior.AllowGet);
