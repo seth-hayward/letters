@@ -19,12 +19,22 @@ namespace letterstocrushes.Infrastructure.Data
             Mapper.CreateMap<Letter, letter>();
         }
 
-        public List<Comment> getComments(int id)
+        public List<Comment> getComments(int id, Boolean include_hidden)
         {
 
             db_mysql db_mysql = new db_mysql();
             List<comment> comments = new List<comment>();
-            comments = (from m in db_mysql.comments where m.letterId.Equals(id) && m.level >= 0 select m).ToList();
+
+            if (include_hidden == true)
+            {
+                List<int> possible_comment_search_values = new List<int> {-2, 0};
+                comments = (from m in db_mysql.comments where m.letterId.Equals(id) && m.level >= 0 || m.letterId.Equals(id) && m.level.Equals(-2) select m).ToList();
+            }
+            else
+            {
+                comments = (from m in db_mysql.comments where m.letterId.Equals(id) && m.level >= 0 select m).ToList();
+            }
+
             return Mapper.Map<List<comment>, List<Comment>>(comments);
 
         }

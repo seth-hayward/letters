@@ -10,7 +10,7 @@ namespace letterstocrushes.Core.Interfaces
     public interface IQueryComments
     {
         Comment getComment(int id);
-        List<Comment> getComments(int id);
+        List<Comment> getComments(int id, Boolean include_hidden);
         List<Comment> getRecentComments(int page);
         void AddComment(Comment comment, Letter letter);
         Boolean Unsubscribe(string email, int letter_id);

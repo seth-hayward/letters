@@ -21,9 +21,9 @@ namespace letterstocrushes.Core.Services
             _mailService = mailService;
         }
 
-        public List<Comment> getComments(int id)
+        public List<Comment> getComments(int id, Boolean include_hidden)
         {
-            return _queryComments.getComments(id);
+            return _queryComments.getComments(id, include_hidden);
         }
 
         public void AddComment(Comment comment, string host)
@@ -83,7 +83,7 @@ namespace letterstocrushes.Core.Services
         public void SendNotifications(int letter_id, string host)
         {
 
-            List<Comment> comments = getComments(letter_id);
+            List<Comment> comments = getComments(letter_id, true);
             List<string> sent_address = new List<string>();
 
             foreach (Comment comment in comments)

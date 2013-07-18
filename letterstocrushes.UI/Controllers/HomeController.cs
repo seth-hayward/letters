@@ -283,7 +283,7 @@ namespace letterstocrushes.Controllers
                 ViewBag.display_pretty_box = true;
             }
 
-            ViewBag.comments = _commentService.getComments(id);
+            ViewBag.comments = _commentService.getComments(id, false);
 
             if (User.Identity.IsAuthenticated == true)
             {
@@ -1062,11 +1062,12 @@ namespace letterstocrushes.Controllers
                 // add an invisible comment so that the user will receive email notifications
 
                 Comment invisa_comment = new Comment();
-                invisa_comment.level = -1;
+                invisa_comment.level = -2;
                 invisa_comment.letterId = letter.Id;
                 invisa_comment.sendEmail = true;
                 invisa_comment.commentDate = DateTime.UtcNow;
                 invisa_comment.commenterEmail = User.Identity.Name;
+                invisa_comment.commenterGuid = System.Guid.NewGuid().ToString();
                 invisa_comment.commenterName = "";
 
                 // add comment, 
