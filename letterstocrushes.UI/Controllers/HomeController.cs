@@ -1067,7 +1067,7 @@ namespace letterstocrushes.Controllers
                 invisa_comment.sendEmail = true;
                 invisa_comment.commentDate = DateTime.UtcNow;
                 invisa_comment.commenterEmail = User.Identity.Name;
-
+                invisa_comment.commenterName = "";
 
                 // add comment, 
                 // notify all users who are subscribed to that letter

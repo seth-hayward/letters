@@ -38,8 +38,12 @@ namespace letterstocrushes.Infrastructure.Data
             db_mysql.letters.Attach(transposed);
             var letter_obj = db_mysql.Entry(transposed);
 
-            letter_obj.Property(e => e.letterComments).IsModified = true;
-            transposed.letterComments = transposed.letterComments + 1;
+
+            if (comment.level > -1)
+            {
+                letter_obj.Property(e => e.letterComments).IsModified = true;
+                transposed.letterComments = transposed.letterComments + 1;
+            }
 
             db_mysql.comments.Add(Mapper.Map<Comment, comment>(comment));
             db_mysql.SaveChanges();
