@@ -27,8 +27,7 @@ namespace letterstocrushes.Infrastructure.Data
 
             if (include_hidden == true)
             {
-                List<int> possible_comment_search_values = new List<int> {-2, 0};
-                comments = (from m in db_mysql.comments where m.letterId.Equals(id) && m.level >= 0 || m.letterId.Equals(id) && m.level.Equals(-2) select m).ToList();
+                comments = (from m in db_mysql.comments where m.letterId.Equals(id) && m.level != -1 select m).ToList();
             }
             else
             {
