@@ -18,5 +18,6 @@ namespace letterstocrushes.Core.Model
         public string commenterEmail { get; set; }
         public string commenterGuid { get; set; }
         public Nullable<int> level { get; set; }
+        public string commenterIP { get; set; }
     }
 }

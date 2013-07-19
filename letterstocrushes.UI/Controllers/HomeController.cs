@@ -331,6 +331,13 @@ namespace letterstocrushes.Controllers
                 using_mobile = true;
             }
 
+
+            string userip = string.Empty;
+            userip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (userip == null)
+                userip = Request.ServerVariables["REMOTE_ADDR"];
+
+
             Core.Model.Comment comm = new Core.Model.Comment();
             comm.commentDate = DateTime.UtcNow;
             comm.commenterEmail = email;
@@ -338,6 +345,7 @@ namespace letterstocrushes.Controllers
             comm.commentMessage = message;
             comm.letterId = letterId;
             comm.level = 0;
+            comm.commenterIP = userip;
 
             string current_guid = getCommenterGuid();
             if (current_guid == null)
