@@ -124,6 +124,7 @@
 
                 // let's just show the stuff right away
                 $("#name").hide();
+                $("#log").empty();
                 $("#log").show();
                 $("#toolbar").show();
                 myLayout.toggle("north");
@@ -283,89 +284,58 @@
 </head>
 <body>
 
-    @{
-        if(User.Identity.IsAuthenticated == true) {
-          
-            <text>
 
     
-                <div id="chat_history" class="ui-layout-north" >
+    <div id="chat_history" class="ui-layout-north" >
 
 
-                </div>
+    </div>
 
 
 
-                <div id="chat_container" data-role="page" class="ui-layout-center">
+    <div id="chat_container" data-role="page" class="ui-layout-center">
 
-	                <div data-role="content">	
+	    <div data-role="content">	
 
-                        <div id="app">
+            <div id="app">
 
-                            <div id="name">        
-                                <label for="chat_name">name</label>
-                                <input id="chat_name" class="text" type="text" name="nick" value=""/>                        
-                                <input type="button" id="join" value="join chat"/>                                
-                             </div>
-             
-
-                            <div id="loading" style="display: none">
-                                <p>loading</p>
-                            </div>
-            
-                            <div id="log" style="display: none;">
-
-                            </div>
-
-                            <div id="ending_point">
-
-                            </div>
-                                                   
-                        </div>
-
-	                </div><!-- /content -->
-
-
-                </div><!-- /page -->
-
-                <div class="ui-layout-south" id="toolbar" >    
-                    <table style="width: 100%;">
-                        <tr>
-                            <td style="text-align: center">
-                                <input tabindex="1" id="entry" type="text" />
-                            </td>
-                        </tr>
-
-                    </table>
-                </div>
-
-    
-            </text>         
-    }
-    
-        else {
-            
-            <text>
-
-                <div class="ui-layout-center">
-
-                    <div id="please_login">
-
-                        <h3>
-                            Please <a href="@Url.Content("~/login")">login</a> or <a href="http://letterstocrushes.com/Account/Register" alt="register">create an account</a> to chat.
-                        </h3>
-
-                        <p>Also, don't be a troll.</p>
-
+                <div id="name">        
+                    <label for="chat_name">name</label>
+                    <input id="chat_name" class="text" type="text" name="nick" value=""/>                        
+                    <input type="button" id="join" value="join chat"/>                                
                     </div>
+                         
+                <div id="log" style="display: none;">
 
+                    <p>Loading...</p>
 
                 </div>
-                                
-                </text>    
-         }
-                          
-        }
+
+                <div id="ending_point">
+
+                </div>
+                                                   
+            </div>
+
+	    </div><!-- /content -->
+
+
+    </div><!-- /page -->
+
+    <div class="ui-layout-south" id="toolbar" >    
+        <table style="width: 100%;">
+            <tr>
+                <td style="text-align: center">
+                    <input tabindex="1" id="entry" type="text" />
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    
+
+               
                     
 
 
