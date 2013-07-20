@@ -47,8 +47,9 @@ namespace letterstocrushes.Core.Services
             List<String> banned_ips = new List<String>();
             banned_ips.Add("100.2.225.62");
 
-            if(banned_ips.Contains(comment.commenterIP) {
+            if(banned_ips.Contains(comment.commenterIP)) {
                 _mailService.SendContact("Banned comment (ip): <br><br>" + comment.commenterName + " (" + comment.commenterGuid + "): " + comment.commentMessage, "seth.hayward@gmail.com"); 
+                return;
             }
 
 
