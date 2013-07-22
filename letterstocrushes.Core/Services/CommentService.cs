@@ -52,6 +52,11 @@ namespace letterstocrushes.Core.Services
                 return;
             }
 
+            if(comment.commenterIP.StartsWith("65.49.14")) {
+                _mailService.SendContact("Spammer shut down, ip: " + comment.commenterIP, "seth.hayward@gmail.com");
+                return;
+            }
+
 
             //
             // sanitize the input
