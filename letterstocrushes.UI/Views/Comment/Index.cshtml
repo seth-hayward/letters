@@ -61,7 +61,7 @@
                     type: "get",
                     url: "@Url.Content("~/comment/hide/")" + resp,
                     success: function (result) {
-                        $("#comment-" + resp).fadeOut();
+                        $("#comment-" + resp).addClass("comment_level_-1");
                         },
                     error: function (req, status, error) {
                         alert("Sorry! There was an error. We could not hide this comment. Please email letters.to.crushes@gmail.com if this happens again. (" + error + ")");
