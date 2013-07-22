@@ -27,7 +27,9 @@ namespace letterstocrushes.Infrastructure.Data
 
             if (include_hidden == true)
             {
-                comments = (from m in db_mysql.comments where m.letterId.Equals(id) && m.level != -1 select m).ToList();
+
+                comments = (from m in db_mysql.comments where m.letterId.Equals(id) && m.level != -2 select m).ToList();
+
             }
             else
             {
@@ -92,6 +94,7 @@ namespace letterstocrushes.Infrastructure.Data
         {
             db_mysql db_mysql = new db_mysql();
             var query = (from m in db_mysql.comments
+                         where m.level.Value != -2
                          orderby m.Id descending
                          select m);
 

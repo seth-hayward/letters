@@ -57,7 +57,6 @@ namespace letterstocrushes.Core.Services
                 return;
             }
 
-
             //
             // sanitize the input
             //
