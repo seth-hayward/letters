@@ -58,7 +58,7 @@ namespace letterstocrushes.Core.Services
             List<String> spammer_ips = new List<String>();
             spammer_ips.Add("65.49.14");
             spammer_ips.Add("111.118.37");
-            spammer_ips.Add("24.5.135");
+            spammer_ips.Add("119.226.253");
 
             if(spammer_ips.Any(rax=>comment.commenterIP.StartsWith(rax))) {
                 _mailService.SendContact("Spammer shut down, ip: " + comment.commenterIP, "seth.hayward@gmail.com");
