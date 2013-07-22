@@ -73,8 +73,8 @@ namespace letterstocrushes.Core.Services
                 return;
             }
 
-            if(comment.commentMessage.Contains("mygardeningplace.com") {
-                _mailService.SendContact("mygardeningplace shut down.", "seth.hayward@gmail.com");
+            if(comment.commentMessage.Contains("mygardeningplace.com")) {
+                _mailService.SendContact("mygardeningplace spam shut down.", "seth.hayward@gmail.com");
                 return;
             }
 
