@@ -52,7 +52,15 @@ namespace letterstocrushes.Core.Services
                 return;
             }
 
-            if(comment.commenterIP.StartsWith("65.49.14")) {
+
+            // if an ip starts with any one of these,
+            // we're going to block these lamers.
+            List<String> spammer_ips = new List<String>();
+            spammer_ips.Add("65.49.14");
+            spammer_ips.Add("111.118.37");
+            spammer_ips.Add("24.5.135");
+
+            if(spammer_ips.Any(rax=>comment.commenterIP.StartsWith(rax))) {
                 _mailService.SendContact("Spammer shut down, ip: " + comment.commenterIP, "seth.hayward@gmail.com");
                 return;
             }
