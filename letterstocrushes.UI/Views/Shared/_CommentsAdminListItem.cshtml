@@ -9,7 +9,7 @@
 
             @if(User.IsInRole("mod")) {
                 <text>
-                    <small>@Model.commenterGuid</small>
+                    <small>@Model.commenterGuid.Substring(0, 8) - @Model.commenterIP</small>                    
                     <a id="c@(Model.Id)" class="comment_hide">hide</a>                    
                 </text>
             }
