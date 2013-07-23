@@ -425,6 +425,17 @@ namespace letterstocrushes.Controllers
             return Json(letterToView, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult GetLetters(int page, int level)
+        {
+            List<Core.Model.Letter> letters = new List<Core.Model.Letter>();
+
+            letters = _letterService.getLetters(level, page, _pagesize).ToList();
+
+            return Json(letters, JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult Unsubscribe(string email, int id=0)
         {
             if (id == 0)

@@ -29,6 +29,21 @@ namespace letterstocrushes
                 new { controller = "Home", action = "Index" } // Parameter defaults
             );
 
+
+            //
+            // begin: api routes
+            //
+
+            routes.MapRoute(
+                "APIGetLetters", // Route name
+                "api/get_letters/{level}/{page}", // URL with parameters
+                new { controller = "Home", action = "GetLetters" } // Parameter defaults
+            );
+
+            //
+            // end: api routes
+            //
+
             routes.MapRoute(
                 "HomeMobilePages", // Route name
                 "mobile/page/{page}", // URL with parameters
