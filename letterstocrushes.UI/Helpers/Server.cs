@@ -199,6 +199,11 @@ namespace letterstocrushes
         public void JoinGroup(string room)
         {
 
+            if(Visitors.ContainsKey(Context.ConnectionId) == false) {
+                Debug.Print("Phantom user tried to connect.");
+                return;
+            }
+
             // get the current user
             ChatVisitor current_user = Visitors[Context.ConnectionId];
 

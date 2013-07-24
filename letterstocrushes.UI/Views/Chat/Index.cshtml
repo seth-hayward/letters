@@ -176,7 +176,7 @@
                 chat.client.enterChat = function (message) {
                     message_counter = 0;
                 };
-
+                 
                 $.connection.hub.stateChanged(function (change) {
 
                     var date_now = new Date();
@@ -193,7 +193,6 @@
                         message.Message = "RECONNECTING... we lost connection to the chat server. Please wait, or press the refresh button on your browser. Sorry!";
                         // ... sometimes the user doesn't reconnect
                         // but it says 'joined' on the chat...
-                        joinChat();
 
                         reconnecting = true;
                     }
