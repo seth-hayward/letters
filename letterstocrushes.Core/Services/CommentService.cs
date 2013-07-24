@@ -26,7 +26,7 @@ namespace letterstocrushes.Core.Services
             return _queryComments.getComments(id, include_hidden);
         }
 
-        public void AddComment(Comment comment, string host)
+        public void AddComment(Comment comment, string host)        
         {
             Letter lucky_letter = _queryLetters.getLetter(comment.letterId);
 
@@ -52,7 +52,6 @@ namespace letterstocrushes.Core.Services
                 return;
             }
 
-
             // if an ip starts with any one of these,
             // we're going to block these lamers.
             List<String> spammer_ips = new List<String>();
@@ -69,12 +68,12 @@ namespace letterstocrushes.Core.Services
             spammer_ips.Add("124.158.1");
             spammer_ips.Add("137.175.118");
 
-            if(spammer_ips.Any(rax=>comment.commenterIP.StartsWith(rax))) {
+            if(comment.commenterIP != null && spammer_ips.Any(rax=>comment.commenterIP.StartsWith(rax))) {
                 _mailService.SendContact("Spammer shut down, ip: " + comment.commenterIP, "seth.hayward@gmail.com");
                 return;
             }
 
-            if(comment.commentMessage.Contains("mygardeningplace.com")) {
+            if(comment.commentMessage != null && comment.commentMessage.Contains("mygardeningplace.com")) {
                 _mailService.SendContact("mygardeningplace spam shut down.", "seth.hayward@gmail.com");
                 return;
             }
