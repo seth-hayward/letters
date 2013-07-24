@@ -261,15 +261,15 @@ namespace letterstocrushes
 
                 String previous_id = existing_user.ConnectionId;
 
-                existing_user.ConnectionId = Context.ConnectionId;
-
                 // remove the old id, we're going to 
                 // add a new one after this
                 Visitors.Remove(previous_id);
 
+                existing_user.ConnectionId = Context.ConnectionId;
+
                 Visitors.Add(Context.ConnectionId, existing_user);
 
-                Clients.Client(previous_id).errorMessage("Someone else has reconnected with your name. This session has been disconnected.");
+                //Clients.Client(previous_id).errorMessage("Someone else has reconnected with your name. This session has been disconnected.");
 
                  // let's send the connection a message just
                 // in case it is still active
@@ -305,7 +305,14 @@ namespace letterstocrushes
                 // after a reboot
                 Visitors[chatter.ConnectionId] = chatter;
             } else {
-                Visitors.Add(chatter.ConnectionId, chatter);
+
+                try
+                {
+                    Visitors.Add(chatter.ConnectionId, chatter);
+                } catch(Exception ex) {
+                    //Visitors.Add(chatter.ConnectionId, chatter);
+                }
+
             }
 
             JoinGroup("1");

@@ -190,7 +190,11 @@
                     };
 
                     if (change.newState === $.signalR.connectionState.reconnecting) {
-                        message.Message = "RECONNECTING... chat server reboot. Sorry!";
+                        message.Message = "RECONNECTING... we lost connection to the chat server. Please wait, or press the refresh button on your browser. Sorry!";
+                        // ... sometimes the user doesn't reconnect
+                        // but it says 'joined' on the chat...
+                        joinChat();
+
                         reconnecting = true;
                     }
                     else if (change.newState === $.signalR.connectionState.disconnected) {
@@ -249,7 +253,7 @@
                     });
                 });
 
-                event.preventDefault();
+                //event.preventDefault();
 
             }
 
