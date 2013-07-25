@@ -78,6 +78,24 @@ namespace letterstocrushes.Core.Services
                 return;
             }
 
+            if (comment.commentMessage != null && comment.commentMessage.Contains("mycraftingplace.com"))
+            {
+                _mailService.SendContact("mycraftingplace.com spam shut down.", "seth.hayward@gmail.com");
+                return;
+            }
+
+            if (comment.commentMessage != null && comment.commentMessage.Contains("bio2008.org"))
+            {
+                _mailService.SendContact("bio2008.org spam shut down.", "seth.hayward@gmail.com");
+                return;
+            }
+
+            if (comment.commentMessage != null && comment.commentMessage.Contains("countylinechiro.com"))
+            {
+                _mailService.SendContact("bio2008.org spam shut down.", "seth.hayward@gmail.com");
+                return;
+            }
+
             //
             // sanitize the input
             //
