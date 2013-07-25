@@ -143,6 +143,7 @@ namespace letterstocrushes.Core.Services
                 banned_ips.Add("66.168.196.58");
                 banned_ips.Add("74.101.158.189");
                 banned_ips.Add("190.235.4.27");
+                banned_ips.Add("108.203.48.88");
                 banned_ips.Add("100.2.225.62"); // initials girl
                 banned_ips.Add("24.5.135.227"); // seth
                 // banned_ips.Add("74.101.102.68"); this person seems okay now
