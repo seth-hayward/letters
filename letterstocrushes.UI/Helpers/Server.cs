@@ -599,7 +599,7 @@ namespace letterstocrushes
         public string Handle { get; set; }
         public string Room { get; set; }
         public int Offset { get; set; }
-
+        public string IP { get; set; }
     }
 
     public class ChatMessage
