@@ -609,6 +609,7 @@ namespace letterstocrushes
         public string Message { get; set; }
         public string Room { get; set; }
         public Boolean StoredInDB { get; set; }
+        public string IP { get; set; }
     }
 
     public class VisitorUpdate : Hub
