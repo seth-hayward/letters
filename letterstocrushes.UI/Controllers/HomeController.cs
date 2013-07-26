@@ -55,6 +55,7 @@ namespace letterstocrushes.Controllers
 
 #endregion
 
+        private readonly Core.Services.BlockService _blockService;
         private readonly Core.Services.LetterService _letterService;
         private readonly Core.Services.EditService _editService;
         private readonly Core.Services.MailService _mailService;
@@ -68,7 +69,8 @@ namespace letterstocrushes.Controllers
                               Core.Services.LetterService letterService,
                               Core.Services.CommentService commentService,
                               Core.Services.QueueService queueService,
-                              Core.Services.VoteService voteService)
+                              Core.Services.VoteService voteService,
+                              Core.Services.BlockService blockService)
         {
             _userService = userService;
             _mailService = mailService;
@@ -77,6 +79,7 @@ namespace letterstocrushes.Controllers
             _commentService = commentService;
             _queueService = queueService;
             _voteService = voteService;
+            _blockService = blockService;
 
             if (FormsService == null) { FormsService = new FormsAuthenticationService(); }
             if (MembershipService == null) { MembershipService = new AccountMembershipService(); }
@@ -88,7 +91,8 @@ namespace letterstocrushes.Controllers
             new Core.Services.LetterService(new Infrastructure.Data.EfQueryLetters(), new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]), new Core.Services.BookmarkService(new Infrastructure.Data.EfQueryBookmarks())),
             new Core.Services.CommentService(new Infrastructure.Data.EfQueryLetters(), new Infrastructure.Data.EfQueryComments(), new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"])),
             new Core.Services.QueueService(new Infrastructure.Data.EfQueryQueue()),
-            new Core.Services.VoteService(new Infrastructure.Data.EfQueryVotes()))
+            new Core.Services.VoteService(new Infrastructure.Data.EfQueryVotes()),
+            new Core.Services.BlockService(new Infrastructure.Data.EfQueryBlocks()))
         {
         }
 
