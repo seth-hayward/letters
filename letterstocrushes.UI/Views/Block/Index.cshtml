@@ -6,6 +6,49 @@
 
     <h2>blocks</h2>
 
+    <div style="padding: 50px; border: 1px dotted black">
+            @using( Html.BeginForm() )
+            {
+                
+                <h4 id="add">add a block</h4>
+                
+                <div class="comment_row">
+                    <label for="what">Block what:</label>
+                    <span class="comment_form">
+                        <select id="what">
+                            <option value="1">Letters</option>
+                            <option value="2">Comments</option>
+                            <option value="3">Chat</option>
+                        </select>
+                    </span>
+                </div>                
+                
+                <div class="comment_row">
+                    <label for="what">Block style:</label>
+                    <span class="comment_form">
+                        <select id="style">
+                            <option value="1">IP</option>
+                            <option value="2">Subnet</option>
+                            <option value="3">GUID</option>
+                        </select>
+                    </span>
+                </div>                                
+
+                <div class="comment_row">
+                    <label for="who">Block who:</label>
+                    <span class="comment_form">@Html.TextBox("who")</span>
+                </div>
+
+                <div class="comment_row">
+                    <span class="comment_form">
+                        <input type="submit" value="send" class="submit_button" />
+                    </span>
+                </div>
+            }
+
+
+    </div>
+
     <ul>
         <li>@ViewBag.IPban ip bans</li>
         <li>@ViewBag.Subnetban ip-subnet bans</li>
