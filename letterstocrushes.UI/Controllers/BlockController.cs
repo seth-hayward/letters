@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using letterstocrushes.Core.Services;
+using letterstocrushes.Core.Model;
 
 namespace letterstocrushes.Controllers
 {
@@ -31,8 +32,7 @@ namespace letterstocrushes.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ViewBag.IPban = _blockService.getBlocks(Core.Model.blockType.blockIP, Core.Model.blockWhat.blockLetter).Count;
-
+            ViewBag.IPban = _blockService.getBlocks(Core.Model.blockType.blockIP, Core.Model.blockWhat.blockLetter);
             return View();
         }
 
@@ -50,6 +50,43 @@ namespace letterstocrushes.Controllers
             int style = int.Parse(fc["style"]);
 
             _blockService.Add(style, what, who);
+
+            // send a message
+
+            String contact_message = User.Identity.Name + " added a block: <br /><br />";
+
+            string what_nice = "";
+            switch (what)
+            {
+                case (int)blockWhat.blockLetter:
+                    what_nice = "letter";
+                    break;
+                case (int)blockWhat.blockComment:
+                    what_nice = "comment";
+                    break;
+                case (int)blockWhat.blockChat:
+                    what_nice = "chat";
+                    break;
+            }
+
+            string style_nice = "";
+            switch (style)
+            {
+                case (int)blockType.blockIP:
+                    style_nice = "ip";
+                    break;
+                case (int)blockType.blockSubnet:
+                    style_nice = "subnet";
+                    break;
+                case (int)blockType.blockGUID:
+                    style_nice = "guid";
+                    break;
+            }
+
+            contact_message = contact_message + "what: " + what_nice + "<br />";
+            contact_message = contact_message + "style: " + style_nice + "<br />";
+
+            _mailService.SendContact(contact_message, "seth.hayward@gmail.com");
 
             return RedirectToAction("Index");
         }
