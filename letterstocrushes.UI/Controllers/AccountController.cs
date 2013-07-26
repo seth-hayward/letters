@@ -34,7 +34,8 @@ namespace letterstocrushes.Controllers
         }
 
         public AccountController()
-            : this(new Core.Services.LetterService(new Infrastructure.Data.EfQueryLetters(), new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]), new Core.Services.BookmarkService(new Infrastructure.Data.EfQueryBookmarks())),
+            : this(new Core.Services.LetterService(new Infrastructure.Data.EfQueryLetters(), new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]), new Core.Services.BookmarkService(new Infrastructure.Data.EfQueryBookmarks()),
+                new Core.Services.BlockService(new Infrastructure.Data.EfQueryBlocks())),
                    new Core.Services.BookmarkService(new Infrastructure.Data.EfQueryBookmarks()), new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]))
         {
         }
