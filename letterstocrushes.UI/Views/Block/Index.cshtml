@@ -57,7 +57,7 @@
         @foreach (letterstocrushes.Core.Model.Block b in ViewBag.IPban)
         {
             <text>
-            <li>@b.Value</li>
+            <li>@b.Value <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
             </text>
         }
     </ul>

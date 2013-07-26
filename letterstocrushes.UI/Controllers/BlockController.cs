@@ -92,5 +92,13 @@ namespace letterstocrushes.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [HttpGet]
+        public ActionResult Remove(int id = 0)
+        {
+            _blockService.Remove(id);
+            return RedirectToAction("Index");
+        }
+
     }
 }
