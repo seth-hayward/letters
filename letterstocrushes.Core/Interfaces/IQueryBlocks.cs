@@ -12,5 +12,6 @@ namespace letterstocrushes.Core.Interfaces
         void Add(int type, string value, int what);
         List<Block> getBlocks(blockType type, blockWhat what);
         void Remove(int id);
+        Block getBlock(int id);
     }
 }
