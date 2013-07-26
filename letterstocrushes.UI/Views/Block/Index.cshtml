@@ -4,9 +4,7 @@
 
 <div class="letterEnvelopeContainer">
 
-    <h2>blocks</h2>
-
-    <div style="padding: 50px; border: 1px dotted black">
+    <div style="padding: 15px; border: 1px dotted black">
             @using( Html.BeginForm() )
             {
                 
@@ -36,12 +34,14 @@
 
                 <div class="comment_row">
                     <label for="who">Block who:</label>
-                    <span class="comment_form">@Html.TextBox("who")</span>
+                    <span class="comment_form">
+                        <input type="text" id="who" style="width: auto" />
+                    </span>
                 </div>
 
                 <div class="comment_row">
                     <span class="comment_form">
-                        <input type="submit" value="send" class="submit_button" />
+                        <input type="submit" value="add block" class="submit_button" />
                     </span>
                 </div>
             }
