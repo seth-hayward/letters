@@ -350,6 +350,7 @@ namespace letterstocrushes
                     chat.Message = msg.Message;
                     chat.Nick = msg.Nick;
                     chat.Room = msg.Room;
+                    chat.IP = msg.IP;
                     _chatService.AddChatToDatabase(chat);
                     msg.StoredInDB = true;
                 }
@@ -373,7 +374,7 @@ namespace letterstocrushes
                 return;
             }
 
-            if (message.Length > 300)
+            if (message.Length > 2000)
             {
                 error.Message = "Message was too long.";
                 Clients.Caller.addMessage(error);
@@ -400,6 +401,7 @@ namespace letterstocrushes
             chat.ChatDate = DateTime.UtcNow;
             chat.StoredInDB = false;
             chat.Room = current_user.Room;
+            chat.IP = HttpContext.Current.Request.UserHostAddress;
 
             bool handled = false;
 
