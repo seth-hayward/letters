@@ -293,6 +293,7 @@ namespace letterstocrushes
             chatter.ConnectionId = Context.ConnectionId;
             chatter.Handle = name;
             chatter.Room = "1";
+            chatter.IP = HttpContext.Current.Request.UserHostAddress;
 
             if (Visitors == null)
             {
