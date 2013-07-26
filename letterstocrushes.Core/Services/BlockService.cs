@@ -27,5 +27,10 @@ namespace letterstocrushes.Core.Services
             return _queryBlocks.getBlocks(type, what);
         }
 
+        public void Remove(int id)
+        {
+            _queryBlocks.Remove(id);
+        }
+
     }
 }

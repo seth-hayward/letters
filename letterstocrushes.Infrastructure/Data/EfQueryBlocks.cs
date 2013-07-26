@@ -57,5 +57,18 @@ namespace letterstocrushes.Infrastructure.Data
             List<block> blocks = (from m in db_mysql.blocks where m.Type == block_type && m.What == block_what select m).ToList();
             return Mapper.Map<List<block>, List<Block>>(blocks);
         }
+
+
+        public void Remove(int id)
+        {
+
+            block fated_block = (from m in db_mysql.blocks where m.Id == id select m).FirstOrDefault();
+
+            if(fated_block != null) {
+                db_mysql.blocks.Remove(fated_block);
+                db_mysql.SaveChanges();
+            }
+
+        }
     }
 }
