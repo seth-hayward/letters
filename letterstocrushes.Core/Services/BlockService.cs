@@ -22,7 +22,7 @@ namespace letterstocrushes.Core.Services
             _queryBlocks.Add(type, value, what);
         }
 
-        public List<Block> getBlocks(int type, int what)
+        public List<Block> getBlocks(blockType type, blockWhat what)
         {
             return _queryBlocks.getBlocks(type, what);
         }

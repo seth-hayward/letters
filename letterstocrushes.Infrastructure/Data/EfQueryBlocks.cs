@@ -46,7 +46,7 @@ namespace letterstocrushes.Infrastructure.Data
             db_mysql.blocks.Add(b);
         }
 
-        public List<Core.Model.Block> getBlocks(int type, int what)
+        public List<Core.Model.Block> getBlocks(blockType type, blockWhat what)
         {
             List<block> blocks = (from m in db_mysql.blocks where m.Type.Equals(type) && m.What.Equals(what) select m).ToList();
             return Mapper.Map<List<block>, List<Block>>(blocks);
