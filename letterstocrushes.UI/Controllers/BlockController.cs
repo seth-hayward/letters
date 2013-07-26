@@ -85,6 +85,7 @@ namespace letterstocrushes.Controllers
 
             contact_message = contact_message + "what: " + what_nice + "<br />";
             contact_message = contact_message + "style: " + style_nice + "<br />";
+            contact_message = contact_message + "who: " + who;
 
             _mailService.SendContact(contact_message, "seth.hayward@gmail.com");
 
