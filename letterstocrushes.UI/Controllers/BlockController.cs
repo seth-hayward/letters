@@ -37,9 +37,9 @@ namespace letterstocrushes.Controllers
         public ActionResult Index(FormCollection fc)
         {
 
-            String who = fc.GetValue("who").RawValue.ToString();
-            String what = fc.GetValue("what").RawValue.ToString();
-            String style = fc.GetValue("style").RawValue.ToString();
+            String who = fc["who"].ToString();
+            String what = fc["what"].ToString();
+            String style = fc["style"].ToString();
 
             System.Diagnostics.Debug.Print("who - " + who + ", what - " + what + ", style - " + style);
             return RedirectToAction("Index");
