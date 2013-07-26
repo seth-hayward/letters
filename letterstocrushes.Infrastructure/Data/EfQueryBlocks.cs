@@ -44,6 +44,8 @@ namespace letterstocrushes.Infrastructure.Data
             b.What = what;
 
             db_mysql.blocks.Add(b);
+            db_mysql.SaveChanges();
+
         }
 
         public List<Core.Model.Block> getBlocks(blockType type, blockWhat what)
