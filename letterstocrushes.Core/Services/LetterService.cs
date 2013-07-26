@@ -131,7 +131,15 @@ namespace letterstocrushes.Core.Services
 
                 new_letter.senderIP = user_ip;
 
+                List<Block> blocked_ips = _blockService.getBlocks(blockType.blockIP, blockWhat.blockLetter);
+
                 List<string> banned_ips = new List<string>();
+
+                foreach (Block b in blocked_ips)
+                {
+                    banned_ips.Add(b.Value);
+                }
+
                 banned_ips.Add("74.173.105.111");
                 banned_ips.Add("76.109.29.135");
                 banned_ips.Add("98.91.17.241");
@@ -147,7 +155,7 @@ namespace letterstocrushes.Core.Services
                 banned_ips.Add("74.101.158.189");
                 banned_ips.Add("190.235.4.27");
                 banned_ips.Add("108.203.48.88");
-                banned_ips.Add("24.5.135.227"); // seth
+                //banned_ips.Add("24.5.135.227"); // seth
                 // banned_ips.Add("74.101.102.68"); this person seems okay now
 
                 List<string> daily_limit_ips = new List<string>();
