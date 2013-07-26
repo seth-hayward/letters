@@ -4,11 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="16f77d0d8f2f402f841a0cb16883622c" Name="Diagram1">
-        <EntityTypeShape EntityType="db_mysqlModel.chat" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_mysqlModel.comment" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_mysqlModel.letter" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_mysqlModel.song" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+      <Diagram DiagramId="16f77d0d8f2f402f841a0cb16883622c" Name="Diagram1" ZoomLevel="67">
+        <EntityTypeShape EntityType="db_mysqlModel.block" Width="1.5" PointX="2.75" PointY="0.5" />
+        <EntityTypeShape EntityType="db_mysqlModel.chat_visitors" Width="1.5" PointX="5.75" PointY="2" />
+        <EntityTypeShape EntityType="db_mysqlModel.chat" Width="1.5" PointX="8.75" PointY="3.5" />
+        <EntityTypeShape EntityType="db_mysqlModel.comment" Width="1.5" PointX="11.75" PointY="5" />
+        <EntityTypeShape EntityType="db_mysqlModel.letter" Width="1.5" PointX="2.375" PointY="3.25" />
+        <EntityTypeShape EntityType="db_mysqlModel.song" Width="1.5" PointX="4.875" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

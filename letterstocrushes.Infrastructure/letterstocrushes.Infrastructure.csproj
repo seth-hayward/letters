@@ -99,10 +99,16 @@
     <Compile Include="aspnet_WebEvent_Events.cs">
       <DependentUpon>db_mssql.tt</DependentUpon>
     </Compile>
+    <Compile Include="block.cs">
+      <DependentUpon>db_mysql.tt</DependentUpon>
+    </Compile>
     <Compile Include="bookmark.cs">
       <DependentUpon>db_mssql.tt</DependentUpon>
     </Compile>
     <Compile Include="chat.cs">
+      <DependentUpon>db_mysql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="chat_visitors.cs">
       <DependentUpon>db_mysql.tt</DependentUpon>
     </Compile>
     <Compile Include="comment.cs">

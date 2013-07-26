@@ -6,11 +6,31 @@
     <edmx:StorageModels>
     <Schema Namespace="db_mysqlModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="db_mysqlModelStoreContainer">
-          <EntitySet Name="chats" EntityType="db_mysqlModel.Store.chats" store:Type="Tables" Schema="mysql5_670082_letters" />
-          <EntitySet Name="comments" EntityType="db_mysqlModel.Store.comments" store:Type="Tables" Schema="mysql5_670082_letters" />
-          <EntitySet Name="letters" EntityType="db_mysqlModel.Store.letters" store:Type="Tables" Schema="mysql5_670082_letters" />
-          <EntitySet Name="songs" EntityType="db_mysqlModel.Store.songs" store:Type="Tables" Schema="mysql5_670082_letters" />
+          <EntitySet Name="blocks" EntityType="db_mysqlModel.Store.blocks" store:Type="Tables" Schema="shayward_mysql_letters" />
+          <EntitySet Name="chat_visitors" EntityType="db_mysqlModel.Store.chat_visitors" store:Type="Tables" Schema="shayward_mysql_letters" />
+          <EntitySet Name="chats" EntityType="db_mysqlModel.Store.chats" store:Type="Tables" Schema="shayward_mysql_letters" />
+          <EntitySet Name="comments" EntityType="db_mysqlModel.Store.comments" store:Type="Tables" Schema="shayward_mysql_letters" />
+          <EntitySet Name="letters" EntityType="db_mysqlModel.Store.letters" store:Type="Tables" Schema="shayward_mysql_letters" />
+          <EntitySet Name="songs" EntityType="db_mysqlModel.Store.songs" store:Type="Tables" Schema="shayward_mysql_letters" />
         </EntityContainer>
+        <EntityType Name="blocks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="int" />
+          <Property Name="Value" Type="mediumtext" />
+          <Property Name="What" Type="int" />
+        </EntityType>
+        <EntityType Name="chat_visitors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ip" Type="varchar" MaxLength="100" />
+          <Property Name="time" Type="timestamp" />
+          <Property Name="nickname" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="chats">
           <Key>
             <PropertyRef Name="id" />
@@ -66,48 +86,66 @@
           <Property Name="user_ip" Type="varchar" Nullable="false" MaxLength="45" />
           <Property Name="status" Type="int" Nullable="false" />
         </EntityType>
-        <Function Name="searchLetters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="mysql5_670082_letters">
-          <Parameter Name="search_terms" Type="varchar" Mode="In" />
-        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="db_mysqlModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="db_mysql" p1:LazyLoadingEnabled="true">
+          <FunctionImport Name="searchLetters" ReturnType="Collection(db_mysqlModel.searchLetters_Result)">
+          <Parameter Name="search_terms" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="quickSearch">
+          <Parameter Name="search_terms" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="blocks" EntityType="db_mysqlModel.block" />
+          <EntitySet Name="chat_visitors" EntityType="db_mysqlModel.chat_visitors" />
           <EntitySet Name="chats" EntityType="db_mysqlModel.chat" />
           <EntitySet Name="comments" EntityType="db_mysqlModel.comment" />
           <EntitySet Name="letters" EntityType="db_mysqlModel.letter" />
           <EntitySet Name="songs" EntityType="db_mysqlModel.song" />
-          <FunctionImport Name="searchLetters" ReturnType="Collection(db_mysqlModel.searchLetters_Result)">
-          <Parameter Name="search_terms" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="quickSearch" EntitySet="letters" ReturnType="Collection(db_mysqlModel.letter)">
-          <Parameter Name="search_terms" Mode="In" Type="String" />
-          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="searchLetters_Result" />
+        <EntityType Name="block">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="Type" />
+          <Property Type="String" Name="Value" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="What" />
+        </EntityType>
+        <EntityType Name="chat_visitors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ip" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="time" />
+          <Property Type="String" Name="nickname" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="chat">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Message" Type="String" MaxLength="16777215" Unicode="false" FixedLength="false" />
-          <Property Name="Nick" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-          <Property Name="ChatDate" Type="DateTime" Nullable="false" />
-          <Property Name="IP" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-          <Property Name="Room" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Message" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Nick" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ChatDate" Nullable="false" />
+          <Property Type="String" Name="IP" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Room" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="comment">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="commentMessage" Type="String" Nullable="false" MaxLength="16777215" Unicode="false" FixedLength="false" />
-          <Property Name="commenterName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="letterId" Type="Int32" Nullable="false" />
-          <Property Name="sendEmail" Type="Boolean" Nullable="false" />
-          <Property Name="commentDate" Type="DateTime" Nullable="false" />
-          <Property Name="hearts" Type="Int32" Nullable="false" />
-          <Property Name="commenterEmail" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="commentMessage" Nullable="false" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="commenterName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="letterId" Nullable="false" />
+          <Property Type="Boolean" Name="sendEmail" Nullable="false" />
+          <Property Type="DateTime" Name="commentDate" Nullable="false" />
+          <Property Type="Int32" Name="hearts" Nullable="false" />
+          <Property Type="String" Name="commenterEmail" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="commenterIP" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="commenterGuid" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="level" />
@@ -116,46 +154,65 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="letterMessage" Type="String" MaxLength="16777215" Unicode="false" FixedLength="false" />
-          <Property Name="letterTags" Type="String" MaxLength="65535" Unicode="false" FixedLength="false" />
-          <Property Name="letterPostDate" Type="DateTime" Nullable="false" />
-          <Property Name="letterUp" Type="Int32" />
-          <Property Name="letterLevel" Type="Int32" />
-          <Property Name="letterLanguage" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="senderIP" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
-          <Property Name="senderCountry" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-          <Property Name="senderRegion" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-          <Property Name="senderCity" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
-          <Property Name="letterComments" Type="Int32" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="letterMessage" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="letterTags" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="letterPostDate" Nullable="false" />
+          <Property Type="Int32" Name="letterUp" />
+          <Property Type="Int32" Name="letterLevel" />
+          <Property Type="String" Name="letterLanguage" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="senderIP" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="senderCountry" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="senderRegion" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="senderCity" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="letterComments" />
         </EntityType>
         <EntityType Name="song">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="hearts" Type="Int32" Nullable="false" />
-          <Property Name="youtube_id" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
-          <Property Name="date_posted" Type="DateTime" Nullable="false" />
-          <Property Name="user_ip" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
-          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="hearts" Nullable="false" />
+          <Property Type="String" Name="youtube_id" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="date_posted" Nullable="false" />
+          <Property Type="String" Name="user_ip" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="status" Nullable="false" />
         </EntityType>
-        <ComplexType Name="searchLetters_Result" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="db_mysqlModelStoreContainer" CdmEntityContainer="db_mysql">
+          <EntitySetMapping Name="blocks">
+            <EntityTypeMapping TypeName="db_mysqlModel.block">
+              <MappingFragment StoreEntitySet="blocks">
+                <ScalarProperty Name="What" ColumnName="What" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chat_visitors">
+            <EntityTypeMapping TypeName="db_mysqlModel.chat_visitors">
+              <MappingFragment StoreEntitySet="chat_visitors">
+                <ScalarProperty Name="nickname" ColumnName="nickname" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="chats">
             <EntityTypeMapping TypeName="db_mysqlModel.chat">
               <MappingFragment StoreEntitySet="chats">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="Nick" ColumnName="Nick" />
-                <ScalarProperty Name="ChatDate" ColumnName="ChatDate" />
-                <ScalarProperty Name="IP" ColumnName="IP" />
                 <ScalarProperty Name="Room" ColumnName="Room" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="ChatDate" ColumnName="ChatDate" />
+                <ScalarProperty Name="Nick" ColumnName="Nick" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -165,53 +222,47 @@
                 <ScalarProperty Name="level" ColumnName="level" />
                 <ScalarProperty Name="commenterGuid" ColumnName="commenterGuid" />
                 <ScalarProperty Name="commenterIP" ColumnName="commenterIP" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="commentMessage" ColumnName="commentMessage" />
-                <ScalarProperty Name="commenterName" ColumnName="commenterName" />
-                <ScalarProperty Name="letterId" ColumnName="letterId" />
-                <ScalarProperty Name="sendEmail" ColumnName="sendEmail" />
-                <ScalarProperty Name="commentDate" ColumnName="commentDate" />
-                <ScalarProperty Name="hearts" ColumnName="hearts" />
                 <ScalarProperty Name="commenterEmail" ColumnName="commenterEmail" />
+                <ScalarProperty Name="hearts" ColumnName="hearts" />
+                <ScalarProperty Name="commentDate" ColumnName="commentDate" />
+                <ScalarProperty Name="sendEmail" ColumnName="sendEmail" />
+                <ScalarProperty Name="letterId" ColumnName="letterId" />
+                <ScalarProperty Name="commenterName" ColumnName="commenterName" />
+                <ScalarProperty Name="commentMessage" ColumnName="commentMessage" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="letters">
             <EntityTypeMapping TypeName="db_mysqlModel.letter">
               <MappingFragment StoreEntitySet="letters">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="letterMessage" ColumnName="letterMessage" />
-                <ScalarProperty Name="letterTags" ColumnName="letterTags" />
-                <ScalarProperty Name="letterPostDate" ColumnName="letterPostDate" />
-                <ScalarProperty Name="letterUp" ColumnName="letterUp" />
-                <ScalarProperty Name="letterLevel" ColumnName="letterLevel" />
-                <ScalarProperty Name="letterLanguage" ColumnName="letterLanguage" />
-                <ScalarProperty Name="senderIP" ColumnName="senderIP" />
-                <ScalarProperty Name="senderCountry" ColumnName="senderCountry" />
-                <ScalarProperty Name="senderRegion" ColumnName="senderRegion" />
-                <ScalarProperty Name="senderCity" ColumnName="senderCity" />
                 <ScalarProperty Name="letterComments" ColumnName="letterComments" />
+                <ScalarProperty Name="senderCity" ColumnName="senderCity" />
+                <ScalarProperty Name="senderRegion" ColumnName="senderRegion" />
+                <ScalarProperty Name="senderCountry" ColumnName="senderCountry" />
+                <ScalarProperty Name="senderIP" ColumnName="senderIP" />
+                <ScalarProperty Name="letterLanguage" ColumnName="letterLanguage" />
+                <ScalarProperty Name="letterLevel" ColumnName="letterLevel" />
+                <ScalarProperty Name="letterUp" ColumnName="letterUp" />
+                <ScalarProperty Name="letterPostDate" ColumnName="letterPostDate" />
+                <ScalarProperty Name="letterTags" ColumnName="letterTags" />
+                <ScalarProperty Name="letterMessage" ColumnName="letterMessage" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="songs">
             <EntityTypeMapping TypeName="db_mysqlModel.song">
               <MappingFragment StoreEntitySet="songs">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="hearts" ColumnName="hearts" />
-                <ScalarProperty Name="youtube_id" ColumnName="youtube_id" />
-                <ScalarProperty Name="date_posted" ColumnName="date_posted" />
-                <ScalarProperty Name="user_ip" ColumnName="user_ip" />
                 <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="user_ip" ColumnName="user_ip" />
+                <ScalarProperty Name="date_posted" ColumnName="date_posted" />
+                <ScalarProperty Name="youtube_id" ColumnName="youtube_id" />
+                <ScalarProperty Name="hearts" ColumnName="hearts" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="searchLetters" FunctionName="db_mysqlModel.Store.searchLetters">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="db_mysqlModel.searchLetters_Result" />
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="quickSearch" FunctionName="db_mysqlModel.Store.searchLetters" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
