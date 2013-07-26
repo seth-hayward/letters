@@ -58,6 +58,11 @@ namespace letterstocrushes.Infrastructure.Data
             return Mapper.Map<List<block>, List<Block>>(blocks);
         }
 
+        public Core.Model.Block getBlock(int id)
+        {
+            block chosen_one = (from m in db_mysql.blocks where m.Id == id select m).FirstOrDefault();
+            return Mapper.Map<block, Block>(chosen_one);
+        }
 
         public void Remove(int id)
         {
