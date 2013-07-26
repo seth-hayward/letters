@@ -71,6 +71,7 @@
     <Compile Include="Model\PasswordChange.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BlockService.cs" />
     <Compile Include="Services\BookmarkService.cs" />
     <Compile Include="Services\ChatService.cs" />
     <Compile Include="Services\CommentService.cs" />
