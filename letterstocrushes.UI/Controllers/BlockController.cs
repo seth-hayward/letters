@@ -11,13 +11,16 @@ namespace letterstocrushes.Controllers
     {
 
         private readonly BlockService _blockService;
+        private readonly MailService _mailService;
 
-        public BlockController(BlockService blockService)
+        public BlockController(BlockService blockService, MailService mailService)
         {
             _blockService = blockService;
+            _mailService = mailService;
         }
 
-        public BlockController() : this(new Core.Services.BlockService(new Infrastructure.Data.EfQueryBlocks()))
+        public BlockController() : this(new Core.Services.BlockService(new Infrastructure.Data.EfQueryBlocks()),
+            new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]))
         {
         }
 
@@ -37,11 +40,17 @@ namespace letterstocrushes.Controllers
         public ActionResult Index(FormCollection fc)
         {
 
-            String who = fc["who"].ToString();
-            String what = fc["what"].ToString();
-            String style = fc["style"].ToString();
+            if (User.IsInRole("mod") == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-            System.Diagnostics.Debug.Print("who - " + who + ", what - " + what + ", style - " + style);
+            String who = fc["who"].ToString();
+            int what = int.Parse(fc["what"]);
+            int style = int.Parse(fc["style"]);
+
+            _blockService.Add(style, what, who);
+
             return RedirectToAction("Index");
         }
 
