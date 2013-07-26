@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IQueryBlocks.cs" />
     <Compile Include="Interfaces\IQueryBookmarks.cs" />
     <Compile Include="Interfaces\IQueryChats.cs" />
     <Compile Include="Interfaces\IQueryEdits.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Interfaces\IQueryQueue.cs" />
     <Compile Include="Interfaces\IQueryUsersByEmail.cs" />
     <Compile Include="Interfaces\IQueryVotes.cs" />
+    <Compile Include="Model\Block.cs" />
     <Compile Include="Model\Bookmark.cs" />
     <Compile Include="Model\Chat.cs" />
     <Compile Include="Model\Comment.cs" />

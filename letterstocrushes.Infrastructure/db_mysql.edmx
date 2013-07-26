@@ -86,23 +86,26 @@
           <Property Name="user_ip" Type="varchar" Nullable="false" MaxLength="45" />
           <Property Name="status" Type="int" Nullable="false" />
         </EntityType>
+        <Function Name="searchLetters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="shayward_mysql_letters">
+          <Parameter Name="search_terms" Type="varchar" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="db_mysqlModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="db_mysql" p1:LazyLoadingEnabled="true">
-          <FunctionImport Name="searchLetters" ReturnType="Collection(db_mysqlModel.searchLetters_Result)">
-          <Parameter Name="search_terms" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="quickSearch">
-          <Parameter Name="search_terms" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="blocks" EntityType="db_mysqlModel.block" />
           <EntitySet Name="chat_visitors" EntityType="db_mysqlModel.chat_visitors" />
           <EntitySet Name="chats" EntityType="db_mysqlModel.chat" />
           <EntitySet Name="comments" EntityType="db_mysqlModel.comment" />
           <EntitySet Name="letters" EntityType="db_mysqlModel.letter" />
           <EntitySet Name="songs" EntityType="db_mysqlModel.song" />
+          <FunctionImport Name="searchLetters" ReturnType="Collection(db_mysqlModel.searchLetters_Result1)">
+            <Parameter Name="search_terms" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="quickSearch" EntitySet="letters" ReturnType="Collection(db_mysqlModel.letter)">
+            <Parameter Name="search_terms" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="searchLetters_Result" />
         <EntityType Name="block">
@@ -178,6 +181,7 @@
           <Property Type="String" Name="user_ip" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="status" Nullable="false" />
         </EntityType>
+        <ComplexType Name="searchLetters_Result1" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -263,6 +267,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="searchLetters" FunctionName="db_mysqlModel.Store.searchLetters">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="db_mysqlModel.searchLetters_Result1" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="quickSearch" FunctionName="db_mysqlModel.Store.searchLetters" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

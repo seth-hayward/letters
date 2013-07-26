@@ -35,22 +35,31 @@ namespace letterstocrushes.Infrastructure
         public DbSet<letter> letters { get; set; }
         public DbSet<song> songs { get; set; }
     
-        public virtual ObjectResult<searchLetters_Result> searchLetters(string search_terms)
+        public virtual ObjectResult<searchLetters_Result1> searchLetters(string search_terms)
         {
             var search_termsParameter = search_terms != null ?
                 new ObjectParameter("search_terms", search_terms) :
                 new ObjectParameter("search_terms", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<searchLetters_Result>("searchLetters", search_termsParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<searchLetters_Result1>("searchLetters", search_termsParameter);
         }
     
-        public virtual int quickSearch(string search_terms)
+        public virtual ObjectResult<letter> quickSearch(string search_terms)
         {
             var search_termsParameter = search_terms != null ?
                 new ObjectParameter("search_terms", search_terms) :
                 new ObjectParameter("search_terms", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("quickSearch", search_termsParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<letter>("quickSearch", search_termsParameter);
+        }
+    
+        public virtual ObjectResult<letter> quickSearch(string search_terms, MergeOption mergeOption)
+        {
+            var search_termsParameter = search_terms != null ?
+                new ObjectParameter("search_terms", search_terms) :
+                new ObjectParameter("search_terms", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<letter>("quickSearch", mergeOption, search_termsParameter);
         }
     }
 }

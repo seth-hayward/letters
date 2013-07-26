@@ -114,6 +114,7 @@
     <Compile Include="comment.cs">
       <DependentUpon>db_mysql.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\EfQueryBlocks.cs" />
     <Compile Include="db_mssql.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -180,6 +181,9 @@
       <DependentUpon>db_mssql.tt</DependentUpon>
     </Compile>
     <Compile Include="searchLetters_Result.cs">
+      <DependentUpon>db_mysql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="searchLetters_Result1.cs">
       <DependentUpon>db_mysql.tt</DependentUpon>
     </Compile>
     <Compile Include="song.cs">
