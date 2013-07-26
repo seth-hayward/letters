@@ -96,7 +96,47 @@ namespace letterstocrushes.Controllers
         [HttpGet]
         public ActionResult Remove(int id = 0)
         {
+
+            Block removed = _blockService.getBlock(id);
             _blockService.Remove(id);
+
+            // send a message
+            String contact_message = User.Identity.Name + " removed a block: <br /><br />";
+
+            string what_nice = "";
+            switch (removed.What)
+            {
+                case (int)blockWhat.blockLetter:
+                    what_nice = "letter";
+                    break;
+                case (int)blockWhat.blockComment:
+                    what_nice = "comment";
+                    break;
+                case (int)blockWhat.blockChat:
+                    what_nice = "chat";
+                    break;
+            }
+
+            string style_nice = "";
+            switch (removed.Type)
+            {
+                case (int)blockType.blockIP:
+                    style_nice = "ip";
+                    break;
+                case (int)blockType.blockSubnet:
+                    style_nice = "subnet";
+                    break;
+                case (int)blockType.blockGUID:
+                    style_nice = "guid";
+                    break;
+            }
+
+            contact_message = contact_message + "what: " + what_nice + "<br />";
+            contact_message = contact_message + "style: " + style_nice + "<br />";
+            contact_message = contact_message + "who: " + removed.Value;
+
+            _mailService.SendContact(contact_message, "seth.hayward@gmail.com");
+
             return RedirectToAction("Index");
         }
 
