@@ -22,9 +22,10 @@ namespace letterstocrushes.UnitTests.Core
 
             Mock<IQueryBookmarks> mockQueryBookmarks = new Mock<IQueryBookmarks>();
 
-            BookmarkService mockBookmarkService = new BookmarkService(mockQueryBookmarks.Object);
+            Mock<BookmarkService> mockBookmarkService = new Mock<BookmarkService>();
+            Mock<BlockService> mockBlockService = new Mock<BlockService>();
 
-            LetterService myLetterService = new LetterService(mockQueryLetters.Object, mockMailService.Object, mockBookmarkService);
+            LetterService myLetterService = new LetterService(mockQueryLetters.Object, mockMailService.Object, mockBookmarkService.Object, mockBlockService.Object);
 
             // Part of arrange -- set up the expectation that the AddLetter 
             // method will be called.
