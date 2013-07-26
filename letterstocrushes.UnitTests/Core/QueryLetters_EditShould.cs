@@ -20,9 +20,10 @@ namespace letterstocrushes.UnitTests.Core
 
             Mock<IQueryBookmarks> mockQueryBookmarks = new Mock<IQueryBookmarks>();
 
-            BookmarkService mockBookmarkService = new BookmarkService(mockQueryBookmarks.Object);
+            Mock<BookmarkService> mockBookmarkService = new Mock<BookmarkService>();
+            Mock<BlockService> mockBlockService = new Mock<BlockService>();
 
-            LetterService myLetterService = new LetterService(mockQueryLetters.Object, mockMailService.Object, mockBookmarkService);
+            LetterService myLetterService = new LetterService(mockQueryLetters.Object, mockMailService.Object, mockBookmarkService.Object, mockBlockService.Object);
 
             mockQueryLetters.Setup(x => x.editLetter(It.IsAny<int>(), It.IsAny<String>(),It.IsAny<String>(),It.IsAny<String>(),It.IsAny<String>(),It.IsAny<bool>())).Returns(true);
 
