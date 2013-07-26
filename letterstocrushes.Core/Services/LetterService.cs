@@ -12,14 +12,17 @@ namespace letterstocrushes.Core.Services
     public class LetterService
     {
 
+        private readonly BlockService _blockService;
         private readonly BookmarkService _bookmarkService;
         private readonly MailService _mailService;
         private readonly IQueryLetters _queryLetters;
-        public LetterService(IQueryLetters queryLetters, MailService mailService, BookmarkService bookmarkService)
+
+        public LetterService(IQueryLetters queryLetters, MailService mailService, BookmarkService bookmarkService, BlockService blockService)
         {
             _queryLetters = queryLetters;
             _mailService = mailService;
             _bookmarkService = bookmarkService;
+            _blockService = blockService;
         }
 
         public int getLetterCount()
