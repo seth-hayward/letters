@@ -98,6 +98,12 @@ namespace letterstocrushes.Core.Services
                 return;
             }
 
+            if (comment.commentMessage != null && comment.commentMessage.Contains("cfnmtoob.com"))
+            {
+                _mailService.SendContact("cfnmtoob.com spam shut down.", "seth.hayward@gmail.com");
+                return;
+            }
+
             //
             // sanitize the input
             //
