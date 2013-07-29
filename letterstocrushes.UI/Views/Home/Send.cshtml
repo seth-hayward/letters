@@ -83,7 +83,7 @@ tinyMCE.init({
                 var m = $('#letterMessage').tinymce().getContent();                
                 if (m == '') { $("#btnSend").fadeIn('fast'); return; };
                 
-                var sendArgs = 'letterText=' + escape(m) + '&letterCountry=' + escape(c) + 'mobile=0';
+                var sendArgs = 'letterText=' + escape(m) + '&letterCountry=' + escape(c) + '&mobile=0';
 
                 var linkid;
 
