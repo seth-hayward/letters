@@ -63,6 +63,23 @@ namespace letterstocrushes
             }
         }
 
+        private static Core.Services.BlockService _blockService;
+        public static Core.Services.BlockService blockService
+        {
+            get
+            {
+                if (_blockService == null)
+                {
+                    _blockService = new Core.Services.BlockService(new Infrastructure.Data.EfQueryBlocks());
+                }
+                return _blockService;
+            }
+            set
+            {
+                _blockService = value;
+            }
+        }
+
         public static List<ChatMessage> Messages
         {
             get
@@ -249,6 +266,16 @@ namespace letterstocrushes
         public void Join(string name)
         {
 
+            String user_ip = HttpContext.Current.Request.UserHostAddress;
+
+            List<Block> blocked_ips = blockService.getBlocks(blockType.blockIP, blockWhat.blockChat);
+
+            if((from m in blocked_ips select m.Value).Contains(user_ip)) {
+                Clients.Caller.errorMessage("You are in timeout.");
+                return;
+            }
+
+
             if (name == null) { return; }
 
             // check to see if a user with this name is on the chat
@@ -293,7 +320,7 @@ namespace letterstocrushes
             chatter.ConnectionId = Context.ConnectionId;
             chatter.Handle = name;
             chatter.Room = "1";
-            chatter.IP = HttpContext.Current.Request.UserHostAddress;
+            chatter.IP = user_ip;
 
             if (Visitors == null)
             {
@@ -363,6 +390,17 @@ namespace letterstocrushes
 
         public void Send(string message)
         {
+
+            String user_ip = HttpContext.Current.Request.UserHostAddress;
+
+            List<Block> blocked_ips = blockService.getBlocks(blockType.blockIP, blockWhat.blockChat);
+
+            if ((from m in blocked_ips select m.Value).Contains(user_ip))
+            {
+                Clients.Caller.errorMessage("You are in timeout.");
+                return;
+            }
+
 
             ChatMessage error = new ChatMessage();
             error.ChatDate = DateTime.UtcNow;
@@ -513,6 +551,29 @@ namespace letterstocrushes
                 Clients.Caller.addMessage(chat_1);
                 handled = true;
 
+            }
+
+            if(message.StartsWith("/ips")) {
+                if(HttpContext.Current.User.IsInRole("Mod")) {
+                    ChatMessage ip_line = new ChatMessage();
+                    ip_line.Nick = "chatbot";
+                    ip_line.Message = "Here are the IP address of the " + Visitors.Values.Count + " chatters.";
+                    Clients.Caller.addMessage(ip_line);
+
+                    foreach (ChatVisitor chatter in Visitors.Values)
+                    {
+                        ip_line = new ChatMessage();
+                        ip_line.Message = chatter.IP;
+                        ip_line.Nick = chatter.Handle;
+                        Clients.Caller.addMessage(ip_line);
+                    }
+                } else {
+                    ChatMessage not_mod = new ChatMessage();
+                    not_mod.Nick = "chatbot";
+                    not_mod.Message = "You must be logged into a mod account to run this command.";
+                    Clients.Caller.addMessage(not_mod);
+                }
+                handled = true;
             }
 
             if (handled == false)
