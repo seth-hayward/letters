@@ -33,6 +33,8 @@ namespace letterstocrushes.Controllers
             }
 
             ViewBag.IPban = _blockService.getBlocks(Core.Model.blockType.blockIP, Core.Model.blockWhat.blockLetter);
+            ViewBag.chatIPban = _blockService.getBlocks(Core.Model.blockType.blockIP, Core.Model.blockWhat.blockChat);
+
             return View();
         }
 
