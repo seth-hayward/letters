@@ -13,639 +13,6 @@ using letterstocrushes.Core.Services;
 namespace letterstocrushes
 {
 
-    public class Chat : Hub
-    {
-
-        private static DateTime started = DateTime.Now;
-        private static int max;
-
-        public static DateTime Started
-        {
-            get
-            {
-                return started;
-            }
-            set
-            {
-                started = value;
-            }
-        }
-
-        public static int Max
-        {
-            get
-            {
-                return max;
-            }
-            set
-            {
-                max = value;
-            }
-        }
-
-        private static List<ChatMessage> messages;
-        private static Dictionary<String, ChatVisitor> _visitors;
-
-        private static Core.Services.ChatService _chatService;
-        public static Core.Services.ChatService chatService
-        {
-            get
-            {
-                if (_chatService == null)
-                {
-                    _chatService = new Core.Services.ChatService(new Infrastructure.Data.EfQueryChats());
-                }
-                return _chatService;
-            }
-            set
-            {
-                _chatService = value;
-            }
-        }
-
-        private static Core.Services.BlockService _blockService;
-        public static Core.Services.BlockService blockService
-        {
-            get
-            {
-                if (_blockService == null)
-                {
-                    _blockService = new Core.Services.BlockService(new Infrastructure.Data.EfQueryBlocks());
-                }
-                return _blockService;
-            }
-            set
-            {
-                _blockService = value;
-            }
-        }
-
-        public static List<ChatMessage> Messages
-        {
-            get
-            {
-                if (messages == null)
-                {
-                    messages = new List<ChatMessage>();
-
-                    _chatService = new Core.Services.ChatService(new Infrastructure.Data.EfQueryChats());
-
-                    List<Core.Model.Chat> database_chats = new List<Core.Model.Chat>();
-                    database_chats = _chatService.PopulateChatMessagesFromDatabase("1");
-                    
-                    foreach (Core.Model.Chat msg in database_chats)
-                    {
-                        ChatMessage new_mgs = new ChatMessage();
-                        new_mgs.Room = msg.Room;
-                        new_mgs.ChatDate = msg.ChatDate;
-                        new_mgs.Message = msg.Message;
-                        new_mgs.Nick = msg.Nick;
-                        new_mgs.StoredInDB = true;
-                        Messages.Add(new_mgs);
-                    }
-
-                    ChatMessage reboot = new ChatMessage();
-                    reboot.ChatDate = DateTime.UtcNow;
-                    reboot.Room = "1";
-                    reboot.Nick = "chatbot";
-                    reboot.Message = "The server was rebooted. If it's acting weird, it's seth's fault.";
-                    reboot.StoredInDB = false;
-                    Messages.Add(reboot);                    
-                }
-                return messages;
-            }
-            set
-            {
-                messages = value;
-
-                // now we just want to check to make sure that
-                // there are not more than 200 chat messages
-                // per room... if there are,
-                // we want to remove the oldest ones
-
-
-                // how processing intensive is this?
-                // it's probably way worse to just
-                // take up tons of memory... but this may be slow too
-                // -- whatever, gogogogo
-
-                // steps:
-                // - get list of rooms in use
-                // - loop through each room in use
-                //     - get count of messages in room
-                //     - remove oldest if there are more than 200 in each room
-
-                List<String> room_list = (from m in messages select m.Room).Distinct().ToList();
-
-                foreach (string room in room_list)
-                {
-                    int message_count = getRoomMessageCount(room);
-
-                    while (getRoomMessageCount(room) > 200)
-                    {
-                        // remove oldest from the room
-                        ChatMessage oldest = (from m in messages where m.Room.Equals(room) orderby m.ChatDate ascending select m).FirstOrDefault();
-
-                        if(oldest != null) {
-                            messages.Remove(oldest);
-                        }
-                    }
-
-                }
-
-            }
-        }
-
-
-        public static int getRoomMessageCount(string room)
-        {
-            return (from m in messages where m.Room.Equals(room) select m).Count();
-        }
-
-        public static Dictionary<String, ChatVisitor> Visitors
-        {
-            get
-            {
-                if (_visitors == null)
-                {
-                    _visitors = new Dictionary<String,ChatVisitor>();
-                }
-                return _visitors;
-            }
-            set
-            {
-                _visitors = value;
-            }
-        }
-
-        public void LeaveAndJoinGroup(string room)
-        {
-
-            // get the current user
-            ChatVisitor current_user = Visitors[Context.ConnectionId];
-
-            // send a message to that group that the user has left
-            ChatMessage chat = new ChatMessage();
-            chat.ChatDate = DateTime.UtcNow;
-            chat.Message = current_user.Handle + " left this room and joined room #" + room + ". Type <b>/join " + room + "</b> to do the same.";
-            chat.Room = current_user.Room;
-            chat.Nick = "Left";
-
-            Clients.OthersInGroup(current_user.Room).addMessage(chat);
-
-            Messages.Add(chat);
-
-            // leave the user's current room
-            Groups.Remove(current_user.ConnectionId, current_user.Room);
-
-            // tell the client to clear it's history
-            ChatMessage reset = new ChatMessage();
-            reset.Room = "reset-channel";
-            Clients.Caller.addMessage(reset);
-
-            // join the new room
-            JoinGroup(room);
-
-        }
-
-        public void AnnounceRestart()
-        {
-            Clients.All.errorMessage("The server was rebooted. You may need to refresh this page.");
-        }
-
-        public void JoinGroup(string room)
-        {
-
-            if(Visitors.ContainsKey(Context.ConnectionId) == false) {
-                Debug.Print("Phantom user tried to connect.");
-                return;
-            }
-
-            // get the current user
-            ChatVisitor current_user = Visitors[Context.ConnectionId];
-
-            current_user.Room = room;
-
-            ChatMessage announced = new ChatMessage();
-            announced.Nick = "Joined:";
-            announced.Message = current_user.Handle;
-            announced.ChatDate = DateTime.UtcNow;
-            announced.Room = room; // well this seems silly, but want to make sure numbers work
-
-            // add to the group
-            Groups.Add(Context.ConnectionId, room);
-
-            // send the message to the group about the new person
-            Clients.OthersInGroup(room).addMessage(announced);
-
-            StringBuilder who_is_here = new StringBuilder();
-            List<ChatVisitor> people_in_room = (from m in Visitors.Values where m.Room.Equals(room) select m).ToList();
-            foreach (ChatVisitor nick in people_in_room)
-            {
-                who_is_here.Append(nick.Handle + ", ");
-            }
-            who_is_here.Remove(who_is_here.Length - 2, 2);
-
-            ChatMessage chat = new ChatMessage();
-            chat.Nick = "In chat room " + room + ":";
-            chat.Message = who_is_here.ToString();
-            chat.ChatDate = DateTime.UtcNow;
-
-            List<ChatMessage> chat_backlog = new List<ChatMessage>();
-            chat_backlog = (from m in Messages where m.Room.Equals(room) orderby m.ChatDate descending select m).Take(200).ToList();
-            chat_backlog.Reverse();
-
-            chat_backlog.Add(chat);
-
-            Clients.Caller.addBacklog(chat_backlog);
-
-            Messages.Add(announced);
-
-        }
-
-        public void Join(string name)
-        {
-
-            String user_ip = HttpContext.Current.Request.UserHostAddress;
-
-            List<Block> blocked_ips = blockService.getBlocks(blockType.blockIP, blockWhat.blockChat);
-
-            if((from m in blocked_ips select m.Value).Contains(user_ip)) {
-                Clients.Caller.errorMessage("You are in timeout.");
-                return;
-            }
-
-
-            if (name == null) { return; }
-
-            // check to see if a user with this name is on the chat
-            ChatVisitor existing_user = (from m in Visitors.Values where m.Handle.Equals(name) select m).FirstOrDefault();
-            
-            // check to see if this connection id already has a user associated with it...
-
-            if (existing_user != null)
-            {
-
-                // allow the person back in with this new name, but
-                // update the connection id
-
-                // BUT ONLY ... IF... that old connection no longer exists?
-
-                String previous_id = existing_user.ConnectionId;
-
-                // remove the old id, we're going to 
-                // add a new one after this
-                Visitors.Remove(previous_id);
-
-                existing_user.ConnectionId = Context.ConnectionId;
-
-                Visitors.Add(Context.ConnectionId, existing_user);
-
-                //Clients.Client(previous_id).errorMessage("Someone else has reconnected with your name. This session has been disconnected.");
-
-                 // let's send the connection a message just
-                // in case it is still active
-                ChatMessage join_error = new ChatMessage();
-                join_error.Nick = "chatbot";
-                join_error.Message = existing_user.Handle + " reconnected.";
-
-                Clients.AllExcept(existing_user.ConnectionId).addMessage(join_error);
-
-            }
-
-            Clients.Caller.enterChat(1);
-
-            // create a new user
-            ChatVisitor chatter = new ChatVisitor();
-            chatter.ConnectionId = Context.ConnectionId;
-            chatter.Handle = name;
-            chatter.Room = "1";
-            chatter.IP = user_ip;
-
-            if (Visitors == null)
-            {
-                Debug.Print("Visitors was null.");
-            }
-
-            if (chatter == null || chatter.ConnectionId == null)
-            {
-                Debug.Print("Chatter or chatter.connectionId was null");
-            }
-
-            if (Visitors.ContainsKey(chatter.ConnectionId))
-            {
-                // this really shouldn't happen, but it seems to happen
-                // after a reboot
-                Visitors[chatter.ConnectionId] = chatter;
-            } else {
-
-                try
-                {
-                    Visitors.Add(chatter.ConnectionId, chatter);
-                } catch(Exception ex) {
-                    //Visitors.Add(chatter.ConnectionId, chatter);
-                }
-
-            }
-
-            JoinGroup("1");
-
-            if (Max < Visitors.Count) { Max = Visitors.Count; }
-
-            if (Started == null)
-            {
-                Started = DateTime.UtcNow;
-            }
-
-            TimeSpan uptime = DateTime.Now - Started;
-            Clients.Group("admins").addMessage(String.Format("{0} active users. {1} max users. uptime is {2}", Visitors.Count, Max, uptime.Hours + " hours, " + uptime.Minutes + " minutes."));
-
-        }
-
-        public void UpdateDatabase()
-        {
-
-            List<ChatMessage> temp_messages = new List<ChatMessage>(Messages);
-
-            foreach (ChatMessage msg in temp_messages)
-            {
-
-                if (msg.StoredInDB == false)
-                {
-                    Core.Model.Chat chat = new Core.Model.Chat();
-                    chat.ChatDate = msg.ChatDate;
-                    chat.Message = msg.Message;
-                    chat.Nick = msg.Nick;
-                    chat.Room = msg.Room;
-                    chat.IP = msg.IP;
-                    _chatService.AddChatToDatabase(chat);
-                    msg.StoredInDB = true;
-                }
-
-            }
-
-            Messages = temp_messages;
-        
-        }
-
-        public void Send(string message)
-        {
-
-            String user_ip = HttpContext.Current.Request.UserHostAddress;
-
-            List<Block> blocked_ips = blockService.getBlocks(blockType.blockIP, blockWhat.blockChat);
-
-            if ((from m in blocked_ips select m.Value).Contains(user_ip))
-            {
-                Clients.Caller.errorMessage("You are in timeout.");
-                return;
-            }
-
-
-            ChatMessage error = new ChatMessage();
-            error.ChatDate = DateTime.UtcNow;
-            error.Nick = "";
-
-            // ignore blank messages and long messages
-            if (message.Length == 0)
-            {
-                return;
-            }
-
-            if (message.Length > 2000)
-            {
-                error.Message = "Message was too long.";
-                Clients.Caller.addMessage(error);
-                return;
-            }
-
-            // get the current user
-            ChatVisitor current_user;
-            bool get_user = Visitors.TryGetValue(Context.ConnectionId, out current_user);
-
-
-            if (get_user == false)
-            {
-                error.Message = "Can't find user.";
-                Clients.Caller.addMessage(error);
-                return;
-            }
-
-
-            ChatMessage chat_1 = new ChatMessage();
-            ChatMessage chat = new ChatMessage();
-            chat.Nick = current_user.Handle + ":";
-            chat.Message = message;
-            chat.ChatDate = DateTime.UtcNow;
-            chat.StoredInDB = false;
-            chat.Room = current_user.Room;
-            chat.IP = HttpContext.Current.Request.UserHostAddress;
-
-            bool handled = false;
-
-            //
-            //
-            // COMMAND HANDLER!!!!
-            //  - available commands:
-            //    1: /join n             # where n is a number less than 10, join a room
-            //
-
-            if (message.StartsWith("/join"))
-            {
-
-                string room = message.Replace("/join ", "");
-                int room_number;
-                if (int.TryParse(room, out room_number) == false)
-                {
-                    room_number = 1;
-                    error.Message = "Unable to join room. Not a valid room number: <b>" + room + "</b>.";
-                    Clients.Caller.addMessage(error);
-                    handled = true;
-                }
-                else
-                {
-                    LeaveAndJoinGroup(room_number.ToString());
-                    handled = true;
-                }
-
-            }
-
-            if (message.StartsWith("/ask "))
-            {
-
-                message = message.Replace("/ask ", "");
-
-                List<String> magic_8_ball = new List<String>();
-                magic_8_ball.Add("It is certain");
-                magic_8_ball.Add("It is decidedly so");
-                magic_8_ball.Add("Without a doubt");
-                magic_8_ball.Add("Yes, definitely");
-                magic_8_ball.Add("You may rely on it");
-                magic_8_ball.Add("As I see it, yes");
-                magic_8_ball.Add("Most likely");
-                magic_8_ball.Add("Outlook is good");
-                magic_8_ball.Add("Yes");
-                magic_8_ball.Add("Signs point to yes");
-
-                magic_8_ball.Add("Reply hazy, try again");
-                magic_8_ball.Add("Ask again later");
-                magic_8_ball.Add("Better not tell you now");
-                magic_8_ball.Add("Cannot predict now");
-                magic_8_ball.Add("Concentrate and ask again");
-
-
-                magic_8_ball.Add("Don't count on it");
-                magic_8_ball.Add("My reply is no");
-                magic_8_ball.Add("My sources say no");
-                magic_8_ball.Add("Outlook not so good");
-                magic_8_ball.Add("Very doubtful");
-
-                chat_1.Nick = "chatbot";
-                chat_1.Message = current_user.Handle + " asked the magic 8-ball: " + message;
-                chat_1.ChatDate = DateTime.UtcNow;
-                chat_1.StoredInDB = false;
-                chat_1.Room = current_user.Room;
-
-                // Call the addMessage method on all the clients in the room
-                Clients.Group(current_user.Room).addMessage(chat_1);
-
-                ChatMessage chat_2 = new ChatMessage();
-
-                Random rand = new Random();
-
-                chat_2.Nick = "magic 8 ball";
-                chat_2.Message = "And the answer is: " + magic_8_ball[rand.Next(magic_8_ball.Count)];
-                chat_2.ChatDate = DateTime.UtcNow;
-                chat_2.StoredInDB = false;
-                chat_2.Room = current_user.Room;
-
-                Clients.Group(current_user.Room).addMessage(chat_2);
-
-                Messages.Add(chat_1);
-                Messages.Add(chat_2);
-
-                handled = true;
-            }
-
-            if(message.StartsWith("/stats")) {
-
-                String stats_message = "";
-                String stats_intro = "General stats: ";
-                String check_user = "";
-                chat_1 = new ChatMessage();
-
-                if (message != "/stats")
-                {
-                    check_user = message.Replace("/stats ", "");
-                    stats_intro = "Stats for " + check_user + ": ";
-                }
-
-                message = _chatService.GetStats(check_user);
-                                
-                chat_1.Nick = "chatbot";
-                chat_1.Message = stats_intro + message;
-
-                chat_1.ChatDate = DateTime.UtcNow;
-                chat_1.StoredInDB = false;
-                chat_1.Room = current_user.Room;
-                Clients.Caller.addMessage(chat_1);
-                handled = true;
-
-            }
-
-            if(message.StartsWith("/ips")) {
-                if(HttpContext.Current.User.IsInRole("Mod")) {
-                    ChatMessage ip_line = new ChatMessage();
-                    ip_line.Nick = "chatbot";
-                    ip_line.Message = "Here are the IP address of the " + Visitors.Values.Count + " chatters.";
-                    Clients.Caller.addMessage(ip_line);
-
-                    foreach (ChatVisitor chatter in Visitors.Values)
-                    {
-                        ip_line = new ChatMessage();
-                        ip_line.Message = chatter.IP;
-                        ip_line.Nick = chatter.Handle;
-                        Clients.Caller.addMessage(ip_line);
-                    }
-                } else {
-                    ChatMessage not_mod = new ChatMessage();
-                    not_mod.Nick = "chatbot";
-                    not_mod.Message = "You must be logged into a mod account to run this command.";
-                    Clients.Caller.addMessage(not_mod);
-                }
-                handled = true;
-            }
-
-            if (handled == false)
-            {
-                // Call the addMessage method on all the clients in the room
-                Clients.Group(current_user.Room).addMessage(chat);
-
-                Messages.Add(chat);
-            }
-
-            // every message, update the database
-            UpdateDatabase();
-
-            TimeSpan uptime = DateTime.Now - Started;
-            Clients.Group("admins").addMessage(String.Format("{0} active users. {1} max users. uptime is {2}", Visitors.Count, Max, uptime.Hours + " hours, " + uptime.Minutes + " minutes."));
-
-
-        }
-
-        public void Admin(string password)
-        {
-            if (password == "lolcats")
-            {
-                Groups.Add(Context.ConnectionId, "admins");
-                Clients.Caller.addBacklog(Messages);
-                TimeSpan uptime = DateTime.Now - Started;
-                Clients.Caller.addMessage(String.Format("{0} active users. {1} max users. uptime is {2}", Visitors.Count, Max, uptime.Hours + " hours, " + uptime.Minutes + " minutes."));
-
-            }
-        }
-
-        public override Task OnConnected()
-        {
-            return Clients.All.joined(Context.ConnectionId, DateTime.Now.ToString());
-        }
-
-        public override Task OnDisconnected()
-        {
-
-            // get the current user
-            ChatVisitor current_user;
-            bool get_user = Visitors.TryGetValue(Context.ConnectionId, out current_user);
-
-            if (get_user == true)
-            {
-
-                ChatMessage chat = new ChatMessage();
-                chat.Nick = "Left:";
-                chat.Message = current_user.Handle;
-                chat.ChatDate = DateTime.UtcNow;
-                chat.Room = current_user.Room; // not sure this is necessary when sending to client
-
-                Clients.Group(current_user.Room).addMessage(chat);
-
-                Messages.Add(chat);
-                Visitors.Remove(current_user.ConnectionId);
-
-                TimeSpan uptime = DateTime.Now - Started;
-                Clients.Group("admins").addMessage(String.Format("{0} active users. {1} max users. uptime is {2}", Visitors.Count, Max, uptime.Hours + " hours, " + uptime.Minutes + " minutes."));
-
-            }
-
-            return Clients.All.leave(Context.ConnectionId, DateTime.Now.ToString());
-        }
-
-        public override Task OnReconnected()
-        {
-            return Clients.All.rejoined(Context.ConnectionId, DateTime.Now.ToString());
-        }
-
-    }
-
     public class Visitor
     {
         public string Connection_Id { get; set; }
@@ -843,6 +210,26 @@ namespace letterstocrushes
 
             Connection_Ids.Remove(Context.ConnectionId);
 
+            // get the current user
+            ChatVisitor current_user;
+            bool get_user = Visitors.TryGetValue(Context.ConnectionId, out current_user);
+
+            if (get_user == true)
+            {
+
+                ChatMessage chat = new ChatMessage();
+                chat.Nick = "Left:";
+                chat.Message = current_user.Handle;
+                chat.ChatDate = DateTime.UtcNow;
+                chat.Room = current_user.Room; // not sure this is necessary when sending to client
+
+                Clients.Group(current_user.Room).addMessage(chat);
+
+                Messages.Add(chat);
+                Visitors.Remove(current_user.ConnectionId);
+
+            }
+
             TimeSpan uptime = DateTime.Now - Started;
             Clients.Group("admins").addMessage(String.Format("{0} active users. {1} max users. uptime is {2}", Connection_Ids.Count, Max, uptime.Hours + " hours, " + uptime.Minutes + " minutes."));
 
@@ -857,6 +244,567 @@ namespace letterstocrushes
             } else {
                 return Clients.All.joined(Context.ConnectionId, DateTime.Now.ToString());
             }
+
+        }
+
+        private static List<ChatMessage> messages;
+        private static Dictionary<String, ChatVisitor> _visitors;
+
+        private static Core.Services.ChatService _chatService;
+        public static Core.Services.ChatService chatService
+        {
+            get
+            {
+                if (_chatService == null)
+                {
+                    _chatService = new Core.Services.ChatService(new Infrastructure.Data.EfQueryChats());
+                }
+                return _chatService;
+            }
+            set
+            {
+                _chatService = value;
+            }
+        }
+
+        private static Core.Services.BlockService _blockService;
+        public static Core.Services.BlockService blockService
+        {
+            get
+            {
+                if (_blockService == null)
+                {
+                    _blockService = new Core.Services.BlockService(new Infrastructure.Data.EfQueryBlocks());
+                }
+                return _blockService;
+            }
+            set
+            {
+                _blockService = value;
+            }
+        }
+
+        public static List<ChatMessage> Messages
+        {
+            get
+            {
+                if (messages == null)
+                {
+                    messages = new List<ChatMessage>();
+
+                    _chatService = new Core.Services.ChatService(new Infrastructure.Data.EfQueryChats());
+
+                    List<Core.Model.Chat> database_chats = new List<Core.Model.Chat>();
+                    database_chats = _chatService.PopulateChatMessagesFromDatabase("1");
+
+                    foreach (Core.Model.Chat msg in database_chats)
+                    {
+                        ChatMessage new_mgs = new ChatMessage();
+                        new_mgs.Room = msg.Room;
+                        new_mgs.ChatDate = msg.ChatDate;
+                        new_mgs.Message = msg.Message;
+                        new_mgs.Nick = msg.Nick;
+                        new_mgs.StoredInDB = true;
+                        Messages.Add(new_mgs);
+                    }
+
+                    ChatMessage reboot = new ChatMessage();
+                    reboot.ChatDate = DateTime.UtcNow;
+                    reboot.Room = "1";
+                    reboot.Nick = "chatbot";
+                    reboot.Message = "The server was rebooted. If it's acting weird, it's seth's fault.";
+                    reboot.StoredInDB = false;
+                    Messages.Add(reboot);
+                }
+                return messages;
+            }
+            set
+            {
+                messages = value;
+
+                // now we just want to check to make sure that
+                // there are not more than 200 chat messages
+                // per room... if there are,
+                // we want to remove the oldest ones
+
+
+                // how processing intensive is this?
+                // it's probably way worse to just
+                // take up tons of memory... but this may be slow too
+                // -- whatever, gogogogo
+
+                // steps:
+                // - get list of rooms in use
+                // - loop through each room in use
+                //     - get count of messages in room
+                //     - remove oldest if there are more than 200 in each room
+
+                List<String> room_list = (from m in messages select m.Room).Distinct().ToList();
+
+                foreach (string room in room_list)
+                {
+                    int message_count = getRoomMessageCount(room);
+
+                    while (getRoomMessageCount(room) > 200)
+                    {
+                        // remove oldest from the room
+                        ChatMessage oldest = (from m in messages where m.Room.Equals(room) orderby m.ChatDate ascending select m).FirstOrDefault();
+
+                        if (oldest != null)
+                        {
+                            messages.Remove(oldest);
+                        }
+                    }
+
+                }
+
+            }
+        }
+
+        public static int getRoomMessageCount(string room)
+        {
+            return (from m in messages where m.Room.Equals(room) select m).Count();
+        }
+
+        public static Dictionary<String, ChatVisitor> Visitors
+        {
+            get
+            {
+                if (_visitors == null)
+                {
+                    _visitors = new Dictionary<String, ChatVisitor>();
+                }
+                return _visitors;
+            }
+            set
+            {
+                _visitors = value;
+            }
+        }
+
+        public void LeaveAndJoinGroup(string room)
+        {
+
+            // get the current user
+            ChatVisitor current_user = Visitors[Context.ConnectionId];
+
+            // send a message to that group that the user has left
+            ChatMessage chat = new ChatMessage();
+            chat.ChatDate = DateTime.UtcNow;
+            chat.Message = current_user.Handle + " left this room and joined room #" + room + ". Type <b>/join " + room + "</b> to do the same.";
+            chat.Room = current_user.Room;
+            chat.Nick = "Left";
+
+            Clients.OthersInGroup(current_user.Room).addMessage(chat);
+
+            Messages.Add(chat);
+
+            // leave the user's current room
+            Groups.Remove(current_user.ConnectionId, current_user.Room);
+
+            // tell the client to clear it's history
+            ChatMessage reset = new ChatMessage();
+            reset.Room = "reset-channel";
+            Clients.Caller.addMessage(reset);
+
+            // join the new room
+            JoinGroup(room);
+
+        }
+
+        public void AnnounceRestart()
+        {
+            Clients.All.errorMessage("The server was rebooted. You may need to refresh this page.");
+        }
+
+        public void JoinGroup(string room)
+        {
+
+            if (Visitors.ContainsKey(Context.ConnectionId) == false)
+            {
+                Debug.Print("Phantom user tried to connect.");
+                return;
+            }
+
+            // get the current user
+            ChatVisitor current_user = Visitors[Context.ConnectionId];
+
+            current_user.Room = room;
+
+            ChatMessage announced = new ChatMessage();
+            announced.Nick = "Joined:";
+            announced.Message = current_user.Handle;
+            announced.ChatDate = DateTime.UtcNow;
+            announced.Room = room; // well this seems silly, but want to make sure numbers work
+
+            // add to the group
+            Groups.Add(Context.ConnectionId, room);
+
+            // send the message to the group about the new person
+            Clients.OthersInGroup(room).addMessage(announced);
+
+            StringBuilder who_is_here = new StringBuilder();
+            List<ChatVisitor> people_in_room = (from m in Visitors.Values where m.Room.Equals(room) select m).ToList();
+            foreach (ChatVisitor nick in people_in_room)
+            {
+                who_is_here.Append(nick.Handle + ", ");
+            }
+            who_is_here.Remove(who_is_here.Length - 2, 2);
+
+            ChatMessage chat = new ChatMessage();
+            chat.Nick = "In chat room " + room + ":";
+            chat.Message = who_is_here.ToString();
+            chat.ChatDate = DateTime.UtcNow;
+
+            List<ChatMessage> chat_backlog = new List<ChatMessage>();
+            chat_backlog = (from m in Messages where m.Room.Equals(room) orderby m.ChatDate descending select m).Take(200).ToList();
+            chat_backlog.Reverse();
+
+            chat_backlog.Add(chat);
+
+            Clients.Caller.addBacklog(chat_backlog);
+
+            Messages.Add(announced);
+
+        }
+
+        public void Join(string name)
+        {
+
+            String user_ip = HttpContext.Current.Request.UserHostAddress;
+
+            List<Block> blocked_ips = blockService.getBlocks(blockType.blockIP, blockWhat.blockChat);
+
+            if ((from m in blocked_ips select m.Value).Contains(user_ip))
+            {
+                Clients.Caller.errorMessage("You are in timeout.");
+                return;
+            }
+
+
+            if (name == null) { return; }
+
+            // check to see if a user with this name is on the chat
+            ChatVisitor existing_user = (from m in Visitors.Values where m.Handle.Equals(name) select m).FirstOrDefault();
+
+            // check to see if this connection id already has a user associated with it...
+
+            if (existing_user != null)
+            {
+
+                // allow the person back in with this new name, but
+                // update the connection id
+
+                // BUT ONLY ... IF... that old connection no longer exists?
+
+                String previous_id = existing_user.ConnectionId;
+
+                // remove the old id, we're going to 
+                // add a new one after this
+                Visitors.Remove(previous_id);
+
+                existing_user.ConnectionId = Context.ConnectionId;
+
+                Visitors.Add(Context.ConnectionId, existing_user);
+
+                //Clients.Client(previous_id).errorMessage("Someone else has reconnected with your name. This session has been disconnected.");
+
+                // let's send the connection a message just
+                // in case it is still active
+                ChatMessage join_error = new ChatMessage();
+                join_error.Nick = "chatbot";
+                join_error.Message = existing_user.Handle + " reconnected.";
+
+                Clients.AllExcept(existing_user.ConnectionId).addMessage(join_error);
+
+            }
+
+            Clients.Caller.enterChat(1);
+
+            // create a new user
+            ChatVisitor chatter = new ChatVisitor();
+            chatter.ConnectionId = Context.ConnectionId;
+            chatter.Handle = name;
+            chatter.Room = "1";
+            chatter.IP = user_ip;
+
+            if (Visitors == null)
+            {
+                Debug.Print("Visitors was null.");
+            }
+
+            if (chatter == null || chatter.ConnectionId == null)
+            {
+                Debug.Print("Chatter or chatter.connectionId was null");
+            }
+
+            if (Visitors.ContainsKey(chatter.ConnectionId))
+            {
+                // this really shouldn't happen, but it seems to happen
+                // after a reboot
+                Visitors[chatter.ConnectionId] = chatter;
+            }
+            else
+            {
+
+                try
+                {
+                    Visitors.Add(chatter.ConnectionId, chatter);
+                }
+                catch (Exception ex)
+                {
+                    //Visitors.Add(chatter.ConnectionId, chatter);
+                }
+
+            }
+
+            JoinGroup("1");
+
+            if (Max < Visitors.Count) { Max = Visitors.Count; }
+
+            if (Started == null)
+            {
+                Started = DateTime.UtcNow;
+            }
+
+            TimeSpan uptime = DateTime.Now - Started;
+            Clients.Group("admins").addMessage(String.Format("{0} active users. {1} max users. uptime is {2}", Visitors.Count, Max, uptime.Hours + " hours, " + uptime.Minutes + " minutes."));
+
+        }
+
+        public void UpdateDatabase()
+        {
+
+            List<ChatMessage> temp_messages = new List<ChatMessage>(Messages);
+
+            foreach (ChatMessage msg in temp_messages)
+            {
+
+                if (msg.StoredInDB == false)
+                {
+                    Core.Model.Chat chat = new Core.Model.Chat();
+                    chat.ChatDate = msg.ChatDate;
+                    chat.Message = msg.Message;
+                    chat.Nick = msg.Nick;
+                    chat.Room = msg.Room;
+                    chat.IP = msg.IP;
+                    _chatService.AddChatToDatabase(chat);
+                    msg.StoredInDB = true;
+                }
+
+            }
+
+            Messages = temp_messages;
+
+        }
+
+        public void SendChat(string message)
+        {
+
+            String user_ip = HttpContext.Current.Request.UserHostAddress;
+
+            List<Block> blocked_ips = blockService.getBlocks(blockType.blockIP, blockWhat.blockChat);
+
+            if ((from m in blocked_ips select m.Value).Contains(user_ip))
+            {
+                Clients.Caller.errorMessage("You are in timeout.");
+                return;
+            }
+
+
+            ChatMessage error = new ChatMessage();
+            error.ChatDate = DateTime.UtcNow;
+            error.Nick = "";
+
+            // ignore blank messages and long messages
+            if (message.Length == 0)
+            {
+                return;
+            }
+
+            if (message.Length > 2000)
+            {
+                error.Message = "Message was too long.";
+                Clients.Caller.addMessage(error);
+                return;
+            }
+
+            // get the current user
+            ChatVisitor current_user;
+            bool get_user = Visitors.TryGetValue(Context.ConnectionId, out current_user);
+
+
+            if (get_user == false)
+            {
+                error.Message = "Can't find user.";
+                Clients.Caller.addMessage(error);
+                return;
+            }
+
+
+            ChatMessage chat_1 = new ChatMessage();
+            ChatMessage chat = new ChatMessage();
+            chat.Nick = current_user.Handle + ":";
+            chat.Message = message;
+            chat.ChatDate = DateTime.UtcNow;
+            chat.StoredInDB = false;
+            chat.Room = current_user.Room;
+            chat.IP = HttpContext.Current.Request.UserHostAddress;
+
+            bool handled = false;
+
+            //
+            //
+            // COMMAND HANDLER!!!!
+            //  - available commands:
+            //    1: /join n             # where n is a number less than 10, join a room
+            //
+
+            if (message.StartsWith("/join"))
+            {
+
+                string room = message.Replace("/join ", "");
+                int room_number;
+                if (int.TryParse(room, out room_number) == false)
+                {
+                    room_number = 1;
+                    error.Message = "Unable to join room. Not a valid room number: <b>" + room + "</b>.";
+                    Clients.Caller.addMessage(error);
+                    handled = true;
+                }
+                else
+                {
+                    LeaveAndJoinGroup(room_number.ToString());
+                    handled = true;
+                }
+
+            }
+
+            if (message.StartsWith("/ask "))
+            {
+
+                message = message.Replace("/ask ", "");
+
+                List<String> magic_8_ball = new List<String>();
+                magic_8_ball.Add("It is certain");
+                magic_8_ball.Add("It is decidedly so");
+                magic_8_ball.Add("Without a doubt");
+                magic_8_ball.Add("Yes, definitely");
+                magic_8_ball.Add("You may rely on it");
+                magic_8_ball.Add("As I see it, yes");
+                magic_8_ball.Add("Most likely");
+                magic_8_ball.Add("Outlook is good");
+                magic_8_ball.Add("Yes");
+                magic_8_ball.Add("Signs point to yes");
+
+                magic_8_ball.Add("Reply hazy, try again");
+                magic_8_ball.Add("Ask again later");
+                magic_8_ball.Add("Better not tell you now");
+                magic_8_ball.Add("Cannot predict now");
+                magic_8_ball.Add("Concentrate and ask again");
+
+
+                magic_8_ball.Add("Don't count on it");
+                magic_8_ball.Add("My reply is no");
+                magic_8_ball.Add("My sources say no");
+                magic_8_ball.Add("Outlook not so good");
+                magic_8_ball.Add("Very doubtful");
+
+                chat_1.Nick = "chatbot";
+                chat_1.Message = current_user.Handle + " asked the magic 8-ball: " + message;
+                chat_1.ChatDate = DateTime.UtcNow;
+                chat_1.StoredInDB = false;
+                chat_1.Room = current_user.Room;
+
+                // Call the addMessage method on all the clients in the room
+                Clients.Group(current_user.Room).addMessage(chat_1);
+
+                ChatMessage chat_2 = new ChatMessage();
+
+                Random rand = new Random();
+
+                chat_2.Nick = "magic 8 ball";
+                chat_2.Message = "And the answer is: " + magic_8_ball[rand.Next(magic_8_ball.Count)];
+                chat_2.ChatDate = DateTime.UtcNow;
+                chat_2.StoredInDB = false;
+                chat_2.Room = current_user.Room;
+
+                Clients.Group(current_user.Room).addMessage(chat_2);
+
+                Messages.Add(chat_1);
+                Messages.Add(chat_2);
+
+                handled = true;
+            }
+
+            if (message.StartsWith("/stats"))
+            {
+
+                String stats_message = "";
+                String stats_intro = "General stats: ";
+                String check_user = "";
+                chat_1 = new ChatMessage();
+
+                if (message != "/stats")
+                {
+                    check_user = message.Replace("/stats ", "");
+                    stats_intro = "Stats for " + check_user + ": ";
+                }
+
+                message = _chatService.GetStats(check_user);
+
+                chat_1.Nick = "chatbot";
+                chat_1.Message = stats_intro + message;
+
+                chat_1.ChatDate = DateTime.UtcNow;
+                chat_1.StoredInDB = false;
+                chat_1.Room = current_user.Room;
+                Clients.Caller.addMessage(chat_1);
+                handled = true;
+
+            }
+
+            if (message.StartsWith("/ips"))
+            {
+                if (HttpContext.Current.User.IsInRole("Mod"))
+                {
+                    ChatMessage ip_line = new ChatMessage();
+                    ip_line.Nick = "chatbot";
+                    ip_line.Message = "Here are the IP address of the " + Visitors.Values.Count + " chatters.";
+                    Clients.Caller.addMessage(ip_line);
+
+                    foreach (ChatVisitor chatter in Visitors.Values)
+                    {
+                        ip_line = new ChatMessage();
+                        ip_line.Message = chatter.IP;
+                        ip_line.Nick = chatter.Handle;
+                        Clients.Caller.addMessage(ip_line);
+                    }
+                }
+                else
+                {
+                    ChatMessage not_mod = new ChatMessage();
+                    not_mod.Nick = "chatbot";
+                    not_mod.Message = "You must be logged into a mod account to run this command.";
+                    Clients.Caller.addMessage(not_mod);
+                }
+                handled = true;
+            }
+
+            if (handled == false)
+            {
+                // Call the addMessage method on all the clients in the room
+                Clients.Group(current_user.Room).addMessage(chat);
+
+                Messages.Add(chat);
+            }
+
+            // every message, update the database
+            UpdateDatabase();
+
+            TimeSpan uptime = DateTime.Now - Started;
+            Clients.Group("admins").addMessage(String.Format("{0} active users. {1} max users. uptime is {2}", Visitors.Count, Max, uptime.Hours + " hours, " + uptime.Minutes + " minutes."));
+
 
         }
 
