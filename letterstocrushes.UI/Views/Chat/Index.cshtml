@@ -90,6 +90,9 @@
             // before we make the chat client
 
             function updateMessage(message, loading) {
+
+                console.log(message);
+
                 var output_message = '<table class="message"><tr>';
                 
                 var chat_date = message.ChatDate;
@@ -120,7 +123,7 @@
             function joinChat() {
 
                 // Proxy created on the fly          
-                chat = $.connection.chat;
+                chat = $.connection.visitorUpdate;
 
                 // let's just show the stuff right away
                 $("#name").hide();
@@ -231,7 +234,7 @@
 
                             var chat_message = $("#entry").val();
 
-                            chat.server.send($('#entry').val());
+                            chat.server.sendChat($('#entry').val());
                             $("#entry").val("");
                             message_counter = -1;
 
@@ -240,16 +243,6 @@
                         }
                     })
 
-                    $("#broadcast").click(function () {
-
-                        var chat_message = $("#entry").val();
-
-                        // Call the chat method on the server
-                        chat.server.send($('#entry').val());
-                        $("#entry").val("");
-                        message_counter = -1;
-                        updatePageTitle();
-                    });
                 });
 
                 //event.preventDefault();
