@@ -104,6 +104,14 @@ namespace letterstocrushes.Core.Services
                 return;
             }
 
+            // /connect.masslive.com
+
+            if (comment.commentMessage != null && comment.commentMessage.Contains("connect.masslive.com"))
+            {
+                _mailService.SendContact("connect.masslive.com spam shut down.", "seth.hayward@gmail.com");
+                return;
+            }
+
             //
             // sanitize the input
             //
