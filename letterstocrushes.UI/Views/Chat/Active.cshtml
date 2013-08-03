@@ -19,7 +19,6 @@
     <script type="text/javascript">
         $(function () {
 
-            var chat_update;
             var visitor_update;
 
             // first we want to get the user's name
@@ -27,18 +26,13 @@
 
             // Proxy created on the fly          
             visitor_update = $.connection.visitorUpdate;
-            chat_update = $.connection.chat;
 
             // Declare a function on the chat hub so the server can invoke it          
             visitor_update.client.addMessage = function (message) {
-                $('#voting').html(message);
-            };
-
-            chat_update.client.addMessage = function (message) {
                 $('#chat').html(message);
             };
 
-            chat_update.client.addBacklog = function (messages) {
+            visitor_update.client.addBacklog = function (messages) {
                 for (var i = 0; i < messages.length; i++) {
                     $("#backlog").append("<li>[room " + messages[i].Room + "] " + messages[i].Nick + " " + messages[i].Message);
                 }
@@ -47,7 +41,6 @@
             // Start the connection
             $.connection.hub.start().done(function () {
                 visitor_update.server.admin("lolcats");
-                chat_update.server.admin("lolcats");
             });
 
         });
@@ -56,11 +49,10 @@
 </head>
 <body>
 
-    <h4>voting</h4>
-    <p><span id="voting">0</span></p>
-    <h4>chat</h4>
+    <h4>visitors</h4>
     <p><span id="chat">0</span></p>
 
+    <h4>chat history</h4>
     <ul id="backlog">
 
     </ul>
