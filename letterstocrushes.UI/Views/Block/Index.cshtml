@@ -62,6 +62,19 @@
         }
     </ul>
 
+    
+    <p>
+        comment ip bans
+    </p>
+    <ul>
+        @foreach (letterstocrushes.Core.Model.Block b in ViewBag.commentsIPban)
+        {
+            <text>
+            <li>@b.Value <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
+            </text>
+        }
+    </ul>
+
     <p>
         chat ip bans
     </p>
