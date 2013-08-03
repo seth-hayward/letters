@@ -186,14 +186,13 @@ namespace letterstocrushes
 
                 TimeSpan uptime = DateTime.Now - Started;
                 Clients.Caller.addMessage(String.Format("{0} active users. {1} max users. uptime is {2}", Connection_Ids.Count, Max, uptime.Hours + " hours, " + uptime.Minutes + " minutes."));
-
+                Clients.Caller.addBacklog(Messages);
             }
         }
 
 
         public void Send(string message)
         {
-            // Call the addMessage method on all clients            
             Clients.All.addMessage(message);
         }
 
@@ -600,6 +599,7 @@ namespace letterstocrushes
 
         public void SendChat(string message)
         {
+            // chat message
 
             String user_ip = HttpContext.Current.Request.UserHostAddress;
 
