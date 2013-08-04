@@ -319,10 +319,13 @@ namespace letterstocrushes
         protected void Application_BeginRequest()
         {
 
-          if (Request.IsLocal)
-          {
-            MiniProfiler.Start();
-          } 
+            string currentUrl = HttpContext.Current.Request.Url.ToString().ToLower();
+            if (currentUrl.StartsWith("http://letterstocrushes.com"))
+            {
+                Response.Status = "301 Moved Permanently";
+                Response.AddHeader("Location", currentUrl.Replace("http://letterstocrushes.com", "http://www.letterstocrushes.com"));
+                Response.End();
+            }
 
         }
 
