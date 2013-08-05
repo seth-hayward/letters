@@ -182,6 +182,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="Content\channel.html" />
     <Content Include="Content\chat.css" />
     <Content Include="Content\comment.png" />
     <Content Include="Content\heart.png" />
