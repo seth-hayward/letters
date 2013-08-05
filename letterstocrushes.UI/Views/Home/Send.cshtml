@@ -2,6 +2,14 @@
     ViewBag.Title = "letters to crushes";
 }
 
+@if (User.Identity.Name == "seth")
+{
+    <text>
+        <script src="@Url.Content("~/Scripts/fb.js")"></script>
+    </text>
+}
+
+
 <div class="letterContainer" id="input">
 
     <div id="sendLetterCopy">
