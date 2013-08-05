@@ -802,8 +802,8 @@ namespace letterstocrushes
             // every message, update the database
             UpdateDatabase();
 
-            TimeSpan uptime = DateTime.Now - Started;
-            Clients.Group("admins").addMessage(String.Format("{0} active users. {1} max users. uptime is {2}", Visitors.Count, Max, uptime.Hours + " hours, " + uptime.Minutes + " minutes."));
+            //TimeSpan uptime = DateTime.Now - Started;
+            //Clients.Group("admins").addMessage(String.Format("{0} active users. {1} max users. uptime is {2}", Visitors.Count, Max, uptime.Hours + " hours, " + uptime.Minutes + " minutes."));
 
 
         }
