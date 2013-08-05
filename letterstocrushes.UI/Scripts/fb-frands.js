@@ -1,15 +1,13 @@
 ﻿// Additional JS functions here
+var oldCB = window.fbAsyncInit;
 window.fbAsyncInit = function () {
-    FB.init({
-        appId: '575199149189657', // App ID
-        channelUrl: '//WWW.crushsongs.COM/Content/channel.html', // Channel File
-        status: true, // check login status
-        cookie: true, // enable cookies to allow the server to access the session
-        xfbml: true  // parse XFBML
-    });
+    if (typeof oldCB === 'function') {
+        oldCB();
+    }
+    //Do Something else here
 
     // Check if the current user is logged in and has authorized the app
-    FB.getLoginStatus(checkLoginStatus);
+    FB.getLoginStatus(checkLoginStatusAndPopulate);
 
     // Login in the current user via Facebook and ask for email permission
     function authUser() {
@@ -18,13 +16,7 @@ window.fbAsyncInit = function () {
 
     function load_dropdown(response) {
 
-        document.getElementById("frands").options.length = 0;
-
-        var oHandler = $('#frands').msDropDown().data("dd");
-        if (oHandler) {
-            oHandler.destroy();
-            console.log(oHandler);
-        }
+        $("#frands").empty();
 
         for (var i = 0; i < response.data.length; i++) {
             $("#frands").append('<option value="' + response.data[i].uid + '" data-image="' + response.data[i].pic_square + '">' + response.data[i].name + '</option>');
@@ -32,6 +24,7 @@ window.fbAsyncInit = function () {
 
         $("#frands").msDropdown({
             visibleRows: 5,
+            rowHeight: 60,
             on: {
                 change: function (data, ui) {
                     $("input[name='toFacebookUID']").val(data.value);
@@ -40,31 +33,25 @@ window.fbAsyncInit = function () {
             }
         });
 
-        // visible row hack...
-        $("#frands").msDropdown().data("dd").open();
-        $("#frands").msDropdown().data("dd").close();
-
-
         $("input[name='toFacebookUID']").val($('#frands').val());
 
-        $("#facebook").fadeIn('fast');
-
     }
+
+    $("#songs").on('click', function () {
+        $("#facebook").show();
+    });
 
     $("#fbSend").on("click", function () {
         alert("to: " + $("input[name='toFacebookUID']").val() + ", from: " + $("input[name='fromFacebookUID']").val());
     });
 
     // Check the result of the user status and display login button if necessary
-    function checkLoginStatus(response) {
+    function checkLoginStatusAndPopulate(response) {
         if (response && response.status == 'connected') {
-
-            // hide login button, they don't need to see it if they're
-            // logged in
-            $("#fb_login_button").hide();
 
             // Now Personalize the User Experience
             console.log('Access Token: ' + response.authResponse.accessToken);
+
             var looking_for = "";
             var fql = "SELECT uid, name, pic_square, sex FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ";
 
@@ -95,6 +82,15 @@ window.fbAsyncInit = function () {
 
                     FB.api('/fql', 'GET', { q: show_fql }, function (response) {
                         if (response && response.data) {
+
+                            // clear list
+                            document.getElementById("frands").options.length = 0;
+
+                            var oHandler = $('#frands').msDropDown().data("dd");
+                            if (oHandler) {
+                                oHandler.destroy();
+                            }
+
                             load_dropdown(response);
                         }
                     });
@@ -113,15 +109,7 @@ window.fbAsyncInit = function () {
 
             // do what now?
         }
+
     }
 
 };
-
-// Load the SDK asynchronously
-(function (d) {
-    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-    if (d.getElementById(id)) { return; }
-    js = d.createElement('script'); js.id = id; js.async = true;
-    js.src = "//connect.facebook.net/en_US/all.js";
-    ref.parentNode.insertBefore(js, ref);
-}(document));
