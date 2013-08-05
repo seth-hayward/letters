@@ -2,7 +2,7 @@
 window.fbAsyncInit = function () {
     FB.init({
         appId: '575199149189657', // App ID
-        channelUrl: '//WWW.crushsongs.COM/Content/channel.html', // Channel File
+        channelUrl: '//WWW.letterstocrushes.COM/Content/channel.html', // Channel File
         status: true, // check login status
         cookie: true, // enable cookies to allow the server to access the session
         xfbml: true  // parse XFBML
