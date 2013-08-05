@@ -46,7 +46,8 @@ david foster wallace and elliott smith.
     @if (User.Identity.Name == "seth")
     {
         <text>
-            <div style="float: right">
+        <script src="@Url.Content("~/Scripts/fb-login.js")"></script>
+            <div style="float: right; padding: 10px">
                 <div id="fb-root"></div>
                 <div id="fb_login_button">
                     <fb:login-button show-faces="false" width="200" max-rows="1"></fb:login-button>
