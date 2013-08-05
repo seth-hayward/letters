@@ -134,19 +134,6 @@ tinyMCE.init({
 
                             $("#perm").html("<a href='@Url.Content("~/letter/")" + result.message + "'>here is a permanent link</a>");
 
-
-                            //
-                            // setup facebook stuff
-                            //
-
-                            @if (User.Identity.Name == "seth")
-                            {
-                                <text>
-                                <script src="@Url.Content("~/Scripts/fb.js")"></script>
-                                </text>
-                            }
-
-
                             $('#input').fadeOut(100, function () { $('#output').fadeIn(100); });
 
                         } else {
