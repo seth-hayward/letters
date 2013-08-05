@@ -5,7 +5,7 @@
 @if (User.Identity.Name == "seth")
 {
     <text>
-        <script src="@Url.Content("~/Scripts/fb.js")"></script>
+        <script src="@Url.Content("~/Scripts/fb-frands.js")"></script>
     </text>
 }
 
@@ -46,6 +46,29 @@
                         <text><li>@Html.ActionLink("and on your bookmarks page", "bookmarks")</li></text>                    
                     }
                 }
+
+
+                @if (User.Identity.Name == "seth")
+                {
+                    <text>
+                <li>Are you Facebook friends with your crush? Tag them and they will see this letter if they login to letters to crushes.
+
+                    <br />
+
+                    <select id="frands" name="frands" style="width: 300px;">
+                    </select>
+                    <input type="button" name="fbSend" id="fbSend" value="save" style="display:none" />
+
+                    <div style="clear: both">
+                        <input type="radio" id="show_men" name="show_gender" value="men" />show men <br />
+                        <input type="radio" id="show_women" name="show_gender" value="women" />show women
+                    </div>
+
+                    <p>They will never see who it was from, unless you tell them.</p>
+                </li>
+
+                    </text>
+                }
             </ul> 
 
 </div>
@@ -73,9 +96,6 @@ tinyMCE.init({
 <script type="text/javascript">
 
     $(document).ready(function () {
-
-        // ensures the optimizely object is defined globally using window.optimizely. 
-        //window.optimizely = window.optimizely || [];
 
         $("#btnSend").click(function() {
 
@@ -113,6 +133,19 @@ tinyMCE.init({
                             //window.optimizely.push(['trackEvent', 'sent_letter']);
 
                             $("#perm").html("<a href='@Url.Content("~/letter/")" + result.message + "'>here is a permanent link</a>");
+
+
+                            //
+                            // setup facebook stuff
+                            //
+
+                            @if (User.Identity.Name == "seth")
+                            {
+                                <text>
+                                <script src="@Url.Content("~/Scripts/fb.js")"></script>
+                                </text>
+                            }
+
 
                             $('#input').fadeOut(100, function () { $('#output').fadeIn(100); });
 
