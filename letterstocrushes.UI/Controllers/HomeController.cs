@@ -437,7 +437,7 @@ namespace letterstocrushes.Controllers
         }
 
         [HttpPost]
-        public JsonResult FacebookLetter(int id, Int64 toFacebookID, Int64 fromFacebookID)
+        public JsonResult facebookLetter(int id, long toFacebookUID, long fromFacebookUID)
         {
             int lucky_id = Convert.ToInt32(id);
 
@@ -466,7 +466,7 @@ namespace letterstocrushes.Controllers
                 check_value = check_cookie.Value;
             }
 
-            Boolean facebooked = _letterService.facebookLetter(lucky_id, toFacebookID, fromFacebookID, userip, check_value, user_name, is_user_mod);
+            Boolean facebooked = _letterService.facebookLetter(lucky_id, toFacebookUID, fromFacebookUID, userip, check_value, user_name, is_user_mod);
 
             if (facebooked == true)
             {
