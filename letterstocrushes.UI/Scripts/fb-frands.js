@@ -42,7 +42,20 @@ window.fbAsyncInit = function () {
     });
 
     $("#fbSend").on("click", function () {
-        alert("to: " + $("input[name='toFacebookUID']").val() + ", from: " + $("input[name='fromFacebookUID']").val());
+        var toFacebookUID =$("input[name='toFacebookUID']").val();
+        var fromFacebookUID = $("input[name='fromFacebookUID']").val();
+
+        $.post("@Url.Content("~/Home/facebookLetter")", {
+            "id": letter_id,
+            "toFacebookUID": toFacebookUID,
+            "fromFacebookUID": fromFacebookUID
+        },
+        function (data) {
+            alert("to: " + toFacebookUID + ", from: " + fromFacebookUID + " - " + data.Message);
+        }, "json").fail(function () {
+            alert("Unable to save the facebook ID's. Sorry, please report this to seth at letters.to.crushes@gmail.com.");
+        });
+
     });
 
     // Check the result of the user status and display login button if necessary

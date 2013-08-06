@@ -94,6 +94,8 @@ tinyMCE.init({
 
 <script type="text/javascript">
 
+    var letter_id = 0;
+
     $(document).ready(function () {
 
         $("#btnSend").click(function() {
@@ -114,21 +116,6 @@ tinyMCE.init({
 
                 var linkid;
 
-
-                var toFacebookUID = 234234;
-                var fromFacebookUID = 1123;
-
-                $.post("@Url.Content("~/Home/facebookLetter")", {
-                    "id": 1,
-                    "toFacebookUID": toFacebookUID,
-                    "fromFacebookUID": fromFacebookUID
-                },
-                  function (data) {
-                      alert("to: " + toFacebookUID + ", from: " + fromFacebookUID + " - " + data.Message);
-                  }, "json").fail(function() {
-                      alert("failed");
-                  });
-
                 $.ajax(
                 {
                     type: "post",
@@ -146,9 +133,11 @@ tinyMCE.init({
                             // event name does not need to be 'pre-registered' 
                             //window.optimizely.push(['trackEvent', 'sent_letter']);
 
+                            letter_id = result.message;
+
                             $("#perm").html("<a href='@Url.Content("~/letter/")" + result.message + "'>here is a permanent link</a>");
 
-                            $('#input').fadeOut(100, function () { $('#output').fadeIn(100); });
+                            $('#input').fadeOut(100, function () { $('#output').fadeIn(100); }); 
 
                         } else {
                             display_errors({ name: 'server error', message: result.message });                            
@@ -167,6 +156,7 @@ tinyMCE.init({
                     }
 
                 });
+
 
             }
             catch (err) {
