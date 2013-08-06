@@ -74,6 +74,8 @@
           <Property Name="senderRegion" Type="varchar" MaxLength="255" />
           <Property Name="senderCity" Type="varchar" MaxLength="45" />
           <Property Name="letterComments" Type="int" />
+          <Property Name="toFacebookUID" Type="bigint" />
+          <Property Name="fromFacebookUID" Type="bigint" />
         </EntityType>
         <EntityType Name="songs">
           <Key>
@@ -98,11 +100,11 @@
           <EntitySet Name="chat_visitors" EntityType="db_mysqlModel.chat_visitors" />
           <EntitySet Name="chats" EntityType="db_mysqlModel.chat" />
           <EntitySet Name="comments" EntityType="db_mysqlModel.comment" />
-          <EntitySet Name="letters" EntityType="db_mysqlModel.letter" />
           <EntitySet Name="songs" EntityType="db_mysqlModel.song" />
           <FunctionImport Name="searchLetters" ReturnType="Collection(db_mysqlModel.searchLetters_Result1)">
-            <Parameter Name="search_terms" Mode="In" Type="String" />
+          <Parameter Name="search_terms" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="letters" EntityType="db_mysqlModel.letter" />
           <FunctionImport Name="quickSearch" EntitySet="letters" ReturnType="Collection(db_mysqlModel.letter)">
             <Parameter Name="search_terms" Mode="In" Type="String" />
           </FunctionImport>
@@ -153,6 +155,18 @@
           <Property Type="String" Name="commenterGuid" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="level" />
         </EntityType>
+        <EntityType Name="song">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="hearts" Nullable="false" />
+          <Property Type="String" Name="youtube_id" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="date_posted" Nullable="false" />
+          <Property Type="String" Name="user_ip" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="status" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="searchLetters_Result1" />
         <EntityType Name="letter">
           <Key>
             <PropertyRef Name="Id" />
@@ -169,19 +183,9 @@
           <Property Type="String" Name="senderRegion" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="senderCity" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="letterComments" />
+          <Property Type="Int64" Name="toFacebookUID" />
+          <Property Type="Int64" Name="fromFacebookUID" />
         </EntityType>
-        <EntityType Name="song">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Type="Int32" Name="id" Nullable="false" />
-          <Property Type="Int32" Name="hearts" Nullable="false" />
-          <Property Type="String" Name="youtube_id" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="date_posted" Nullable="false" />
-          <Property Type="String" Name="user_ip" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="status" Nullable="false" />
-        </EntityType>
-        <ComplexType Name="searchLetters_Result1" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -237,24 +241,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="letters">
-            <EntityTypeMapping TypeName="db_mysqlModel.letter">
-              <MappingFragment StoreEntitySet="letters">
-                <ScalarProperty Name="letterComments" ColumnName="letterComments" />
-                <ScalarProperty Name="senderCity" ColumnName="senderCity" />
-                <ScalarProperty Name="senderRegion" ColumnName="senderRegion" />
-                <ScalarProperty Name="senderCountry" ColumnName="senderCountry" />
-                <ScalarProperty Name="senderIP" ColumnName="senderIP" />
-                <ScalarProperty Name="letterLanguage" ColumnName="letterLanguage" />
-                <ScalarProperty Name="letterLevel" ColumnName="letterLevel" />
-                <ScalarProperty Name="letterUp" ColumnName="letterUp" />
-                <ScalarProperty Name="letterPostDate" ColumnName="letterPostDate" />
-                <ScalarProperty Name="letterTags" ColumnName="letterTags" />
-                <ScalarProperty Name="letterMessage" ColumnName="letterMessage" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="songs">
             <EntityTypeMapping TypeName="db_mysqlModel.song">
               <MappingFragment StoreEntitySet="songs">
@@ -272,6 +258,26 @@
               <ComplexTypeMapping TypeName="db_mysqlModel.searchLetters_Result1" />
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="letters">
+            <EntityTypeMapping TypeName="db_mysqlModel.letter">
+              <MappingFragment StoreEntitySet="letters">
+                <ScalarProperty Name="fromFacebookUID" ColumnName="fromFacebookUID" />
+                <ScalarProperty Name="toFacebookUID" ColumnName="toFacebookUID" />
+                <ScalarProperty Name="letterComments" ColumnName="letterComments" />
+                <ScalarProperty Name="senderCity" ColumnName="senderCity" />
+                <ScalarProperty Name="senderRegion" ColumnName="senderRegion" />
+                <ScalarProperty Name="senderCountry" ColumnName="senderCountry" />
+                <ScalarProperty Name="senderIP" ColumnName="senderIP" />
+                <ScalarProperty Name="letterLanguage" ColumnName="letterLanguage" />
+                <ScalarProperty Name="letterLevel" ColumnName="letterLevel" />
+                <ScalarProperty Name="letterUp" ColumnName="letterUp" />
+                <ScalarProperty Name="letterPostDate" ColumnName="letterPostDate" />
+                <ScalarProperty Name="letterTags" ColumnName="letterTags" />
+                <ScalarProperty Name="letterMessage" ColumnName="letterMessage" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="quickSearch" FunctionName="db_mysqlModel.Store.searchLetters" />
         </EntityContainerMapping>
       </Mapping>

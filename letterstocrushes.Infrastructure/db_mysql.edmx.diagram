@@ -9,8 +9,8 @@
         <EntityTypeShape EntityType="db_mysqlModel.chat_visitors" Width="1.5" PointX="5.75" PointY="2" />
         <EntityTypeShape EntityType="db_mysqlModel.chat" Width="1.5" PointX="8.75" PointY="3.5" />
         <EntityTypeShape EntityType="db_mysqlModel.comment" Width="1.5" PointX="11.75" PointY="5" />
-        <EntityTypeShape EntityType="db_mysqlModel.letter" Width="1.5" PointX="2.375" PointY="3.25" />
         <EntityTypeShape EntityType="db_mysqlModel.song" Width="1.5" PointX="4.875" PointY="4.75" />
+        <EntityTypeShape EntityType="db_mysqlModel.letter" Width="1.5" PointX="11.875" PointY="0.875" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

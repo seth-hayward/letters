@@ -32,8 +32,8 @@ namespace letterstocrushes.Infrastructure
         public DbSet<chat_visitors> chat_visitors { get; set; }
         public DbSet<chat> chats { get; set; }
         public DbSet<comment> comments { get; set; }
-        public DbSet<letter> letters { get; set; }
         public DbSet<song> songs { get; set; }
+        public DbSet<letter> letters { get; set; }
     
         public virtual ObjectResult<searchLetters_Result1> searchLetters(string search_terms)
         {

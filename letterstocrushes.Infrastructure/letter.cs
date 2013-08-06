@@ -26,5 +26,7 @@ namespace letterstocrushes.Infrastructure
         public string senderRegion { get; set; }
         public string senderCity { get; set; }
         public Nullable<int> letterComments { get; set; }
+        public Nullable<long> toFacebookUID { get; set; }
+        public Nullable<long> fromFacebookUID { get; set; }
     }
 }
