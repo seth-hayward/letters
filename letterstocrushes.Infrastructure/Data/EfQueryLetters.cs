@@ -264,5 +264,33 @@ namespace letterstocrushes.Infrastructure.Data
             letter letter = (from m in db_mysql.letters where m.letterTags.Equals(guid) select m).FirstOrDefault();
             return Mapper.Map<letter, Letter>(letter);
         }
+
+
+        public void facebookLetter(int lucky_id, long toFacebookUID, long fromFacebookUID, string userip, string cookie_value, string user_name, bool is_user_mod)
+        {
+
+            db_mysql db_mysql = new db_mysql();
+
+            Letter lucky = getLetter(lucky_id);
+
+            if (lucky == null) { return; }
+
+            letter transformed;
+            transformed = Mapper.Map<Letter, letter>(lucky);
+
+            db_mysql.letters.Attach(transformed);
+            var letter = db_mysql.Entry(transformed);
+
+            letter.Property(e => e.fromFacebookUID).IsModified = true;
+            transformed.fromFacebookUID = fromFacebookUID;
+
+            letter.Property(e => e.toFacebookUID).IsModified = true;
+            transformed.toFacebookUID = toFacebookUID;
+
+            letter.CurrentValues.SetValues(transformed);
+
+            db_mysql.SaveChanges();
+
+        }
     }
 }
