@@ -436,6 +436,49 @@ namespace letterstocrushes.Controllers
             return Json(letters, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult FacebookLetter(int id, Int64 toFacebookID, Int64 fromFacebookID)
+        {
+            int lucky_id = Convert.ToInt32(id);
+
+            bool is_user_mod = User.IsInRole("Mod");
+            string userip = "anonymous letter sender";
+            userip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (userip == null)
+                userip = Request.ServerVariables["REMOTE_ADDR"];
+
+            string user_name;
+            if (User.Identity.IsAuthenticated == true)
+            {
+                user_name = User.Identity.Name;
+            }
+            else
+            {
+                user_name = userip;
+            }
+
+            Core.Model.Letter lucky = _letterService.getLetter(lucky_id);
+
+            HttpCookie check_cookie = Request.Cookies[lucky.letterTags];
+            string check_value = null;
+            if (check_cookie != null)
+            {
+                check_value = check_cookie.Value;
+            }
+
+            Boolean facebooked = _letterService.facebookLetter(lucky_id, toFacebookID, fromFacebookID, userip, check_value, user_name, is_user_mod);
+
+            if (facebooked == true)
+            {
+                return Json(new { Result = 1, Message = "Letter facebooked." }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { Result = 0, Message = "Failure to facebook. Unknown reason, could be anything really." }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
 
         public ActionResult Unsubscribe(string email, int id=0)
         {
