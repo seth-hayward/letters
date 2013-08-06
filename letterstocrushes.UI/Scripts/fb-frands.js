@@ -45,7 +45,7 @@ window.fbAsyncInit = function () {
         var toFacebookUID =$("input[name='toFacebookUID']").val();
         var fromFacebookUID = $("input[name='fromFacebookUID']").val();
 
-        $.post("@Url.Content("~/Home/facebookLetter")", {
+        $.post("/Home/facebookLetter", {
             "id": letter_id,
             "toFacebookUID": toFacebookUID,
             "fromFacebookUID": fromFacebookUID
