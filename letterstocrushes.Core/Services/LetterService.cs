@@ -322,6 +322,24 @@ namespace letterstocrushes.Core.Services
 
         }
 
+        public Boolean facebookLetter(int lucky_id, int toFacebookUID, int fromFacebookUID, string userip, string cookie_value, string user_name, bool is_user_mod)
+        {
+
+            Boolean can_edit = this.canEdit(cookie_value, is_user_mod);
+
+            if (can_edit == false)
+            {
+                return false;
+            }
+            else
+            {
+                _queryLetters.facebookLetter(lucky_id, toFacebookUID, fromFacebookUID, userip, cookie_value, user_name, is_user_mod);
+                return true;
+            }
+
+        }
+
+
         public Boolean canEdit(string cookie_value, bool user_is_mod)
         {
             Boolean able_to_edit;
