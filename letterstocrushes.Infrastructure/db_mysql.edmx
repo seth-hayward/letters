@@ -101,9 +101,6 @@
           <EntitySet Name="chats" EntityType="db_mysqlModel.chat" />
           <EntitySet Name="comments" EntityType="db_mysqlModel.comment" />
           <EntitySet Name="songs" EntityType="db_mysqlModel.song" />
-          <FunctionImport Name="searchLetters" ReturnType="Collection(db_mysqlModel.searchLetters_Result1)">
-          <Parameter Name="search_terms" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="letters" EntityType="db_mysqlModel.letter" />
           <FunctionImport Name="quickSearch" EntitySet="letters" ReturnType="Collection(db_mysqlModel.letter)">
             <Parameter Name="search_terms" Mode="In" Type="String" />
@@ -253,11 +250,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="searchLetters" FunctionName="db_mysqlModel.Store.searchLetters">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="db_mysqlModel.searchLetters_Result1" />
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="letters">
             <EntityTypeMapping TypeName="db_mysqlModel.letter">
               <MappingFragment StoreEntitySet="letters">

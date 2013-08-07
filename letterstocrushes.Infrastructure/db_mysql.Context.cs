@@ -35,15 +35,6 @@ namespace letterstocrushes.Infrastructure
         public DbSet<song> songs { get; set; }
         public DbSet<letter> letters { get; set; }
     
-        public virtual ObjectResult<searchLetters_Result1> searchLetters(string search_terms)
-        {
-            var search_termsParameter = search_terms != null ?
-                new ObjectParameter("search_terms", search_terms) :
-                new ObjectParameter("search_terms", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<searchLetters_Result1>("searchLetters", search_termsParameter);
-        }
-    
         public virtual ObjectResult<letter> quickSearch(string search_terms)
         {
             var search_termsParameter = search_terms != null ?
