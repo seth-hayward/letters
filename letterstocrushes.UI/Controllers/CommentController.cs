@@ -131,5 +131,23 @@ namespace letterstocrushes.Controllers
             return c_guid_value;
         }
 
+        [HttpGet]
+        public JsonResult GetComments(int id)
+        {
+            List<Core.Model.Comment> comments = new List<Core.Model.Comment>();
+
+            comments = _commentService.getComments(id, false);
+
+            // hide some info
+            foreach (Comment c in comments)
+            {
+                c.commenterGuid = "";
+                c.commenterIP = "";
+                c.commenterEmail = "";
+            }
+
+            return Json(comments, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
