@@ -16,8 +16,6 @@ window.fbAsyncInit = function () {
 
     function load_dropdown(response) {
 
-        $("#frands").empty();
-
         for (var i = 0; i < response.data.length; i++) {
             $("#frands").append('<option value="' + response.data[i].uid + '" data-image="' + response.data[i].pic_square + '">' + response.data[i].name + '</option>');
         }
@@ -45,11 +43,15 @@ window.fbAsyncInit = function () {
         var toFacebookUID =$("input[name='toFacebookUID']").val();
         var fromFacebookUID = $("input[name='fromFacebookUID']").val();
 
-        $.post("/Home/facebookLetter", {
+        var little_obj = {
             "id": letter_id,
             "toFacebookUID": toFacebookUID,
             "fromFacebookUID": fromFacebookUID
-        },
+        };
+
+        console.log(little_obj);
+
+        $.post("/Home/facebookLetter", little_obj,
         function (data) {
             alert("to: " + toFacebookUID + ", from: " + fromFacebookUID + " - " + data.Message);
         }, "json").fail(function () {

@@ -5,7 +5,7 @@
 @if (User.Identity.Name == "seth")
 {
     <text>
-        <script src="@Url.Content("~/Scripts/fb-frands.js")"></script>
+        <script src="@Url.Content("~/Scripts/fb-frands.js?" + System.Guid.NewGuid().ToString())"></script>
     </text>
 }
 
