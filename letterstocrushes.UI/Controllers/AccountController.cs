@@ -303,48 +303,48 @@ namespace letterstocrushes.Controllers
         }
 
 
-        [HttpPost]
-        public JsonResult MobileLogin(string email, string password)
-        {
-            int result = 0;
+        //[HttpPost]
+        //public JsonResult MobileLogin(string email, string password)
+        //{
+        //    int result = 0;
 
-            if (MembershipService.ValidateUser(email, password))
-            {
-                FormsService.SignIn(email, true);
-                FormsAuthentication.SetAuthCookie(email, true);
-                result = 1;
-            }
-            else
-            {
-                result = 2;
-            }
+        //    if (MembershipService.ValidateUser(email, password))
+        //    {
+        //        FormsService.SignIn(email, true);
+        //        FormsAuthentication.SetAuthCookie(email, true);
+        //        result = 1;
+        //    }
+        //    else
+        //    {
+        //        result = 2;
+        //    }
 
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
-        [HttpGet]
-        public JsonResult MobileStatus()
-        {
-            int result = 0;
+        //[HttpGet]
+        //public JsonResult MobileStatus()
+        //{
+        //    int result = 0;
 
-            if (User.Identity.IsAuthenticated == true)
-            {
-                result = 1;
-            }
-            else
-            {
-                result = 0;
-            }
+        //    if (User.Identity.IsAuthenticated == true)
+        //    {
+        //        result = 1;
+        //    }
+        //    else
+        //    {
+        //        result = 0;
+        //    }
 
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
-        [HttpGet]
-        public JsonResult MobileLogout()
-        {
-            FormsService.SignOut();
-            return Json(1, JsonRequestBehavior.AllowGet);
-        }
+        //[HttpGet]
+        //public JsonResult MobileLogout()
+        //{
+        //    FormsService.SignOut();
+        //    return Json(1, JsonRequestBehavior.AllowGet);
+        //}
 
         // **************************************
         // URL: /Account/LogOff
