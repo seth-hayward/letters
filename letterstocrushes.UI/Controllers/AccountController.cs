@@ -302,6 +302,26 @@ namespace letterstocrushes.Controllers
 
         }
 
+
+        [HttpPost]
+        public JsonResult MobileLogin(string email, string password)
+        {
+            int result = 0;
+
+            if (MembershipService.ValidateUser(email, password))
+            {
+                FormsService.SignIn(email, true);
+                FormsAuthentication.SetAuthCookie(email, true);
+                result = 1;
+            }
+            else
+            {
+                result = 2;
+            }
+
+            return Json(result);
+        }
+
         // **************************************
         // URL: /Account/LogOff
         // **************************************
