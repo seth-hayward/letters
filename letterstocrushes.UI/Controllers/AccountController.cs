@@ -319,7 +319,31 @@ namespace letterstocrushes.Controllers
                 result = 2;
             }
 
-            return Json(result);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult MobileStatus()
+        {
+            int result = 0;
+
+            if (User.Identity.IsAuthenticated == true)
+            {
+                result = 1;
+            }
+            else
+            {
+                result = 0;
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult MobileLogout()
+        {
+            FormsService.SignOut();
+            return Json(1, JsonRequestBehavior.AllowGet);
         }
 
         // **************************************
