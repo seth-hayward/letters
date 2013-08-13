@@ -163,13 +163,13 @@ div#title a
 
 span#footer_center
 {
-	width: 340px;
+	width: 420px;
 	float: left;
 }
 
 span#footer_left
 {
-	width: 80px;
+	width: 40px;
 	margin-top: 7px;
 	border-top: dotted 1px #aaa;
 	float: left;
@@ -177,7 +177,7 @@ span#footer_left
 
 span#footer_right 
 {
-	width: 80px;
+	width: 40px;
 	margin-top: 7px;
 	border-top: dotted 1px #aaa;
 	float: left;	
