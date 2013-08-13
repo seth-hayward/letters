@@ -21,21 +21,31 @@
                     @Html.ActionLink("popular", "popular", "Home")                
                     @Html.ActionLink("bookmarks", "Index", "Account")                     
                     @Html.ActionLink("search", "search", "Home")     
-                    @Html.ActionLink("chat", "Index", "chat")                                                    
+                    @Html.ActionLink("chat", "Index", "chat")           
+                    <text>
+                    <a href="http://anonsong.com" target="_blank">anon song</a>
+                    </text>              
+                                                     
                     }
                     else
                     {
                     @Html.ActionLink("chat", "Index", "chat")                                        
                     @Html.ActionLink("bookmarks", "Index", "Account")                       
                     @Html.ActionLink("feedback", "contact", "Home")
-                    @Html.ActionLink("search", "search", "Home")                                            
+                    @Html.ActionLink("search", "search", "Home")    
+                    <text>
+                    <a href="http://anonsong.com" target="_blank">anon song</a>
+                    </text>                                        
                     }
                 }
                 else
                 {
                 @Html.ActionLink("chat", "Index", "Chat")                
                 @Html.ActionLink("feedback", "contact", "Home")
-                @Html.ActionLink("search", "search", "Home")                     
+                @Html.ActionLink("search", "search", "Home")
+                <text>
+                <a href="http://anonsong.com" target="_blank">anon song</a>
+                </text>     
                 }
 
 
