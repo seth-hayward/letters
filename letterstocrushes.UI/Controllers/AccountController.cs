@@ -319,7 +319,7 @@ namespace letterstocrushes.Controllers
                 result = 2;
             }
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(new { message = result, response = result, guid = result }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -336,7 +336,7 @@ namespace letterstocrushes.Controllers
                 result = 0;
             }
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(new { message = result, response = result, guid = result }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
