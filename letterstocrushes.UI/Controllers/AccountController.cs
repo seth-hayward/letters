@@ -304,14 +304,14 @@ namespace letterstocrushes.Controllers
 
 
         [HttpPost]
-        public JsonResult MobileLogin(string email, string password)
+        public JsonResult MobileLogin(string a, string b)
         {
             int result = 0;
 
-            if (MembershipService.ValidateUser(email, password))
+            if (MembershipService.ValidateUser(a, b))
             {
-                FormsService.SignIn(email, true);
-                FormsAuthentication.SetAuthCookie(email, true);
+                FormsService.SignIn(a, true);
+                FormsAuthentication.SetAuthCookie(a, true);
                 result = 1;
             }
             else
