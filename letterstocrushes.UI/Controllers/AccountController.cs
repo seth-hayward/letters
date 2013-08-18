@@ -64,6 +64,12 @@ namespace letterstocrushes.Controllers
 
             List<Core.Model.Letter> bookmarks = new List<Core.Model.Letter>();
 
+            foreach (Core.Model.Letter b in bookmarks)
+            {
+                b.fromFacebookUID = 0;
+                b.toFacebookUID = 0;
+            }
+
             bookmarks = _bookmarkService.getBookmarksByUser(UserID, id);
             bookmarks = _letterService.fixList(bookmarks, "0");
 
