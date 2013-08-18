@@ -54,6 +54,22 @@ namespace letterstocrushes.Controllers
         //
 
         #region Bookmarks
+
+        [HttpGet]
+        public JsonResult GetBookmarks(int id)
+        {
+            string UserID = "";
+            MembershipUser MemUser = Membership.GetUser();
+            UserID = MemUser.ProviderUserKey.ToString();
+
+            List<Core.Model.Letter> bookmarks = new List<Core.Model.Letter>();
+
+            bookmarks = _bookmarkService.getBookmarksByUser(UserID, id);
+            bookmarks = _letterService.fixList(bookmarks, "0");
+
+            return Json(bookmarks, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Index(int page=1, int mobile=0)
         {
 
