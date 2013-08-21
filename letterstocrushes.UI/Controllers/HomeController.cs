@@ -529,7 +529,7 @@ namespace letterstocrushes.Controllers
                 msg += "The letter was not found or you are not authorized to make this change.";
             }
 
-            return Json(new { response = _response, message = msg }, JsonRequestBehavior.AllowGet);
+            return Json(new { response = _response, message = msg, guid = "0" }, JsonRequestBehavior.AllowGet);
 
         }
 
