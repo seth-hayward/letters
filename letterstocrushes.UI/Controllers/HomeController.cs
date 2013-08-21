@@ -479,6 +479,59 @@ namespace letterstocrushes.Controllers
 
         }
 
+        [HttpGet]
+        public JsonResult hideLetter(int id)
+        {
+
+            int response = 0;
+
+            int lucky_id = Convert.ToInt32(id);
+
+            bool is_user_mod = User.IsInRole("Mod");
+            string userip = "anonymous letter sender";
+            userip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (userip == null)
+                userip = Request.ServerVariables["REMOTE_ADDR"];
+
+            string user_name;
+            if (User.Identity.IsAuthenticated == true)
+            {
+                user_name = User.Identity.Name;
+            }
+            else
+            {
+                user_name = userip;
+            }
+
+            Core.Model.Letter lucky = _letterService.getLetter(lucky_id);
+
+            HttpCookie check_cookie = Request.Cookies[lucky.letterTags];
+            string check_value = null;
+            if (check_cookie != null)
+            {
+                check_value = check_cookie.Value;
+            }
+
+            Boolean hidden = _letterService.hideLetter(lucky_id, userip, check_value, user_name, is_user_mod);
+
+            string msg = "";
+
+            if (hidden == true)
+            {
+                response = 1;
+                msg = "Letter hidden.";
+                msg += "This letter has been successfully hidden.";
+            }
+            else
+            {
+                response = 0;
+                msg = "Unable to hide letter.";
+                msg += "The letter was not found or you are not authorized to make this change.";
+            }
+
+            return Json(new { Result = response, Message = msg }, JsonRequestBehavior.AllowGet);
+
+        }
 
         public ActionResult Unsubscribe(string email, int id=0)
         {
