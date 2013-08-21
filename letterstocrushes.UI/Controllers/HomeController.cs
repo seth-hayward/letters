@@ -483,7 +483,7 @@ namespace letterstocrushes.Controllers
         public JsonResult hideLetter(int id)
         {
 
-            int response = 0;
+            int _response = 0;
 
             int lucky_id = Convert.ToInt32(id);
 
@@ -518,18 +518,18 @@ namespace letterstocrushes.Controllers
 
             if (hidden == true)
             {
-                response = 1;
+                _response = 1;
                 msg = "Letter hidden.";
                 msg += "This letter has been successfully hidden.";
             }
             else
             {
-                response = 0;
+                _response = 0;
                 msg = "Unable to hide letter.";
                 msg += "The letter was not found or you are not authorized to make this change.";
             }
 
-            return Json(new { Result = response, Message = msg }, JsonRequestBehavior.AllowGet);
+            return Json(new { response = _response, message = msg }, JsonRequestBehavior.AllowGet);
 
         }
 
