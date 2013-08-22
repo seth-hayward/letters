@@ -358,14 +358,14 @@ namespace letterstocrushes.Controllers
                 result = 0;
             }
 
-            return Json(new { message = result, response = result, guid = result }, JsonRequestBehavior.AllowGet);
+            return Json(new { message = result.ToString(), response = result, guid = result.ToString() }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public JsonResult MobileLogout()
         {
             FormsService.SignOut();
-            return Json(1, JsonRequestBehavior.AllowGet);
+            return Json(new { message = "1", response = 1, guid = "1" }, JsonRequestBehavior.AllowGet);
         }
 
         // **************************************
