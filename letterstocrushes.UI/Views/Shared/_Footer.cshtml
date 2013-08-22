@@ -18,7 +18,9 @@
                     if (User.IsInRole("Mod") == true)
                     {
                     @Html.ActionLink("queue", "queue", "Home")
-                    @Html.ActionLink("popular", "popular", "Home")                
+                    @Html.ActionLink("popular", "popular", "Home")      
+                    @Html.ActionLink("block", "Index", "Block")           
+                    @Html.ActionLink("comments", "Index", "Comment")             
                     @Html.ActionLink("bookmarks", "Index", "Account") <br />              
                     @Html.ActionLink("search", "search", "Home")     
                     @Html.ActionLink("chat", "Index", "chat")           
