@@ -320,10 +320,10 @@ namespace letterstocrushes
         {
 
             string currentUrl = HttpContext.Current.Request.Url.ToString().ToLower();
-            if (currentUrl.StartsWith("http://letterstocrushes.com"))
+            if (currentUrl.StartsWith("http://www.letterstocrushes.com"))
             {
                 Response.Status = "301 Moved Permanently";
-                Response.AddHeader("Location", currentUrl.Replace("http://letterstocrushes.com", "http://www.letterstocrushes.com"));
+                Response.AddHeader("Location", currentUrl.Replace("http://www.letterstocrushes.com", "http://letterstocrushes.com"));
                 Response.End();
             }
 
