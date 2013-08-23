@@ -6,7 +6,9 @@
 
 <div class="letterContainer">
 
-    <h2>the queue</h2>
+    <h2>the queue        <input type="button" id="btnPublish" title="publish" value="publish" />
+
+    </h2>
 
     <ul>
         @if (ViewBag.Count == 0)
@@ -23,6 +25,22 @@
 
 
 </div>
+
+<script>
+
+    $(document).ready(function () {
+        $("#btnPublish").on('click', function () {
+            $("#btnPublish").hide();
+
+            $.get('@Url.Content("~/home/publishqueue")', function (data) {
+                $("#btnPublish").show();
+                alert('A letter was published to the front page. Thank you!');
+            });
+
+        });
+    });
+
+</script>
 
    
 @section Footer {
