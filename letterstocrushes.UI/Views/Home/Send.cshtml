@@ -2,14 +2,6 @@
     ViewBag.Title = "letters to crushes";
 }
 
-@if (User.Identity.Name == "seth")
-{
-    <text>
-        <script src="@Url.Content("~/Scripts/fb-frands.js?" + System.Guid.NewGuid().ToString())"></script>
-    </text>
-}
-
-
 <div class="letterContainer" id="input">
 
     <div id="sendLetterCopy">
@@ -47,31 +39,6 @@
                     }
                 }
 
-
-                @if (User.Identity.Name == "seth")
-                {
-                    <text>
-                <li>Are you Facebook friends with your crush? Tag them and they will see this letter if they login to letters to crushes.
-
-                    <br />
-
-                    <select id="frands" name="frands" style="width: 300px;">
-                    </select>
-                    <input type="button" name="fbSend" id="fbSend" value="save" style="display:none" />
-
-                    <div style="clear: both">
-                        <input type="radio" id="show_men" name="show_gender" value="men" />show men <br />
-                        <input type="radio" id="show_women" name="show_gender" value="women" />show women
-                    </div>
-
-                    <input type="hidden" id="toFacebookUID" name="toFacebookUID" value="0" />
-                    <input type="hidden" id="fromFacebookUID" name="fromFacebookUID" value="0" />
-
-
-                    <p>They will never see who it was from, unless you tell them.</p>
-                </li>
-                    </text>
-                }
             </ul> 
 
 </div>
