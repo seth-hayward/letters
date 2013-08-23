@@ -764,6 +764,10 @@ namespace letterstocrushes
 
             }
 
+            //if (message.StartsWith("/report ")) {
+            //    string report_msg = message.Replace("/report ", "");                
+            //}
+
             if (message.StartsWith("/ips"))
             {
                 if (HttpContext.Current.User.IsInRole("Mod"))
