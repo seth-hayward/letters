@@ -40,6 +40,12 @@ namespace letterstocrushes
                 new { controller = "Home", action = "GetLetters" } // Parameter defaults
             );
 
+            routes.MapRoute(
+                "APISearchLetters", // Route name
+                "api/search/{terms}", // URL with parameters
+                new { controller = "Home", action = "SearchLetters" } // Parameter defaults
+            );
+
             //
             // end: api routes
             //

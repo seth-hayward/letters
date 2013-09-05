@@ -446,6 +446,26 @@ namespace letterstocrushes.Controllers
             return Json(letters, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult SearchLetters(string terms)
+        {
+            List<Core.Model.Letter> letters = new List<Core.Model.Letter>();
+
+            string cache_key_list = "mobile-search-" + terms;
+
+            if (HttpContext.Cache[cache_key_list] == null)
+            {
+                letters = _letterService.search(terms).ToList();
+                HttpContext.Cache.Insert(cache_key_list, letters, null, DateTime.UtcNow.AddSeconds(180), TimeSpan.Zero);
+            }
+            else
+            {
+                letters = (List<Core.Model.Letter>)HttpContext.Cache[cache_key_list];
+            }
+
+            return Json(letters, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult facebookLetter(int id, long toFacebookUID, long fromFacebookUID)
         {
