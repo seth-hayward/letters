@@ -431,7 +431,17 @@ namespace letterstocrushes.Controllers
         {
             List<Core.Model.Letter> letters = new List<Core.Model.Letter>();
 
-            letters = _letterService.getLetters(level, page, _pagesize).ToList();
+            string cache_key_list = "mobile-" + level.ToString() + "-p" + page.ToString();
+
+            if (HttpContext.Cache[cache_key_list] == null)
+            {
+                letters = _letterService.getLetters(level, page, _pagesize).ToList();
+                HttpContext.Cache.Insert(cache_key_list, letters, null, DateTime.UtcNow.AddSeconds(15), TimeSpan.Zero);
+            }
+            else
+            {
+                letters = (List<Core.Model.Letter>)HttpContext.Cache[cache_key_list];
+            }
 
             return Json(letters, JsonRequestBehavior.AllowGet);
         }
