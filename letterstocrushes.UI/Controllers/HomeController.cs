@@ -447,7 +447,7 @@ namespace letterstocrushes.Controllers
         }
 
         [HttpGet]
-        public JsonResult SearchLetters(string terms)
+        public JsonResult SearchLetters(string terms, int page)
         {
             List<Core.Model.Letter> letters = new List<Core.Model.Letter>();
 
@@ -462,6 +462,8 @@ namespace letterstocrushes.Controllers
             {
                 letters = (List<Core.Model.Letter>)HttpContext.Cache[cache_key_list];
             }
+
+            letters = letters.Skip((page - 1) * 10).Take(10).ToList();
 
             return Json(letters, JsonRequestBehavior.AllowGet);
         }
