@@ -63,7 +63,7 @@
                 var m = '<p>' + $('#letterMessage').val().replace(/\n\r?/g, '<br />') + '</p>';
                 if (m == '') { $("#btnSend").fadeIn('fast'); return; };
                 
-                var sendArgs = 'letterText=' + escape(m) + '&letterCountry=' + escape(c);
+                var sendArgs = 'letterText=' + escape(m) + '&letterCountry=' + escape(c) + '&mobile=0';
 
                 var linkid;
 

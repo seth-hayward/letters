@@ -582,11 +582,16 @@ namespace letterstocrushes.Controllers
             string useragent = HttpContext.Request.UserAgent.ToLower();
 
             if(useragent.Contains("iphone") | useragent.Contains("ipod") | useragent.Contains("ipad") | useragent.Contains("android") | useragent.Contains("blackberry")) {
-                return View("m");
+                return RedirectToAction("MobileSend");
             }
 
             return View();
             
+        }
+
+        public ActionResult MobileSend()
+        {
+            return View("m");
         }
 
         public ActionResult Bookmarks()
@@ -867,7 +872,7 @@ namespace letterstocrushes.Controllers
                             message_body = "Hello, \n\n" +
                                             "You requested a password reset. Please click this " +
                                             "link to change your password:\n" +
-                                            "http://www.letterstocrushes.com/password/" + password_change_request.cguid + "\n\n" +
+                                            "http://letterstocrushes.com/password/" + password_change_request.cguid + "\n\n" +
                                             "sincerely,\nletters to crushes";
 
                             msg.Message = message_body;
