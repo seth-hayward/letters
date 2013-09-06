@@ -71,7 +71,7 @@ namespace letterstocrushes
             routes.MapRoute(
                 "SendMobile", // Route name
                 "mobile/send", // URL with parameters
-                new { controller = "Home", action = "Send", mobile = 1 } // Parameter defaults
+                new { controller = "Home", action = "MobileSend" } // Parameter defaults
             );
 
             routes.MapRoute(
