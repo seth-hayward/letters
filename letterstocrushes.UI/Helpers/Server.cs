@@ -800,7 +800,7 @@ namespace letterstocrushes
                 // Call the addMessage method on all the clients in the room
                 Clients.Group(current_user.Room).addMessage(chat);
 
-                string simple_chat = chat.Nick + ": " + chat.Message;
+                string simple_chat = chat.Nick + " " + chat.Message;
                     
                 Clients.Group(current_user.Room).addSimpleMessage(simple_chat);
 
