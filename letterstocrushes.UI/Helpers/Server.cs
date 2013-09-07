@@ -456,12 +456,21 @@ namespace letterstocrushes
             chat.ChatDate = DateTime.UtcNow;
 
             List<ChatMessage> chat_backlog = new List<ChatMessage>();
+            StringBuilder simple_chat_backlog = new StringBuilder();
+            
             chat_backlog = (from m in Messages where m.Room.Equals(room) orderby m.ChatDate descending select m).Take(200).ToList();
             chat_backlog.Reverse();
 
+            foreach (var c in chat_backlog)
+            {
+                simple_chat_backlog.AppendLine(c.Nick + " " + c.Message);
+            }
+
             chat_backlog.Add(chat);
+            simple_chat_backlog.AppendLine(chat.Nick + " " + chat.Message);
 
             Clients.Caller.addBacklog(chat_backlog);
+            Clients.Caller.addSimpleBacklog(simple_chat_backlog);
 
             Messages.Add(announced);
 
@@ -800,8 +809,7 @@ namespace letterstocrushes
                 // Call the addMessage method on all the clients in the room
                 Clients.Group(current_user.Room).addMessage(chat);
 
-                string simple_chat = chat.Nick + " " + chat.Message;
-                    
+                string simple_chat = chat.Nick + " " + chat.Message;                    
                 Clients.Group(current_user.Room).addSimpleMessage(simple_chat);
 
                 Messages.Add(chat);
