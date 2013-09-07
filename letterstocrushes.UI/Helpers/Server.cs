@@ -461,16 +461,15 @@ namespace letterstocrushes
             chat_backlog = (from m in Messages where m.Room.Equals(room) orderby m.ChatDate descending select m).Take(200).ToList();
             chat_backlog.Reverse();
 
+            chat_backlog.Add(chat);
+
             foreach (var c in chat_backlog)
             {
                 simple_chat_backlog.AppendLine(c.Nick + " " + c.Message);
             }
 
-            chat_backlog.Add(chat);
-            simple_chat_backlog.AppendLine(chat.Nick + " " + chat.Message);
-
             Clients.Caller.addBacklog(chat_backlog);
-            Clients.Caller.addSimpleBacklog(simple_chat_backlog);
+            Clients.Caller.addSimpleBacklog(simple_chat_backlog.ToString());
 
             Messages.Add(announced);
 
