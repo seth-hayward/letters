@@ -427,7 +427,6 @@ namespace letterstocrushes
 
             // get the current user
             ChatVisitor current_user = Visitors[Context.ConnectionId];
-
             current_user.Room = room;
 
             ChatMessage announced = new ChatMessage();
@@ -441,6 +440,7 @@ namespace letterstocrushes
 
             // send the message to the group about the new person
             Clients.OthersInGroup(room).addMessage(announced);
+            Clients.OthersInGroup(room).addSimpleMessage(announced.Nick + " " + announced.Message);
 
             StringBuilder who_is_here = new StringBuilder();
             List<ChatVisitor> people_in_room = (from m in Visitors.Values where m.Room.Equals(room) select m).ToList();
@@ -823,5 +823,25 @@ namespace letterstocrushes
 
         }
 
+        public void RequestSimpleBacklog()
+        {
+
+            // get the current user
+            ChatVisitor current_user = Visitors[Context.ConnectionId];
+
+            List<ChatMessage> chat_backlog = new List<ChatMessage>();
+            StringBuilder simple_chat_backlog = new StringBuilder();
+
+            chat_backlog = (from m in Messages where m.Room.Equals(current_user.Room) orderby m.ChatDate descending select m).Take(200).ToList();
+            chat_backlog.Reverse();
+
+            foreach (var c in chat_backlog)
+            {
+                simple_chat_backlog.AppendLine(c.Nick + " " + c.Message);
+            }
+
+            Clients.Caller.addSimpleBacklog(simple_chat_backlog.ToString());
+
+        }
     }
 }
