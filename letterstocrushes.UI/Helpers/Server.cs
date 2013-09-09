@@ -823,7 +823,7 @@ namespace letterstocrushes
 
         }
 
-        public void RequestSimpleBacklog()
+        public void RequestSimpleBacklog(string message)
         {
 
             // get the current user
