@@ -63,6 +63,18 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "ModHome", // Route name
+                "mod/", // URL with parameters
+                new { controller = "Home", action = "ModLetters", id = UrlParameter.Optional } // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "ModHomePages", // Route name
+                "mod/page/{page}", // URL with parameters
+                new { controller = "Home", action = "ModLetters" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "MorePages", // Route name
                 "more/page/{page}", // URL with parameters
                 new { controller = "Home", action = "More" } // Parameter defaults
