@@ -199,6 +199,7 @@
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
     <Content Include="Content\mobile.css" />
+    <Content Include="Content\web.config" />
     <None Include="Properties\PublishProfiles\hostgator v2.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap\css\bootstrap-responsive.css" />
@@ -453,6 +454,7 @@
     <Content Include="Views\Chat\History.cshtml" />
     <Content Include="Views\Block\Index.cshtml" />
     <Content Include="Views\Home\ModLetters.cshtml" />
+    <Content Include="Scripts\web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
