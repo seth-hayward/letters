@@ -297,7 +297,7 @@ namespace letterstocrushes.Infrastructure.Data
         public int getLetterCountModPage()
         {
             db_mysql db_mysql = new db_mysql();
-            return (from m in db_mysql.letters where m.letterLevel.Equals(-10) select m).Count();
+            return (from m in db_mysql.letters where m.letterLevel == -10 select m).Count();
         }
 
         public List<Letter> getModLetters(int page, int _pagesize)
@@ -307,7 +307,7 @@ namespace letterstocrushes.Infrastructure.Data
             List<letter> results = new List<letter>();
 
             var query = (from m in db_mysql.letters
-                         where m.letterLevel.Equals(-10)
+                         where m.letterLevel == -10
                          orderby m.Id descending
                          select m);
 

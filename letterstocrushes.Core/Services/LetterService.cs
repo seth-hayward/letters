@@ -40,6 +40,11 @@ namespace letterstocrushes.Core.Services
             return _queryLetters.getLetterCountHomePage();
         }
 
+        public int getLetterCountModPage()
+        {
+            return _queryLetters.getLetterCountModPage();
+        }
+
         public Letter getLetter(int id)
         {
             return _queryLetters.getLetter(id);
@@ -98,6 +103,14 @@ namespace letterstocrushes.Core.Services
                 //  <p>{para2}
                 //  </p>
                 //
+
+
+                // if mobile is set to this, we want to set the
+                // letter level to be a hidden level
+                if (mobile == -10)
+                {
+                    new_letter.letterLevel = -10;
+                }
 
                 if (mobile == 1)
                 {
@@ -282,6 +295,11 @@ namespace letterstocrushes.Core.Services
         public List<Letter> getLetters(int greater_than_level, int page, int _pagesize)
         {
             return _queryLetters.getLetters(greater_than_level, page, _pagesize);
+        }
+
+        public List<Letter> getModLetters(int page, int _pagesize)
+        {
+            return _queryLetters.getModLetters(page, _pagesize);
         }
 
         public List<Letter> getPopularLetters(Letter latest_front_page)
