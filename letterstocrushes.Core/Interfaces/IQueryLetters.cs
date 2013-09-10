@@ -17,7 +17,9 @@ namespace letterstocrushes.Core.Interfaces
         int getLetterCount();
         int getLetterCountHomePage();
         int getLetterCountMorePage();
+        int getLetterCountModPage();
         List<Letter> getLetters(int greater_than_level, int page, int _pagesize);
+        List<Letter> getModLetters(int page, int _pagesize);
         Letter getLatestFrontPageLetter();
         Letter getLastLetterSent();
         Letter getLastLetterFromIP(string ip);

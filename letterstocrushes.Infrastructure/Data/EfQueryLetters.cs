@@ -292,5 +292,27 @@ namespace letterstocrushes.Infrastructure.Data
             db_mysql.SaveChanges();
 
         }
+
+
+        public int getLetterCountModPage()
+        {
+            db_mysql db_mysql = new db_mysql();
+            return (from m in db_mysql.letters where m.letterLevel.Equals(-10) select m).Count();
+        }
+
+        public List<Letter> getModLetters(int page, int _pagesize)
+        {
+            db_mysql db_mysql = new db_mysql();
+
+            List<letter> results = new List<letter>();
+
+            var query = (from m in db_mysql.letters
+                         where m.letterLevel.Equals(-10)
+                         orderby m.Id descending
+                         select m);
+
+            results = query.Skip((page - 1) * _pagesize).Take(_pagesize).ToList();
+            return Mapper.Map<List<letter>, List<Letter>>(results);
+        }
     }
 }
