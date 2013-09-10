@@ -10,7 +10,7 @@
 packages/
 
 # ignoring changes to Web.config for now
-Web.config
+#/Web.config
 
 # Build results
 
