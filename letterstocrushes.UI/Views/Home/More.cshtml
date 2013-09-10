@@ -17,28 +17,37 @@
     @Html.Partial("_Footer")
 }
 
-<div id="disqus_thread" class="letterComments" style="display: none"></div>
 
-<script type="text/javascript" src="http://disqus.com/forums/crushes/embed.js"></script>
-<script type="text/javascript">
+@if (ViewBag.CurrentPage > 3000)
+{
+    <text>
 
-    //<![CDATA[
-    (function () {
+        <div id="disqus_thread" class="letterComments" style="display: none"></div>
 
-        var links = document.getElementsByTagName('a');
-        var query = '?';
+        <script type="text/javascript" src="http://disqus.com/forums/crushes/embed.js"></script>
+        <script type="text/javascript">
 
-        for (var i = 0; i < links.length; i++) {
-            if (links[i].href.indexOf('#disqus_thread') >= 0) {
-                query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
-            }
-        }
-        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/crushes/get_num_replies.js' + query + '"></' + 'script>');
+            //<![CDATA[
+            (function () {
 
-    })();
-    //]]>
+                var links = document.getElementsByTagName('a');
+                var query = '?';
 
-</script>
+                for (var i = 0; i < links.length; i++) {
+                    if (links[i].href.indexOf('#disqus_thread') >= 0) {
+                        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+                    }
+                }
+                document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/crushes/get_num_replies.js' + query + '"></' + 'script>');
+
+            })();
+            //]]>
+
+        </script>
+
+
+    </text>
+}
 
 @Html.Partial("_LetterVoteListener")
 
