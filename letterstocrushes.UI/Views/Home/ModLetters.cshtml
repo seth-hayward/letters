@@ -1,0 +1,174 @@
+﻿@model IEnumerable<letterstocrushes.Core.Model.Letter>
+@using letterstocrushes;
+
+@{
+    ViewBag.Title = "letters to crushes: mod letters";
+}
+
+<div class="letterContainer" id="input" style="padding: 20px; border: 1px dotted #eee">
+
+    <div id="sendLetterCopy">
+    	<input type="button" class="submit_button" value="send" id="btnSend" style="float: right" />
+        <p>Send a mod letter. For mod-eyes only.
+        </p>
+
+
+    </div>
+
+    <div id="errors" style="display: none">
+        <p><b>there was an error (<span id="error_name"></span>).</b> something bad happened (<span id="error_message"></span>) and your letter was not sent. please send use a report using the @Html.ActionLink("feedback page", "Contact") if you see this again.</p>
+    </div>
+        
+	<textarea id="letterMessage" rows="12" cols="12" style="width: 100%"></textarea>
+		        	
+	<br />
+		    
+    		
+</div>
+
+
+
+@foreach (var item in Model) {
+
+    Html.RenderPartial("_LetterMoreListItem", item);    
+
+}
+
+@Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/mod")))
+
+
+<!-- begin add mod letter tinymce stuff -->
+
+    <script src="@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
+   
+    <script type="text/javascript">
+   
+        tinyMCE.init({
+            theme: "advanced",
+            mode: "textareas",
+            plugins: "preview",
+            theme_advanced_buttons1 : "charmap,separator,bold,italic,underline,strikethrough,separator,bullist,numlist,separator,preview",
+            theme_advanced_buttons2 : "",
+            theme_advanced_buttons3 : "",
+            invalid_elements : "background-color,img,a,font-family,border,font-family,margin,background-image",
+            content_css : "@Url.Content("~/Content/tinymce.css")"
+        });
+
+    </script>
+
+@section Footer {
+    @Html.Partial("_Footer")
+}
+
+@Html.Partial("_LetterVoteListener")
+
+<script type="text/javascript" >
+
+    $(document).ready(function() {
+
+        var offset = new Date().getTimezoneOffset();
+        $.cookie('userTimeZone', offset/60, { expires: 365 });
+
+	    jQuery(document).bind('keydown', 'left',function (evt){previous_page(); return false; });
+	    jQuery(document).bind('keydown', 'right',function (rght){next_page(); return false; });
+
+	    var current_page = @ViewBag.CurrentPage;
+
+	    function previous_page() {
+		    var previous_page = current_page - 1;
+		    if (previous_page > 0) {
+			    window.location = "/mod/page/" + previous_page;
+		    }
+	    }
+
+	    function next_page() {
+		    var next_page = current_page + 1;
+		    window.location = "/mod/page/" + next_page;
+	    }
+
+    });
+
+
+</script>
+
+
+<script type="text/javascript">
+
+    var letter_id = 0;
+
+    $(document).ready(function () {
+
+        $("#btnSend").click(function() {
+
+            $("#btnSend").hide();
+            $("#errors").hide();
+
+            try {
+                                
+                var m = $('#letterMessage').tinymce().getContent();                
+                if (m == '') { $("#btnSend").fadeIn('fast'); return; };
+                
+                var sendArgs = 'letterText=' + escape(m) + '&letterCountry=UNKNOWN&mobile=-10';
+
+                var linkid;
+
+                $.ajax(
+                {
+                    type: "post",
+                    url: "@Url.Content("~/Home/Mail")",
+                    data: sendArgs,
+                    dataType: "json",
+                    processData: false,
+                    success: function(result)
+                    {                                
+                        // but what happens if it returns a fail from the server here?
+                        if (result.response == '1') {
+                            $.cookie(result.guid, 0, { expires: 365 });
+
+                            // sends a tracking call to Optimizely for the given event name. 
+                            // event name does not need to be 'pre-registered' 
+                            //window.optimizely.push(['trackEvent', 'sent_letter']);
+
+                            letter_id = result.message;
+
+                            // reload the page
+                            window.location = "@Url.Content("~/mod/")";
+
+
+                        } else {
+                            display_errors({ name: 'server error', message: result.message });                            
+                        }
+                                            
+                    },                
+                    error : function(req, status, error)
+                    {
+
+                        // this is shit code... why do i need an error handler here as well?
+                        // how can i fire an error to get this code to run in the first place?
+
+                        throw {
+                            name: 'delivery error',
+                            message: error};
+                    }
+
+                });
+
+
+            }
+            catch (err) {
+                display_errors(err);                
+            }
+
+        });
+
+
+        function display_errors(err) {
+
+            alert('an error occurred: ' + err.name + ", " + err.message);
+            $("#btnSend").fadeIn('fast');
+        }
+
+    });
+
+</script>

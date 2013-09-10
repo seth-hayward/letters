@@ -238,6 +238,83 @@ namespace letterstocrushes.Controllers
 
         }
 
+        public ActionResult ModLetters(int page = 1, int mobile = 0)
+        {
+
+            bool is_user_mod = User.IsInRole("Mod");
+            if (is_user_mod == false)
+            {
+                return RedirectToAction("Index");
+            }
+
+            string time_zone = getUserTimeZone();
+            int _all_letter_count = 0;
+            int _pages_db = 0;
+
+            List<Core.Model.Letter> _letters = new List<Core.Model.Letter>();
+
+            string cache_key_list = "mod-page-" + page;
+            string cache_key_count = "mod-page-count-db";
+
+            //
+            // Fetch the total number of "mod" letters in db1.
+            // Store this information in the cache for 90 seconds.
+            // Fetch from cache if it exists there.
+            //
+
+            var profiler = MiniProfiler.Current;
+
+            if (HttpContext.Cache[cache_key_count] == null)
+            {
+                using (profiler.Step("Getting count"))
+                {
+                    _all_letter_count = _letterService.getLetterCountModPage();
+                }
+                HttpContext.Cache.Insert(cache_key_count, _all_letter_count, null, DateTime.UtcNow.AddSeconds(90), TimeSpan.Zero);
+            }
+            else
+            {
+                _all_letter_count = (int)HttpContext.Cache[cache_key_count];
+            }
+
+            _pages_db = (int)Math.Ceiling((double)_all_letter_count / _pagesize);
+
+            //
+            // Now... let's get our letters.
+            // We're basically using offsets. 
+            // We don't care about the ID. 
+            // It is meaningless to us.
+            //
+
+            if (HttpContext.Cache[cache_key_list] == null)
+            {
+                using (profiler.Step("Getting letters"))
+                {
+                    _letters = _letterService.getModLetters(page, _pagesize);
+                }
+                HttpContext.Cache.Insert(cache_key_list, _letters, null, DateTime.UtcNow.AddSeconds(15), TimeSpan.Zero);
+            }
+            else
+            {
+                _letters = (List<Core.Model.Letter>)HttpContext.Cache[cache_key_list];
+            }
+
+            ViewData.Model = _letterService.fixList(_letters, time_zone);
+            ViewBag.CurrentPage = page;
+            ViewBag.Pages = _all_letter_count;
+
+            if (mobile == 0)
+            {
+                return View();
+            }
+            else
+            {
+                return View("~/Views/Mobile/More.cshtml");
+            }
+
+        }
+
+
         public ActionResult Details(int id = 1, int mobile = 0)
         {
             string time_zone = getUserTimeZone();
@@ -248,6 +325,16 @@ namespace letterstocrushes.Controllers
             using (profiler.Step("Getting letter"))
             {
                 letterToView = _letterService.getLetter(id, time_zone);
+            }
+
+            if (letterToView.letterLevel == -10)
+            {
+                // mod letter, mod eyes only
+                if (User.IsInRole("Mod") == false)
+                {
+                    return RedirectToAction("Index");
+                }
+
             }
 
             HttpCookie letter_cookie = Request.Cookies[letterToView.letterTags];
@@ -1209,6 +1296,12 @@ namespace letterstocrushes.Controllers
             }
 
             Core.Model.Letter letter = _letterService.Mail(Server.HtmlDecode(letterText), letterCountry, userip, userid, int.Parse(mobile), ref error_message);
+
+            // remove the more page
+            // and mod page cache objects so they
+            // get pulled again immedately with the new data
+            HttpContext.Cache.Remove("mod-page-1");
+            HttpContext.Cache.Remove("more-page-1");
 
             if (User.Identity.IsAuthenticated == true)
             {
