@@ -228,11 +228,11 @@ namespace letterstocrushes
 
                 if (current == true)
                 {
-                    response = string.Format("<a class='current' href='{1}?page={2}'>{0}</a>", text, url, page);
+                    response = string.Format("<a class='current' href='{1}/page/{2}'>{0}</a>", text, url, page);
                 }
                 else
                 {
-                    response = string.Format("<a href='{1}?page={2}'>{0}</a>", text, url, page);
+                    response = string.Format("<a href='{1}/page/{2}'>{0}</a>", text, url, page);
                 }
 
             }
