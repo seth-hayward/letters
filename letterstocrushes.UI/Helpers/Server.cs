@@ -519,10 +519,11 @@ namespace letterstocrushes
                 // let's send the connection a message just
                 // in case it is still active
                 ChatMessage join_error = new ChatMessage();
-                join_error.Nick = "chatbot";
+                join_error.Nick = "chatbot:";
                 join_error.Message = existing_user.Handle + " reconnected.";
 
                 Clients.AllExcept(existing_user.ConnectionId).addMessage(join_error);
+                Clients.AllExcept(existing_user.ConnectionId).addSimpleMessage(join_error.Nick + " " + join_error.Message);
 
             }
 
@@ -646,6 +647,7 @@ namespace letterstocrushes
             {
                 error.Message = "Can't find user.";
                 Clients.Caller.addMessage(error);
+                Clients.Caller.addSimpleMessage("chatbot: Can't find user.");
                 return;
             }
 
@@ -678,6 +680,7 @@ namespace letterstocrushes
                     room_number = 1;
                     error.Message = "Unable to join room. Not a valid room number: <b>" + room + "</b>.";
                     Clients.Caller.addMessage(error);
+                    Clients.Caller.addSimpleMessage("chatbot: " + error.Message);
                     handled = true;
                 }
                 else
@@ -718,7 +721,7 @@ namespace letterstocrushes
                 magic_8_ball.Add("Outlook not so good");
                 magic_8_ball.Add("Very doubtful");
 
-                chat_1.Nick = "chatbot";
+                chat_1.Nick = "chatbot:";
                 chat_1.Message = current_user.Handle + " asked the magic 8-ball: " + message;
                 chat_1.ChatDate = DateTime.UtcNow;
                 chat_1.StoredInDB = false;
@@ -726,18 +729,20 @@ namespace letterstocrushes
 
                 // Call the addMessage method on all the clients in the room
                 Clients.Group(current_user.Room).addMessage(chat_1);
+                Clients.Group(current_user.Room).addSimpleMessage(chat_1.Nick + " " + chat_1.Message);
 
                 ChatMessage chat_2 = new ChatMessage();
 
                 Random rand = new Random();
 
-                chat_2.Nick = "magic 8 ball";
+                chat_2.Nick = "magic 8 ball:";
                 chat_2.Message = "And the answer is: " + magic_8_ball[rand.Next(magic_8_ball.Count)];
                 chat_2.ChatDate = DateTime.UtcNow;
                 chat_2.StoredInDB = false;
                 chat_2.Room = current_user.Room;
 
                 Clients.Group(current_user.Room).addMessage(chat_2);
+                Clients.Group(current_user.Room).addSimpleMessage(chat_1.Nick + " " + chat_1.Message);
 
                 Messages.Add(chat_1);
                 Messages.Add(chat_2);
@@ -761,13 +766,14 @@ namespace letterstocrushes
 
                 message = _chatService.GetStats(check_user);
 
-                chat_1.Nick = "chatbot";
+                chat_1.Nick = "chatbot:";
                 chat_1.Message = stats_intro + message;
 
                 chat_1.ChatDate = DateTime.UtcNow;
                 chat_1.StoredInDB = false;
                 chat_1.Room = current_user.Room;
                 Clients.Caller.addMessage(chat_1);
+                Clients.Caller.addSimpleMessage(chat_1.Nick + " " + chat_1.Message);
                 handled = true;
 
             }
@@ -781,9 +787,10 @@ namespace letterstocrushes
                 if (HttpContext.Current.User.IsInRole("Mod"))
                 {
                     ChatMessage ip_line = new ChatMessage();
-                    ip_line.Nick = "chatbot";
+                    ip_line.Nick = "chatbot:";
                     ip_line.Message = "Here are the IP address of the " + Visitors.Values.Count + " chatters.";
                     Clients.Caller.addMessage(ip_line);
+                    Clients.Caller.addSimpleMessage(ip_line.Nick + " " + ip_line.Message);
 
                     foreach (ChatVisitor chatter in Visitors.Values)
                     {
@@ -791,14 +798,16 @@ namespace letterstocrushes
                         ip_line.Message = chatter.IP;
                         ip_line.Nick = chatter.Handle;
                         Clients.Caller.addMessage(ip_line);
+                        Clients.Caller.addSimpleMessage(ip_line.Nick + " " + ip_line.Message);
                     }
                 }
                 else
                 {
                     ChatMessage not_mod = new ChatMessage();
-                    not_mod.Nick = "chatbot";
+                    not_mod.Nick = "chatbot:";
                     not_mod.Message = "You must be logged into a mod account to run this command.";
                     Clients.Caller.addMessage(not_mod);
+                    Clients.Caller.addSimpleMessage(not_mod.Nick + " " + not_mod.Message);
                 }
                 handled = true;
             }
