@@ -24,6 +24,10 @@ namespace letterstocrushes.Controllers
 
         public ActionResult Index(int page = 1)
         {
+            if (User.IsInRole("Mod") == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.CurrentPage = page;
             ViewBag.Pages = _commentService.getCommentCount();
             return View(_commentService.getRecentComments(page));
