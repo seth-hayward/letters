@@ -88,56 +88,31 @@ else
 
     <div class="letterCommentsForm well well-small">
 
-        @using (Html.BeginForm("Details", "Home", FormMethod.Post,new Dictionary<string, object> { 
-                                { "id", "add_comment_form" },
-                                { "class", "form-vertical" },
-                                { "data-ajax", "false" }
+        @using (Html.BeginForm("Details", "Home", FormMethod.Post,new Dictionary<string, object> {
+                { "data-ajax", "false" }
                         }))
         {
-            <fieldset>
-                <legend>add comment</legend>
-
-                <div class="control-group">
-                    @Html.Label("commenterName", "Name:", new { @class="control-label" })
-                    <div class="controls">
-                        @Html.TextBox("commenterName", "", new Dictionary<string, object> { 
-                                { "data-role", "none" } 
-                        })
-                    </div>
+                <div data-role="fieldcontain">
+                    <label for="commenterName">Name:</label>
+                    <input type="text" name="commenterName" id="commenterName" value=""  />
                 </div>
 
-                <div class="control-group">
-                    @Html.Label("commenterEmail", "Email:", new { @class="control-label" })
-                    <div class="controls">
-                        @Html.TextBox("commenterEmail", (string)ViewBag.email, new Dictionary<string, object> { 
-                                { "data-role", "none" } 
-                        })
-
-                        <span class="help-block">
+                <div data-role="fieldcontain">
+                    <label for="commenterEmail">Email:</label>
+                    <input type="text" name="commenterEmail" id="commenterEmail" />
+                        <p>
                             Email is optional and never shown. Leave yours if you want email notifications on new comments for this letter.
-                        </span>
-
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    @Html.Label("comment", "Comment:", new { @class="control-label" })
-                    <div class="controls">
-                        @Html.TextArea("comment", "", new Dictionary<string, object> { 
-                                { "data-role", "none" } 
-                        })
-                    </div>
+                        </p>
                 </div>
 
-                <div class="comment_row">
-                    <span class="comment_form">
-                        @Html.Hidden("letterId", Model.Id)
-                        @Html.Hidden("mobile", "1")
-                        <button type="button" id="add_comment" class="btn btn-primary" data-role="none">Send</button>
-                    </span>
+                <div data-role="fieldcontain">
+                    <label for="comment">Comment:</label>
+                    <textarea name="comment" id="comment"></textarea>
                 </div>
 
-            </fieldset>
+                @Html.Hidden("letterId", Model.Id)
+                @Html.Hidden("mobile", "1")
+                <button type="submit">send comment</button>
                 
         }
 

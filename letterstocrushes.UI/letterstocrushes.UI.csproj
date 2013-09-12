@@ -186,6 +186,9 @@
     <Content Include="Content\chat.css" />
     <Content Include="Content\comment.png" />
     <Content Include="Content\heart.png" />
+    <Content Include="Content\jquery.mobile-1.3.2.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\owl.ico" />
     <Content Include="Content\rainbow.JPG" />
     <Content Include="Content\style.css" />

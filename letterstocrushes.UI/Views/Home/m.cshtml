@@ -2,28 +2,33 @@
     ViewBag.Title = "letters to crushes: send";
 }
 
+@{
+    Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+
 <div class="letterContainer" id="input">
 
     <div id="sendLetterCopy">
-        <p>Write your letter.
+        <p style="float: left">Write your letter.
         </p>
+
+        <div style="float: right; margin-top: 10px">
+            <a id="btnSend" href="#" data-role="button" data-mini="true" data-inline="false" style="padding: 7px">Send</a>
+        </div>
     </div>
 
     <div id="errors" style="display: none">
         <p><b>there was an error (<span id="error_name"></span>).</b> something bad happened (<span id="error_message"></span>) and your letter was not sent. please send use a report using the @Html.ActionLink("contact page", "contact") if you see this again.</p>
     </div>
         
-	<textarea id="letterMessage" rows="12" cols="12" style="width: 250px"></textarea>
-		        	
+	<textarea id="letterMessage" rows="12" cols="12" style="width: 100%"></textarea>
+
+
 	<br />
 		    
-	<input type="button" class="submit_button" value="send" id="btnSend" />
-
     <div class="letterPostScript">            
-        <p>Please use initials or nicknames, it will be posted for others to see.</p>        
+        <small>Please use initials or nicknames, it will be posted for others to see.</small>        
     </div>            
-
-    <div id="disqus_thread" class="letterComments" style="display: none"></div>
     		
 </div>
 
@@ -31,11 +36,11 @@
 
             <h2>your letter was sent.</h2>
             <ul>
-                <li><span id="perm">here is it's permanent link</span></li>
-                <li>and it is @Html.ActionLink("on top of the more! page", "More")</li>
+                <li id="perm">here is it's permanent link</li>
+                <li><a href="@Url.Content("~/mobile/more")" rel="external">and it is on top of the more! page</a></li>
                 @{                    
                     if (User.Identity.IsAuthenticated == true) {
-                        <text><li>@Html.ActionLink("and on your bookmarks page", "bookmarks")</li></text>                    
+                        <text><li><a href="@Url.Content("~/mobile/bookmarks")" rel="external">and on your bookmarks page</a></li></text>                    
                     }
                 }
             </ul> 
@@ -79,7 +84,7 @@
                         // but what happens if it returns a fail from the server here?
                         if (result.response == '1') {
                             $.cookie(result.guid, 0, { expires: 365 });
-                            $("#perm").html("<a href='@Url.Content("~/letter/")" + result.message + "'>here is a permanent link</a>");
+                            $("#perm").html("<a href='@Url.Content("~/mobile/letter/")" + result.message + "' rel='external'>here is a permanent link</a>");
 
                             $('#input').fadeOut(100, function () { $('#output').fadeIn(100); });
 
