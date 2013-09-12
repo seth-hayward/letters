@@ -11,7 +11,6 @@
     <!-- Return on Development -->
     <link href="@Url.Content("~/Content/mobile.css?v=20130722")" rel="stylesheet" type="text/css" />
 
-
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
 
@@ -40,7 +39,7 @@
                                 </span>
 
                                 <ul id="nav">
-                                    <li @{ System.Diagnostics.Debug.Print(Request.RawUrl); if(Request.RawUrl.Contains("/mobile/page")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/page/1")">Home</a></li>
+                                    <li @{ if(Request.RawUrl.Contains("/mobile/page")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/page/1")">Home</a></li>
                                     <li @{ if(Request.RawUrl.Contains("/mobile/more")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/more")">More</a></li>
                                     <li @{ if(Request.RawUrl.Contains("/mobile/send")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/send")">Send</a></li>
                                     <li @{ if(Request.RawUrl.Contains("/mobile/bookmarks")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/bookmarks")">Bookmarks</a></li>

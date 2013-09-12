@@ -82,7 +82,7 @@ namespace letterstocrushes
 
         }
 
-        public static string Pager(double current_page, double items, string root)
+        public static string Pager(double current_page, double items, string root, bool mobile = false)
         {
 
             string response = "<div class='pager'>";
@@ -91,11 +91,11 @@ namespace letterstocrushes
             // back button first
             if (current_page == 1)
             {
-                response += Button("back", true, root, current_page - 1);
+                response += Button("back", true, root, current_page - 1, false, mobile);
             }
             else
             {
-                response += Button("back", false, root, current_page - 1);
+                response += Button("back", false, root, current_page - 1, false, mobile);
             }
 
             // middle text
@@ -113,7 +113,7 @@ namespace letterstocrushes
 
                     for (int a = 1; a < 6; a++)
                     {
-                        response += "&nbsp;" + Button(a.ToString(), false, root, (double)a, a == current_page);
+                        response += Button(a.ToString(), false, root, (double)a, a == current_page, mobile);
                     }
 
                 }
@@ -123,7 +123,7 @@ namespace letterstocrushes
 
                     for (int a = (int)(current_page - 2); a < (int)(current_page + 3); a++)
                     {
-                        response += "&nbsp;" + Button(a.ToString(), false, root, (double)a, a == current_page);
+                        response += Button(a.ToString(), false, root, (double)a, a == current_page, mobile);
                     }
 
                 }
@@ -133,7 +133,7 @@ namespace letterstocrushes
 
                     for (int a = (int)(pages - 4); a <= (int)pages; a++)
                     {
-                        response += "&nbsp;" + Button(a.ToString(), false, root, (double)a, a == current_page);
+                        response += Button(a.ToString(), false, root, (double)a, a == current_page, mobile);
                     }
 
                 }
@@ -148,11 +148,11 @@ namespace letterstocrushes
 
             if (current_page == pages)
             {
-                response += "&nbsp;" + Button("next", true, root, current_page + 1);
+                response += Button("next", true, root, current_page + 1, false, mobile);
             }
             else
             {
-                response += "&nbsp;" + Button("next", false, root, current_page + 1);
+                response += Button("next", false, root, current_page + 1, false, mobile);
             }
 
 
@@ -214,13 +214,19 @@ namespace letterstocrushes
 
         }
 
-        public static string Button(string text, bool disabled, string url, double page, bool current = false)
+        public static string Button(string text, bool disabled, string url, double page, bool current = false, bool mobile = false)
         {
 
             string response = "";
+            string mobile_include = "";
+
+            if (mobile)
+            {
+                mobile_include = @"data-role=""button""";
+            }
 
             if (disabled == true) {
-                response = string.Format("<a class='disabled' onclick='$.post(this.href); return false;'>{0}</a>", text);
+                response = string.Format("<a class='disabled' {1} onclick='$.post(this.href); return false;'>{0}</a>", text, mobile_include);
             } else {
 
                 // if we have the current button (this is the page that the user is on)
@@ -228,11 +234,11 @@ namespace letterstocrushes
 
                 if (current == true)
                 {
-                    response = string.Format("<a class='current' href='{1}/page/{2}'>{0}</a>", text, url, page);
+                    response = string.Format("<a class='current' {3} href='{1}page/{2}'>{0}</a>", text, url, page, mobile_include);
                 }
                 else
                 {
-                    response = string.Format("<a href='{1}/page/{2}'>{0}</a>", text, url, page);
+                    response = string.Format("<a {3} href='{1}page/{2}'>{0}</a>", text, url, page, mobile_include);
                 }
 
             }
