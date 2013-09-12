@@ -2,9 +2,26 @@
 {
 }
 
+/* styles for desktop */
+.tinynav { display: none }
+
+
+/* styles for mobile */
+@media screen and (max-width: 600px) {
+    .tinynav { display: block; width: 150px; float: right; margin-right: 30px }
+    #nav { display: none }
+}
+
+div#mobile_header
+{
+    width: 100%;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
 div.letterEnvelopeContainer
 {
-    margin-top: 20px;
+    margin-top: 4px;
 }
 
 ul.letterNav
