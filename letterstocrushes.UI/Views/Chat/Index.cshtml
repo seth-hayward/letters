@@ -182,6 +182,8 @@
                  
                 $.connection.hub.stateChanged(function (change) {
 
+                    console.log("newState: " + change.newState);
+
                     var date_now = new Date();
                     var reconnecting = false;
 

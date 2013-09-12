@@ -169,16 +169,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="apple-touch-icon-114x114-precomposed.png">
+    <Content Include="Content\apple-touch-icon-114x114-precomposed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="apple-touch-icon-114x114.png">
+    <Content Include="Content\apple-touch-icon-114x114.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="apple-touch-icon-72x72-precomposed.png">
+    <Content Include="Content\apple-touch-icon-72x72-precomposed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="apple-touch-icon-72x72.png">
+    <Content Include="Content\apple-touch-icon-72x72.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Readme\Elmah.txt" />
@@ -190,10 +190,10 @@
     <Content Include="Content\rainbow.JPG" />
     <Content Include="Content\style.css" />
     <Content Include="Content\tinymce.css" />
-    <Content Include="apple-touch-icon-precomposed.png">
+    <Content Include="Content\apple-touch-icon-precomposed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="favicon.ico">
+    <Content Include="Content\favicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Global.asax" />
@@ -385,10 +385,10 @@
     <Content Include="Scripts\tiny_mce\utils\form_utils.js" />
     <Content Include="Scripts\tiny_mce\utils\mctabs.js" />
     <Content Include="Scripts\tiny_mce\utils\validate.js" />
-    <Content Include="touch-icon-iphone-precomposed.png">
+    <Content Include="Content\touch-icon-iphone-precomposed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="touch-icon-iphone.png">
+    <Content Include="Content\touch-icon-iphone.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.config">
