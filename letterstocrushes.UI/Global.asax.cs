@@ -159,6 +159,12 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "PopularPages", // Route name
+                "popular/page/{page}", // URL with parameters
+                new { controller = "Home", action = "Popular" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "EditRoute", // Route name
                 "edit/{id}", // URL with parameters
                 new { controller = "Home", action = "Edit" } // Parameter defaults
