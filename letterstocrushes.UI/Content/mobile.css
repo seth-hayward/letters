@@ -3,7 +3,7 @@
 }
 
 /* styles for desktop */
-    .tinynav { display: block; width: 100px; float: right; margin-right: 30px }
+    .tinynav { display: block; width: 100px; float: right; }
 #nav
 {
     display: none;

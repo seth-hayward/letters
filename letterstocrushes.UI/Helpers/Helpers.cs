@@ -228,7 +228,7 @@ namespace letterstocrushes
 
             if (mobile)
             {
-                mobile_include = @"data-role=""button"" data-inline=""true""";
+                mobile_include = @"data-role=""button"" data-ajax=""false"" data-inline=""true""";
             }
 
             if (disabled == true) {
