@@ -22,7 +22,7 @@ else
         Html.RenderPartial("_LetterMobileBookmarkListItem", item);
     }
 
-    @Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/mobile/bookmarks")))
+    @Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/mobile/bookmarks/"), true))
         
 }
 
