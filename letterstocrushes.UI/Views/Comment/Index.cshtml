@@ -10,7 +10,7 @@
    
 }
 
-@Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/comments")))
+@Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/comments/")))
 
 @section Footer {
     @Html.Partial("_Footer")
