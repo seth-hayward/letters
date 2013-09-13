@@ -11,7 +11,7 @@
 
 }
 
-@Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/more/")))
+@Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/more/"), true))
 
 @section Footer {
     @Html.Partial("_Footer")

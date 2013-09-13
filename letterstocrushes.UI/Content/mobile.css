@@ -3,11 +3,12 @@
 }
 
 /* styles for desktop */
-    .tinynav { display: block; width: 100px; float: right; }
+.tinynav { display: block; width: 100px; }
 #nav
 {
     display: none;
 }
+
 
 /* styles for mobile */
 @media screen and (max-width: 600px) {
@@ -16,7 +17,6 @@
 
 div#mobile_header
 {
-    width: 100%;
     padding-top: 10px;
     padding-left: 10px;
 }
