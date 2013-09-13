@@ -736,9 +736,19 @@ namespace letterstocrushes.Controllers
             if (userip == null)
                 userip = Request.ServerVariables["REMOTE_ADDR"];
 
-            msg.Message = msg.Message + "<br><br>sent from ip: " + userip;
+            msg.Message = "Feedback received ( " + msg.Email + " ): <br /><br />" + msg.Message + "<br><br>sent from ip: " + userip;
           
             _mailService.SendContact(msg.Message, msg.Email);
+
+            Letter contact_letter = new Letter();
+            contact_letter.letterLanguage = "en-US";
+            contact_letter.letterLevel = -10;
+            contact_letter.letterPostDate = DateTime.UtcNow;
+            contact_letter.senderIP = userip;
+            contact_letter.letterMessage = msg.Message;
+
+            _letterService.AddLetter(contact_letter);
+
             return View("Thanks");
         }
 

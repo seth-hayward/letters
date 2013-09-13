@@ -252,6 +252,13 @@ namespace letterstocrushes.Infrastructure.Data
         public void AddLetter(Letter letter)
         {
             db_mysql db_mysql = new db_mysql();
+
+            if (letter.Id == 0)
+            {
+                letter last_letter = db_mysql.letters.OrderByDescending(u => u.Id).FirstOrDefault();
+                letter.Id = last_letter.Id + 1;
+            }
+
             letter new_letter = Mapper.Map<Letter, letter>(letter);
             db_mysql.letters.Add(new_letter);
             db_mysql.SaveChanges();
