@@ -746,6 +746,8 @@ namespace letterstocrushes.Controllers
             contact_letter.letterPostDate = DateTime.UtcNow;
             contact_letter.senderIP = userip;
             contact_letter.letterMessage = msg.Message;
+            contact_letter.letterComments = 0;
+            contact_letter.letterUp = 1;
 
             _letterService.AddLetter(contact_letter);
 
