@@ -105,36 +105,42 @@ namespace letterstocrushes
             // only because we are always dealing with more than 5 pages
             //
 
-            if (pages > 4)
+            if (mobile == false)
             {
 
-                if (current_page < 4)
+                if (pages > 4)
                 {
 
-                    for (int a = 1; a < 6; a++)
+                    if (current_page < 4)
                     {
-                        response += Button(a.ToString(), false, root, (double)a, a == current_page, mobile);
+
+                        for (int a = 1; a < 6; a++)
+                        {
+                            response += Button(a.ToString(), false, root, (double)a, a == current_page, mobile);
+                        }
+
                     }
 
-                }
-
-                if (current_page >= 4 & current_page < (pages - 2))
-                {
-
-                    for (int a = (int)(current_page - 2); a < (int)(current_page + 3); a++)
+                    if (current_page >= 4 & current_page < (pages - 2))
                     {
-                        response += Button(a.ToString(), false, root, (double)a, a == current_page, mobile);
+
+                        for (int a = (int)(current_page - 2); a < (int)(current_page + 3); a++)
+                        {
+                            response += Button(a.ToString(), false, root, (double)a, a == current_page, mobile);
+                        }
+
                     }
 
-                }
-
-                if (current_page >= (pages - 2))
-                {
-
-                    for (int a = (int)(pages - 4); a <= (int)pages; a++)
+                    if (current_page >= (pages - 2))
                     {
-                        response += Button(a.ToString(), false, root, (double)a, a == current_page, mobile);
+
+                        for (int a = (int)(pages - 4); a <= (int)pages; a++)
+                        {
+                            response += Button(a.ToString(), false, root, (double)a, a == current_page, mobile);
+                        }
+
                     }
+
 
                 }
 

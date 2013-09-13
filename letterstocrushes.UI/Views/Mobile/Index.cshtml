@@ -29,7 +29,7 @@
 }
 
 <div data-role="controlgroup">
-    @Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/mobile"), true))
+    @Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~/mobile/"), true))
 </div>
 
 @Html.Partial("_LetterMobileVoteListener")
