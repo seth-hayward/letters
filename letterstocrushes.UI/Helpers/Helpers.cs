@@ -222,7 +222,7 @@ namespace letterstocrushes
 
             if (mobile)
             {
-                mobile_include = @"data-role=""button""";
+                mobile_include = @"data-role=""button"" data-inline=""true""";
             }
 
             if (disabled == true) {
