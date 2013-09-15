@@ -197,6 +197,7 @@
     </Content>
     <Content Include="Content\owl.ico" />
     <Content Include="Content\rainbow.JPG" />
+    <Content Include="Content\readable.min.css" />
     <Content Include="Content\responsive-nav-styles.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

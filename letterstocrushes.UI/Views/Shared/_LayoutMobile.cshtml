@@ -7,8 +7,9 @@
 
     <link rel="icon" type="image/png" href="@Url.Content("~/Content/favicon.ico")" />
 
-    <!-- jQuery mobile support for swiping -->
-    <link rel="stylesheet" href="@Url.Content("~/Content/jquery.mobile-1.3.2.min.css")">
+    <!-- jQuery mobile -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/readable.min.css")" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css" />
 
     <!-- responsive-nav.js -->
     <link rel="stylesheet" href="@Url.Content("~/Content/responsive-nav.css")">
@@ -39,14 +40,9 @@
     <div class="container" data-role="page">
 
         <div data-role="header">
+                <div id="mobile_header">
 
-                        <div id="mobile_header">
-                                <span style="float: left; padding-top: 5px; padding-right: 10px">
-                                    <a href="@Url.Content("/mobile/page/1")" rel="external">letters to crushes</a>
-                                </span>
-
-
-                                <div id="nav">
+                            <div id="nav">
 
                                     <ul>
 
@@ -72,15 +68,18 @@
 
                                 </ul>
 
-                                </div>
+                            </div>
 
-                            <div style="clear: both">
-                        </div>
+                            <span style="float: left;padding-right: 10px">
+                                <a href="@Url.Content("/mobile/page/1")" rel="external">letters to crushes</a>
+                            </span>
+
+                    <div style="clear: both">
+
+                    </div>
+                </div>
 
             </div>
-
-
-        </div>
 
         <div data-role="content">
 
@@ -95,7 +94,7 @@
     <script>
         var navigation = responsiveNav("#nav", { // Selector: The ID of the wrapper
             animate: true, // Boolean: Use CSS3 transitions, true or false
-            transition: 400, // Integer: Speed of the transition, in milliseconds
+            transition: 100, // Integer: Speed of the transition, in milliseconds
             label: "Menu", // String: Label for the navigation toggle
             insert: "after", // String: Insert the toggle before or after the navigation
             customToggle: "", // Selector: Specify the ID of a custom toggle
