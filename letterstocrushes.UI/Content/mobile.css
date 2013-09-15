@@ -1,19 +1,11 @@
-﻿div.container
+﻿body
+{
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+div.container
 {
     margin-top: 50px;
-}
-
-/* styles for desktop */
-.tinynav { display: block; width: 100px; }
-#nav
-{
-    display: none;
-}
-
-
-/* styles for mobile */
-@media screen and (max-width: 600px) {
-    #nav { display: none }
 }
 
 div#mobile_header
@@ -28,6 +20,11 @@ div#mobile_header .ui-btn-corner-all
 {
     border-radius: 0px;
 }
+
+    div#mobile_header .ui-bar
+    {
+        padding: 0;
+    }
 
 div.letterEnvelopeContainer
 {
