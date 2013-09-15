@@ -30,6 +30,10 @@
       $(function () {             // huan086: Swipe right is way too sensitive on iPhone 4S and gets triggered even when scrolling vertically.
           // Set the horizontalDistanceThreshold to 50% of screen to make sure that it does not get triggered accidentally.
           $.event.special.swipe.horizontalDistanceThreshold = Math.min($(document).width() / 2, 160);
+
+          $("#nav a").on('click', function () {
+              navigation.toggle();
+          });
       });
 
   </script>
