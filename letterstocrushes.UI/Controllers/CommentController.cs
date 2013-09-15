@@ -153,5 +153,43 @@ namespace letterstocrushes.Controllers
             return Json(comments, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult Add(int letterId, string comment, string commenterName, string commenterEmail)
+        {
+
+            Comment comm = new Comment();
+            comm.commentDate = DateTime.UtcNow;
+            comm.commenterEmail = commenterEmail;
+            comm.commenterName = commenterName;
+            comm.commentMessage = comment;
+            comm.letterId = letterId;
+            comm.level = 0;
+
+            string userip = string.Empty;
+            userip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (userip == null)
+                userip = Request.ServerVariables["REMOTE_ADDR"];
+            comm.commenterIP = userip;
+
+            // add comment, 
+            // notify all users who are subscribed to that letter
+            string host = "";
+
+            switch (Request.Url.Port)
+            {
+                case 80:
+                    host = "http://" + Request.Url.Host + VirtualPathUtility.ToAbsolute("~/");
+                    break;
+                default:
+                    host = "http://" + Request.Url.Host + ":" + Request.Url.Port + VirtualPathUtility.ToAbsolute("~/");
+                    break;
+            }
+
+            _commentService.AddComment(comm, host);
+
+            return Json(comm, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
