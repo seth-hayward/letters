@@ -185,12 +185,24 @@
     <Content Include="Content\channel.html" />
     <Content Include="Content\chat.css" />
     <Content Include="Content\comment.png" />
+    <Content Include="Content\hamburger-retina.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\hamburger.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\heart.png" />
     <Content Include="Content\jquery.mobile-1.3.2.min.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\owl.ico" />
     <Content Include="Content\rainbow.JPG" />
+    <Content Include="Content\responsive-nav-styles.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\responsive-nav.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\style.css" />
     <Content Include="Content\tinymce.css" />
     <Content Include="Content\apple-touch-icon-precomposed.png">
@@ -261,6 +273,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\msdropdown\sprite.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\responsive-nav.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\tinynav.js">
