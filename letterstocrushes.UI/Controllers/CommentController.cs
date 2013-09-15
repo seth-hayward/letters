@@ -172,6 +172,20 @@ namespace letterstocrushes.Controllers
                 userip = Request.ServerVariables["REMOTE_ADDR"];
             comm.commenterIP = userip;
 
+            string current_guid = getCommenterGuid();
+            if (current_guid == null)
+            {
+                current_guid = System.Guid.NewGuid().ToString();
+
+                // new commenter, let's give them a guid
+                HttpCookie cookie = new HttpCookie("cId");
+                cookie.Value = current_guid;
+                cookie.Expires = DateTime.Now.AddDays(1500);
+                Response.Cookies.Add(cookie);
+            }
+
+            comm.commenterGuid = current_guid;
+
             // add comment, 
             // notify all users who are subscribed to that letter
             string host = "";

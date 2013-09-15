@@ -41,6 +41,13 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "APIAddComment", // Route name
+                "api/add_comment/", // URL with parameters
+                new { controller = "Comment", action = "Add" } // Parameter defaults
+            );
+
+
+            routes.MapRoute(
                 "APISearchLetters", // Route name
                 "api/search/{terms}/{page}", // URL with parameters
                 new { controller = "Home", action = "SearchLetters" } // Parameter defaults
