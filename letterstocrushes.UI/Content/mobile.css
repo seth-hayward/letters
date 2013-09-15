@@ -1,5 +1,6 @@
 ﻿div.container
 {
+    margin-top: 50px;
 }
 
 /* styles for desktop */
@@ -17,8 +18,15 @@
 
 div#mobile_header
 {
-    padding-top: 10px;
+    background-color: #fff;
+    display: block;
     padding-left: 10px;
+    z-index: 100;
+}
+
+div#mobile_header .ui-btn-corner-all
+{
+    border-radius: 0px;
 }
 
 div.letterEnvelopeContainer
