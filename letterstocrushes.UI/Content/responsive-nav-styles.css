@@ -25,16 +25,6 @@
   }
 }
 
-#nav a {
-  color: #000;
-  text-decoration: none;
-  width: 100%;
-  background: #fff;
-  border-bottom: 1px solid white;
-  padding: 0.7em 1em;
-  float: left;
-}
-
 @media screen and (min-width: 40em) {
   #nav a {
     margin: 0;
@@ -46,16 +36,28 @@
   }
 }
 
-#nav ul ul a {
-  background: #fff;
-  padding-left: 2em;
-}
-
 @media screen and (min-width: 40em) {
   #nav ul ul a {
     display: none;
   }
 }
+
+#nav a {
+  color: #000;
+  text-decoration: none;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid white;
+  padding: 0.7em 1em;
+  float: left;
+}
+
+
+#nav ul ul a {
+  background: #fff;
+  padding-left: 2em;
+}
+
 
 #nav-toggle {
   -webkit-touch-callout: none;

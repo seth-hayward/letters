@@ -41,44 +41,44 @@
 </head>
 <body>
 
-            <div id="mobile_header" class="ui-bar ui-bar-b">
+    <div id="mobile_header" class="ui-bar ui-bar-b">
 
-            <div id="nav">
+        <div id="nav">
 
-                    <ul>
+                <ul>
 
-                    <li @{ if(Request.RawUrl.Contains("/mobile/page")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/page/1")">Home</a></li>
-                    <li @{ if(Request.RawUrl.Contains("/mobile/more") || Request.RawUrl.Contains("/mobile/letter")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/more")">More</a></li>
-                    <li @{ if(Request.RawUrl.Contains("/mobile/send")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/send")">Send</a></li>
-                    <li @{ if(Request.RawUrl.Contains("/mobile/search")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/search")">Search</a></li>
-                    <li @{ if(Request.RawUrl.Contains("/chat")) { <text>class="selected" </text> } }><a href="@Url.Content("~/chat")" target="_blank">Chat</a></li>
+                <li @{ if(Request.RawUrl.Contains("/mobile/page")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/page/1")">Home</a></li>
+                <li @{ if(Request.RawUrl.Contains("/mobile/more") || Request.RawUrl.Contains("/mobile/letter")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/more")">More</a></li>
+                <li @{ if(Request.RawUrl.Contains("/mobile/send")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/send")">Send</a></li>
+                <li @{ if(Request.RawUrl.Contains("/mobile/search")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/search")">Search</a></li>
+                <li @{ if(Request.RawUrl.Contains("/chat")) { <text>class="selected" </text> } }><a href="@Url.Content("~/chat")" target="_blank">Chat</a></li>
 
-                    @if (User.Identity.IsAuthenticated == true)
-                    {
-                        <text>
-                            <li @{ if(Request.RawUrl.Contains("/mobile/bookmarks")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/bookmarks")">Bookmarks</a></li>
-                            <li @{ if(Request.RawUrl.Contains("/logout/1")) { <text>class="selected" </text> } }><a href="@Url.Content("~/logout/1")">Logout</a></li>
+                @if (User.Identity.IsAuthenticated == true)
+                {
+                    <text>
+                        <li @{ if(Request.RawUrl.Contains("/mobile/bookmarks")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/bookmarks")">Bookmarks</a></li>
+                        <li @{ if(Request.RawUrl.Contains("/logout/1")) { <text>class="selected" </text> } }><a href="@Url.Content("~/logout/1")">Logout</a></li>
 
-                        </text>
-                    } else {
+                    </text>
+                } else {
                                         
-                        <text>
-                            <li @{ if(Request.RawUrl.Contains("/mobile/login")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/login")">Login</a></li>
-                        </text>                                     
-                    }
+                    <text>
+                        <li @{ if(Request.RawUrl.Contains("/mobile/login")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/login")">Login</a></li>
+                    </text>                                     
+                }
 
-                </ul>
+            </ul>
 
-            </div>
+        </div>
 
-            <span style="float: left;padding-right: 10px; margin-top: 20px">
-                <a href="@Url.Content("/mobile/page/1")" rel="external">letters to crushes</a>
-            </span>
+        <span style="float: left;padding-right: 10px; margin-top: 20px">
+            <a href="@Url.Content("/mobile/page/1")" rel="external">letters to crushes</a>
+        </span>
 
-    <div style="clear: both">
+        <div style="clear: both">
 
+        </div>
     </div>
-</div>
 
 
     <div class="container" data-role="page">
