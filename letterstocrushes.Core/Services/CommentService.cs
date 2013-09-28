@@ -14,11 +14,13 @@ namespace letterstocrushes.Core.Services
         private readonly IQueryLetters _queryLetters;
         private readonly IQueryComments _queryComments;
         private readonly MailService _mailService;
-        public CommentService(IQueryLetters queryLetters, IQueryComments queryComments, MailService mailService)
+        private readonly BlockService _blockService;
+        public CommentService(IQueryLetters queryLetters, IQueryComments queryComments, MailService mailService, BlockService blockService)
         {
             _queryLetters = queryLetters;
             _queryComments = queryComments;
             _mailService = mailService;
+            _blockService = blockService;
         }
 
         public List<Comment> getComments(int id, Boolean include_hidden)
@@ -28,6 +30,18 @@ namespace letterstocrushes.Core.Services
 
         public void AddComment(Comment comment, string host)        
         {
+
+            // spam protection
+            List<Block> blocked_ips = _blockService.getBlocks(blockType.blockIP, blockWhat.blockComment);
+
+            List<string> banned_ips = new List<string>();
+
+            foreach (Block b in blocked_ips)
+            {
+                banned_ips.Add(b.Value);
+            }
+
+
             Letter lucky_letter = _queryLetters.getLetter(comment.letterId);
 
             // time to ban people
@@ -44,7 +58,6 @@ namespace letterstocrushes.Core.Services
             }
 
 
-            List<String> banned_ips = new List<String>();
             banned_ips.Add("100.2.225.62");
 
             if(banned_ips.Contains(comment.commenterIP)) {
