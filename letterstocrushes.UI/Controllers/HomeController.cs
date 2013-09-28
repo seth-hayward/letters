@@ -87,7 +87,7 @@ namespace letterstocrushes.Controllers
             new Core.Services.EditService(new Infrastructure.Data.EfQueryEdits()),
             new Core.Services.LetterService(new Infrastructure.Data.EfQueryLetters(), new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]), new Core.Services.BookmarkService(new Infrastructure.Data.EfQueryBookmarks()),
                 new Core.Services.BlockService(new Infrastructure.Data.EfQueryBlocks())),
-            new Core.Services.CommentService(new Infrastructure.Data.EfQueryLetters(), new Infrastructure.Data.EfQueryComments(), new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"])),
+            new Core.Services.CommentService(new Infrastructure.Data.EfQueryLetters(), new Infrastructure.Data.EfQueryComments(), new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]), new Core.Services.BlockService(new Infrastructure.Data.EfQueryBlocks())),
             new Core.Services.QueueService(new Infrastructure.Data.EfQueryQueue()),
             new Core.Services.VoteService(new Infrastructure.Data.EfQueryVotes()))
         {

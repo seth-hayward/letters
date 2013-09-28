@@ -18,7 +18,7 @@ namespace letterstocrushes.Controllers
             _commentService = commentService;
         }
 
-        public CommentController() : this(new CommentService(new Infrastructure.Data.EfQueryLetters(), new Infrastructure.Data.EfQueryComments(), new MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"])))
+        public CommentController() : this(new CommentService(new Infrastructure.Data.EfQueryLetters(), new Infrastructure.Data.EfQueryComments(), new MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]), new Core.Services.BlockService(new Infrastructure.Data.EfQueryBlocks())))
         {
         }
 
