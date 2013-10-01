@@ -184,6 +184,12 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "EditsPages", // Route name
+                "edits/page/{page}", // URL with parameters
+                new { controller = "Home", action = "Edits" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "Queue", // Route name
                 "queue/", // URL with parameters
                 new { controller = "Home", action = "Queue" } // Parameter defaults
