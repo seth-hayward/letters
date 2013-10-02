@@ -46,9 +46,6 @@
             </ul> 
 
 </div>
-    
-<script src="http://www.google.com/jsapi?key=ABQIAAAAldASRj6IH3Y9p1O31t-C9RQCeCEsZXDSZbVjp8UFZVicfsCyEBQ2EQnGirJm-6SOzGyiESqsoOB2eA" type="text/javascript"></script>
-
 
 <script type="text/javascript">
 
@@ -62,9 +59,7 @@
             try {
 
                 var c;                                
-                if(google.loader.ClientLocation) { c = google.loader.ClientLocation.address.country_code.toUpperCase(); }
-                else { c = "UNKNOWN"; }
-                                
+                c = "UNKNOWN";
                 var m = '<p>' + $('#letterMessage').val().replace(/\n\r?/g, '<br />') + '</p>';
                 if (m == '') { $("#btnSend").fadeIn('fast'); return; };
                 
