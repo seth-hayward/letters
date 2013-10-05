@@ -26,7 +26,7 @@ namespace letterstocrushes.Controllers
         {
             if (User.IsInRole("Mod") == false)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Account");
             }
             ViewBag.CurrentPage = page;
             ViewBag.Pages = _commentService.getCommentCount();
