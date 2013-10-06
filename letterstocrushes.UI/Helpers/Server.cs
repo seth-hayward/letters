@@ -407,7 +407,7 @@ namespace letterstocrushes
             Clients.Caller.addMessage(reset);
 
             // join the new room
-            JoinGroup(room);
+            JoinGroup(room, true);
 
         }
 
@@ -416,7 +416,7 @@ namespace letterstocrushes
             Clients.All.errorMessage("The server was rebooted. You may need to refresh this page.");
         }
 
-        public void JoinGroup(string room)
+        public void JoinGroup(string room, bool display_welcome)
         {
 
             if (Visitors.ContainsKey(Context.ConnectionId) == false)
@@ -439,8 +439,12 @@ namespace letterstocrushes
             Groups.Add(Context.ConnectionId, room);
 
             // send the message to the group about the new person
-            Clients.OthersInGroup(room).addMessage(announced);
-            Clients.OthersInGroup(room).addSimpleMessage(announced.Nick + " " + announced.Message);
+
+            if (display_welcome == true)
+            {
+                Clients.OthersInGroup(room).addMessage(announced);
+                Clients.OthersInGroup(room).addSimpleMessage(announced.Nick + " " + announced.Message);
+            }
 
             StringBuilder who_is_here = new StringBuilder();
             List<ChatVisitor> people_in_room = (from m in Visitors.Values where m.Room.Equals(room) select m).ToList();
@@ -478,6 +482,8 @@ namespace letterstocrushes
         public void Join(string name)
         {
 
+            bool display_welcome = true;
+
             String user_ip = HttpContext.Current.Request.UserHostAddress;
 
             List<Block> blocked_ips = blockService.getBlocks(blockType.blockIP, blockWhat.blockChat);
@@ -503,6 +509,8 @@ namespace letterstocrushes
                 // update the connection id
 
                 // BUT ONLY ... IF... that old connection no longer exists?
+
+                display_welcome = false;
 
                 String previous_id = existing_user.ConnectionId;
 
@@ -566,7 +574,7 @@ namespace letterstocrushes
 
             }
 
-            JoinGroup("1");
+            JoinGroup("1", display_welcome);
 
             if (Max < Visitors.Count) { Max = Visitors.Count; }
 
