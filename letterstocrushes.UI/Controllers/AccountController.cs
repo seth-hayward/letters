@@ -329,11 +329,21 @@ namespace letterstocrushes.Controllers
         public JsonResult MobileLogin(string a, string b)
         {
             int result = 0;
+            string is_mod = "0";
 
             if (MembershipService.ValidateUser(a, b))
             {
                 FormsService.SignIn(a, true);
                 FormsAuthentication.SetAuthCookie(a, true);
+
+                if (User.IsInRole("Mod") == true)
+                {
+                    is_mod = "1";
+                }
+                else
+                {
+                    is_mod = User.Identity.Name;
+                }
                 result = 1;
             }
             else
@@ -341,24 +351,30 @@ namespace letterstocrushes.Controllers
                 result = 2;
             }
 
-            return Json(new { message = result, response = result, guid = result }, JsonRequestBehavior.AllowGet);
+            return Json(new { message = result, response = result, guid = is_mod }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public JsonResult MobileStatus()
         {
             int result = 0;
+            int mod = 0;
 
             if (User.Identity.IsAuthenticated == true)
             {
                 result = 1;
+
+                if (User.IsInRole("Mod") == true)
+                {
+                    mod = 1;
+                }
             }
             else
             {
                 result = 0;
             }
 
-            return Json(new { message = result.ToString(), response = result, guid = result.ToString() }, JsonRequestBehavior.AllowGet);
+            return Json(new { message = result.ToString(), response = result, guid = mod.ToString() }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
