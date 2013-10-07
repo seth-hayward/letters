@@ -136,6 +136,18 @@ namespace letterstocrushes.Controllers
         }
 
         [HttpGet]
+        public JsonResult GetRecentComments(int page)
+        {
+
+            if (User.IsInRole("Mod") == false)
+            {
+                return Json("Oh.", JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(_commentService.getRecentComments(page), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public JsonResult GetComments(int id)
         {
             List<Core.Model.Comment> comments = new List<Core.Model.Comment>();

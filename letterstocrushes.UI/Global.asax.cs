@@ -40,6 +40,13 @@ namespace letterstocrushes
                 new { controller = "Home", action = "GetLetters" } // Parameter defaults
             );
 
+
+            routes.MapRoute(
+                "APIGetRecentComments", // Route name
+                "api/get_comments/{page}", // URL with parameters
+                new { controller = "Comment", action = "GetRecentComments" } // Parameter defaults
+            );
+
             routes.MapRoute(
                 "APIAddComment", // Route name
                 "api/add_comment/", // URL with parameters
