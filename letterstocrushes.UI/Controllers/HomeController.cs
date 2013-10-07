@@ -522,7 +522,17 @@ namespace letterstocrushes.Controllers
 
             if (HttpContext.Cache[cache_key_list] == null)
             {
-                letters = _letterService.getLetters(level, page, _pagesize).ToList();
+
+                switch(level)
+                {
+                    case -10:
+                        letters = _letterService.getModLetters(page, _pagesize).ToList();
+                        break;
+                    default:
+                        letters = _letterService.getLetters(level, page, _pagesize).ToList();
+                        break;
+                }
+
                 HttpContext.Cache.Insert(cache_key_list, letters, null, DateTime.UtcNow.AddSeconds(15), TimeSpan.Zero);
             }
             else
