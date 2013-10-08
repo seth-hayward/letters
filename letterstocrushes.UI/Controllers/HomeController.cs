@@ -1465,6 +1465,7 @@ namespace letterstocrushes.Controllers
 
                     if (hubConnection.State == Microsoft.AspNet.SignalR.Client.ConnectionState.Connected)
                     {
+
                         // Send the message
                         hub.Invoke("Vote", id, c);
 
