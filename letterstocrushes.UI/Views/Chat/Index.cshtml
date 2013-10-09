@@ -162,8 +162,15 @@
 
                 chat.client.reloadChat = function () {
 
+                    var message = {
+                        Message: "Detected login/logout in another browser. Please hold tight.",
+                        Nick: "chatbot",
+                        ChatDate: new Date(),
+                        Publish: 1,
+                    };
+
                     $.connection.hub.stop();
-                    updateMessage("Detected login/logout in another browser. Please hold tight.");
+                    updateMessage(message);
                     var timeout_id = window.setTimeout(function () {
                         joinChat();
                     }, 3000);
