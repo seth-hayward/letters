@@ -11,6 +11,7 @@ using letterstocrushes.Models;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using StackExchange.Profiling;
+using Microsoft.AspNet.SignalR.Client.Hubs;
 
 namespace letterstocrushes.Controllers
 {
@@ -46,6 +47,31 @@ namespace letterstocrushes.Controllers
             if (MembershipService == null) { MembershipService = new AccountMembershipService(); }
 
             base.Initialize(requestContext);
+        }
+
+        private HubConnection _hubConnection;
+        private IHubProxy _hub;
+        public HubConnection hubConnection
+        {
+            get
+            {
+                return _hubConnection;
+            }
+            set
+            {
+                _hubConnection = value;
+            }
+        }
+        public IHubProxy hub
+        {
+            get
+            {
+                return _hub;
+            }
+            set
+            {
+                _hub = value;
+            }
         }
 
 
@@ -278,6 +304,9 @@ namespace letterstocrushes.Controllers
                     
                     FormsAuthentication.RedirectFromLoginPage(model.UserName, true);
 
+                    announceStatusChange();
+
+
                     if (model.Mobile == 1)
                     {
 //                        return RedirectToAction("Index", "Account", new { mobile = 1 });
@@ -335,6 +364,7 @@ namespace letterstocrushes.Controllers
             {
                 FormsService.SignIn(a, true);
                 FormsAuthentication.SetAuthCookie(a, true);
+                announceStatusChange();
 
                 if (User.IsInRole("Mod") == true)
                 {
@@ -380,6 +410,7 @@ namespace letterstocrushes.Controllers
         [HttpGet]
         public JsonResult MobileLogout()
         {
+            announceStatusChange();
             FormsService.SignOut();
             return Json(new { message = "1", response = 1, guid = "1" }, JsonRequestBehavior.AllowGet);
         }
@@ -390,6 +421,9 @@ namespace letterstocrushes.Controllers
 
         public ActionResult Logout(int mobile = 0)
         {
+
+            announceStatusChange();
+
             FormsService.SignOut();
 
             if (mobile == 0)
@@ -570,5 +604,73 @@ namespace letterstocrushes.Controllers
             return time_zone_value;
         }
 
+        public void announceStatusChange()
+        {
+
+            string userip = null;
+            userip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (userip == null)
+                userip = Request.ServerVariables["REMOTE_ADDR"];
+
+            string signalr_hub = "http://localhost:" + Request.Url.Port + VirtualPathUtility.ToAbsolute("~/signalr/hubs");
+
+            try
+            {
+                    // create a new connection if one does not exist
+                    if (hubConnection == null || hubConnection.State == Microsoft.AspNet.SignalR.Client.ConnectionState.Disconnected)
+                    {
+                        hubConnection = new HubConnection(signalr_hub);
+
+                        // Create a proxy to the chat service
+                        hub = hubConnection.CreateHubProxy("visitorUpdate");
+
+                        // Start the connection
+                        hubConnection.Start().Wait();
+
+                    }
+
+
+                    if (hubConnection.State == Microsoft.AspNet.SignalR.Client.ConnectionState.Connected)
+                    {
+
+                        // Send the message
+
+                        String user_ip = Request.UserHostAddress;
+
+                        hub.Invoke("AnnounceStatusChange", user_ip);
+
+                        hubConnection.Stop();
+                    }
+            }
+            catch (Exception ex)
+            {
+
+                Core.Model.Contact msg = new Core.Model.Contact();
+
+
+                string hub_state = "";
+                if (hubConnection != null)
+                {
+                    hub_state = hubConnection.State.ToString();
+                }
+                else
+                {
+                    hub_state = "null";
+                }
+                msg.Message = "account controller. <br />state: " + hub_state + "<br><br>" + ex.Message.ToString();
+                if (ex.InnerException != null)
+                {
+                    msg.Message = msg.Message + "<br><br>" + ex.InnerException.Message.ToString();
+                }
+
+                _mailService.SendContact(msg.Message, msg.Email);
+
+            }
+
+
+        }
+
+
     }
+
 }

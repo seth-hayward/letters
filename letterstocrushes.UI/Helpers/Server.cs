@@ -193,7 +193,9 @@ namespace letterstocrushes
 
         public void Send(string message)
         {
-            Clients.All.addMessage(message);
+
+            Clients.All.addMessage(message);                
+
         }
 
         public override Task OnConnected()
@@ -614,10 +616,23 @@ namespace letterstocrushes
 
         }
 
+        public void AnnounceStatusChange(string ip)
+        {
+
+
+            foreach (ChatVisitor k in Visitors.Values) {
+                if (k.IP == ip)
+                {
+                    Clients.Client(k.ConnectionId).reloadChat();
+                }
+            }
+
+        }
+
         public void SendChat(string message)
         {
             // chat message
-
+            
             String user_ip = HttpContext.Current.Request.UserHostAddress;
 
             List<Block> blocked_ips = blockService.getBlocks(blockType.blockIP, blockWhat.blockChat);
@@ -825,17 +840,19 @@ namespace letterstocrushes
                 // Call the addMessage method on all the clients in the room
                 Clients.Group(current_user.Room).addMessage(chat);
 
-                string simple_chat = chat.Nick + " " + chat.Message;                    
+                string simple_chat = chat.Nick + " " + chat.Message;
                 Clients.Group(current_user.Room).addSimpleMessage(simple_chat);
 
                 Messages.Add(chat);
             }
+
 
             // every message, update the database
             UpdateDatabase();
 
             //TimeSpan uptime = DateTime.Now - Started;
             //Clients.Group("admins").addMessage(String.Format("{0} active users. {1} max users. uptime is {2}", Visitors.Count, Max, uptime.Hours + " hours, " + uptime.Minutes + " minutes."));
+
 
 
         }
