@@ -805,35 +805,35 @@ namespace letterstocrushes
             //    string report_msg = message.Replace("/report ", "");                
             //}
 
-            //if (message.StartsWith("/ips"))
-            //{
-            //    if (HttpContext.Current.User.IsInRole("Mod"))
-            //    {
-            //        ChatMessage ip_line = new ChatMessage();
-            //        ip_line.Nick = "chatbot:";
-            //        ip_line.Message = "Here are the IP address of the " + Visitors.Values.Count + " chatters.";
-            //        Clients.Caller.addMessage(ip_line);
-            //        Clients.Caller.addSimpleMessage(ip_line.Nick + " " + ip_line.Message);
+            if (message.StartsWith("/ips"))
+            {
+                if (HttpContext.Current.User.IsInRole("Mod"))
+                {
+                    ChatMessage ip_line = new ChatMessage();
+                    ip_line.Nick = "chatbot:";
+                    ip_line.Message = "Here are the IP address of the " + Visitors.Values.Count + " chatters.";
+                    Clients.Caller.addMessage(ip_line);
+                    Clients.Caller.addSimpleMessage(ip_line.Nick + " " + ip_line.Message);
 
-            //        foreach (ChatVisitor chatter in Visitors.Values)
-            //        {
-            //            ip_line = new ChatMessage();
-            //            ip_line.Message = chatter.IP;
-            //            ip_line.Nick = chatter.Handle;
-            //            Clients.Caller.addMessage(ip_line);
-            //            Clients.Caller.addSimpleMessage(ip_line.Nick + " " + ip_line.Message);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        ChatMessage not_mod = new ChatMessage();
-            //        not_mod.Nick = "chatbot:";
-            //        not_mod.Message = "You must be logged into a mod account to run this command.";
-            //        Clients.Caller.addMessage(not_mod);
-            //        Clients.Caller.addSimpleMessage(not_mod.Nick + " " + not_mod.Message);
-            //    }
-            //    handled = true;
-            //}
+                    foreach (ChatVisitor chatter in Visitors.Values)
+                    {
+                        ip_line = new ChatMessage();
+                        ip_line.Message = chatter.IP;
+                        ip_line.Nick = chatter.Handle;
+                        Clients.Caller.addMessage(ip_line);
+                        Clients.Caller.addSimpleMessage(ip_line.Nick + " " + ip_line.Message);
+                    }
+                }
+                else
+                {
+                    ChatMessage not_mod = new ChatMessage();
+                    not_mod.Nick = "chatbot:";
+                    not_mod.Message = "You must be logged into a mod account to run this command.";
+                    Clients.Caller.addMessage(not_mod);
+                    Clients.Caller.addSimpleMessage(not_mod.Nick + " " + not_mod.Message);
+                }
+                handled = true;
+            }
 
             if (handled == false)
             {
