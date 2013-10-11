@@ -406,7 +406,7 @@ namespace letterstocrushes.Controllers
                 result = 2;
             }
 
-            return Json(new { message = result, response = result_message, guid = result }, JsonRequestBehavior.AllowGet);
+            return Json(new { message = result_message, response = result, guid = result }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
