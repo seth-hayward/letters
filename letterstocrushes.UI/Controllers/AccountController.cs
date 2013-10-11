@@ -384,6 +384,31 @@ namespace letterstocrushes.Controllers
             return Json(new { message = result, response = result, guid = is_mod }, JsonRequestBehavior.AllowGet);
         }
 
+
+        [HttpPost]
+        public JsonResult MobileRegister(string a, string b)
+        {
+            int result = 0;
+            string result_message = "";
+
+            MembershipCreateStatus createStatus = MembershipService.CreateUser(a, b, a);
+
+            if (createStatus == MembershipCreateStatus.Success)
+            {
+                FormsService.SignIn(a, true);
+                _mailService.SendContact("New user joined: " + a, "seth.hayward@gmail.com");
+
+                result = 1;
+            }
+            else
+            {
+                result_message = AccountValidation.ErrorCodeToString(createStatus);
+                result = 2;
+            }
+
+            return Json(new { message = result, response = result_message, guid = result }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpGet]
         public JsonResult MobileStatus()
         {
@@ -459,9 +484,7 @@ namespace letterstocrushes.Controllers
         public ActionResult Register(RegisterModel model)
         {
 
-            //Debug.Print("ModelState before: " + ModelState.IsValid.ToString());
             model.Email = model.UserName;
-            //Debug.Print("ModelState after: " + ModelState.IsValid.ToString());
 
             if (TestEmail(model.Email) == false)
             {
@@ -475,7 +498,7 @@ namespace letterstocrushes.Controllers
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
-                    FormsService.SignIn(model.UserName, false /* createPersistentCookie */);
+                    FormsService.SignIn(model.UserName, true /* createPersistentCookie */);
                     _mailService.SendContact("New user joined: " + model.Email, "seth.hayward@gmail.com");
                     
                     if (model.Mobile == 0)
@@ -489,7 +512,6 @@ namespace letterstocrushes.Controllers
                 }
                 else
                 {
-                    //Debug.Print("Error: " + AccountValidation.ErrorCodeToString(createStatus));
                     ModelState.AddModelError("", AccountValidation.ErrorCodeToString(createStatus));
                 }
             }
@@ -497,10 +519,6 @@ namespace letterstocrushes.Controllers
                 ModelState.AddModelError("", "there was an error.");
             }
 
-            //Debug.Print("ModelState: " + ModelState.IsValid.ToString());
-            //Debug.Print("Email: " + model.Email.ToString());
-            //Debug.Print("UserName: " + model.UserName.ToString());
-            //Debug.Print("Test email: " + TestEmail(model.Email.ToString()));
 
             // If we got this far, something failed, redisplay form
             ViewBag.PasswordLength = MembershipService.MinPasswordLength;
