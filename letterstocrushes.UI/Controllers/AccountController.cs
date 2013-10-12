@@ -606,10 +606,8 @@ namespace letterstocrushes.Controllers
             if (test != null) {
                 bool isStrictMatch = reStrict.IsMatch(test);
                 response = isStrictMatch;
-                Debug.Print("Response: " + response.ToString());
             }
             else {
-                Debug.Print("Null failure jesus christ.");
                 response = false;
             }
 
