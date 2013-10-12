@@ -390,20 +390,32 @@ namespace letterstocrushes.Controllers
         {
             int result = 0;
             string result_message = "";
+          
+            if (TestEmail(a) == false) {
 
-            MembershipCreateStatus createStatus = MembershipService.CreateUser(a, b, a);
+                result = 200;
+                result_message = "Please enter a valid email address.";
 
-            if (createStatus == MembershipCreateStatus.Success)
-            {
-                FormsService.SignIn(a, true);
-                _mailService.SendContact("New user joined: " + a, "seth.hayward@gmail.com");
+            } else {
 
-                result = 1;
-            }
-            else
-            {
-                result_message = AccountValidation.ErrorCodeToString(createStatus);
-                result = 2;
+                MembershipCreateStatus createStatus = MembershipService.CreateUser(a, b, a);
+
+                switch(createStatus)
+                {
+                    case MembershipCreateStatus.Success:
+                        FormsService.SignIn(a, true);
+                        result = 1;
+                        _mailService.SendContact("Mobile user joined: " + a, "seth.hayward@gmail.com");
+                        break;
+                    case MembershipCreateStatus.DuplicateUserName:
+                        result_message = "Someone has already created an account with this address.";
+                        result = 201;
+                        break;
+                    default:
+                        _mailService.SendContact("Mobile register. " + a + ": <br />" + AccountValidation.ErrorCodeToString(createStatus), "seth.hayward@gmail.com");
+                        break;
+                }
+
             }
 
             return Json(new { message = result_message, response = result, guid = result }, JsonRequestBehavior.AllowGet);
