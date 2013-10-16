@@ -486,7 +486,7 @@ namespace letterstocrushes
 
             bool display_welcome = true;
 
-            String user_ip = HttpContext.Current.Request.UserHostAddress;
+            String user_ip = Context.Request.GetHttpContext().Request.UserHostAddress;
 
             List<Block> blocked_ips = blockService.getBlocks(blockType.blockIP, blockWhat.blockChat);
 
@@ -631,9 +631,8 @@ namespace letterstocrushes
 
         public void SendChat(string message)
         {
-            // chat message
-            
-            String user_ip = HttpContext.Current.Request.UserHostAddress;
+            // chat message            
+            String user_ip = Context.Request.GetHttpContext().Request.UserHostAddress;
 
             List<Block> blocked_ips = blockService.getBlocks(blockType.blockIP, blockWhat.blockChat);
 
@@ -682,7 +681,7 @@ namespace letterstocrushes
             chat.ChatDate = DateTime.UtcNow;
             chat.StoredInDB = false;
             chat.Room = current_user.Room;
-            chat.IP = HttpContext.Current.Request.UserHostAddress;
+            chat.IP = Context.Request.GetHttpContext().Request.UserHostAddress;
 
             bool handled = false;
 
@@ -807,7 +806,7 @@ namespace letterstocrushes
 
             if (message.StartsWith("/ips"))
             {
-                if (HttpContext.Current.User.IsInRole("Mod"))
+                if (Context.Request.GetHttpContext().User.IsInRole("Mod"))
                 {
                     ChatMessage ip_line = new ChatMessage();
                     ip_line.Nick = "chatbot:";

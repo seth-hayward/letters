@@ -67,6 +67,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Users\Administrator\Desktop\HtmlDiff.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.0.0-rc1\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.0.0-rc1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
@@ -156,6 +160,7 @@
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Helpers\GetHttpContextNoLongerSupported.cs" />
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Helpers\Server.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -165,6 +170,7 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\apple-touch-icon-114x114-precomposed.png">
@@ -250,7 +256,9 @@
     </Content>
     <Content Include="Scripts\jquery.jeditable.mini.js" />
     <Content Include="Scripts\jquery.signalR-2.0.0-rc1.js" />
-    <Content Include="Scripts\jquery.signalR-2.0.0-rc1.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.0.0-rc1.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\msdropdown\dd.css">

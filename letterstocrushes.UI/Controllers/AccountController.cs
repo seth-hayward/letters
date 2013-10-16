@@ -11,7 +11,7 @@ using letterstocrushes.Models;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using StackExchange.Profiling;
-using Microsoft.AspNet.SignalR.Client.Hubs;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace letterstocrushes.Controllers
 {

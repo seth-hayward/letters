@@ -12,8 +12,8 @@ using System.Web.Caching;
 using letterstocrushes;
 using StackExchange.Profiling;
 using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Client.Hubs;
 using letterstocrushes.Core.Model;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace letterstocrushes.Controllers
 {
