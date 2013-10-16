@@ -76,7 +76,8 @@
             function scrollDown(loading) {
                 if (loading == true) { return; }
 
-                $("#chat_container").animate({ scrollTop: $("#app").height()}, 1);
+                var app_height = document.getElementById("app").scrollHeight;
+                $("#chat_container").animate({ scrollTop: app_height}, 1);
 
                 $("#entry").focus();
             }
