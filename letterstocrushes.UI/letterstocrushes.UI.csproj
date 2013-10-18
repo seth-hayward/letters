@@ -176,16 +176,19 @@
     <Content Include="Content\apple-touch-icon-114x114-precomposed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\apple-touch-icon-114x114.png">
+    <Content Include="Content\apple-touch-icon-120x120-precomposed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\apple-touch-icon-144x144-precomposed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\apple-touch-icon-72x72-precomposed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\apple-touch-icon-72x72.png">
+    <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="Content\apple-touch-icon-76x76-precomposed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\channel.html" />
     <Content Include="Content\chat.css" />
     <Content Include="Content\comment.png" />
@@ -213,7 +216,7 @@
     <Content Include="Content\apple-touch-icon-precomposed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\favicon.ico">
+    <Content Include="favicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Global.asax" />
