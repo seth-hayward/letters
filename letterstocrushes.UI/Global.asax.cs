@@ -300,6 +300,18 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "TermsOfUse", // Route name
+                "terms/", // URL with parameters
+                new { controller = "Home", action = "Terms" } // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "Privacy", // Route name
+                "privacy/", // URL with parameters
+                new { controller = "Home", action = "Terms" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "SongsAddRoute", // Route name
                 "songs/add/", // URL with parameters
                 new { controller = "Song", action = "Add" } // Parameter defaults

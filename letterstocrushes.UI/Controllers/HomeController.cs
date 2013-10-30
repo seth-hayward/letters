@@ -314,6 +314,17 @@ namespace letterstocrushes.Controllers
 
         }
 
+        [HttpGet]
+        public ActionResult Terms()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Privacy()
+        {
+            return View();
+        }
 
         public ActionResult Details(int id = 1, int mobile = 0)
         {
