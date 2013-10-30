@@ -308,7 +308,7 @@ namespace letterstocrushes
             routes.MapRoute(
                 "Privacy", // Route name
                 "privacy/", // URL with parameters
-                new { controller = "Home", action = "Terms" } // Parameter defaults
+                new { controller = "Home", action = "Privacy" } // Parameter defaults
             );
 
             routes.MapRoute(

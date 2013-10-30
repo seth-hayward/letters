@@ -485,6 +485,7 @@
     <Content Include="Views\Home\ModLetters.cshtml" />
     <Content Include="Scripts\web.config" />
     <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="Views\Home\Privacy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
