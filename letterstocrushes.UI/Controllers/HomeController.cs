@@ -425,6 +425,13 @@ namespace letterstocrushes.Controllers
             string email = fc["commenterEmail"].ToString();
             string message = fc["comment"].ToString();
             bool using_mobile = false;
+            bool mod_mode = false;
+            
+            if(fc["mod_mode"].Contains("true")) {
+                mod_mode = true;
+            } else {
+                mod_mode = false;
+            };
             
             if(fc["mobile"].ToString() == "1") {
                 using_mobile = true;
@@ -459,6 +466,11 @@ namespace letterstocrushes.Controllers
             }
 
             comm.commenterGuid = current_guid;
+
+            if (mod_mode == true && User.IsInRole("mod"))
+            {
+                comm.commenterGuid = "mod" + current_guid.Substring(2, current_guid.Length - 3);
+            }
 
             if (email != null)
             {

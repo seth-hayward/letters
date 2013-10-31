@@ -5,14 +5,39 @@
     <div class="comment_header">
         
         <div class="commenter_name">
-            @Model.commenterName
 
-        @if (User.IsInRole("Mod")) {        
-            <text>
-                <small>@Model.commenterGuid.Substring(0, 8)</small>
-                <a id="c@(Model.Id)" class="comment_hide">hide</a>
-            </text>
-            }
+            <ul>
+
+                @if (@Model.commenterGuid.StartsWith("mod")) {
+                    <text>
+                    <li>
+                        <img src="@Url.Content("~/content/apple-touch-icon-72x72-precomposed.png")" style="margin-bottom: -7px; width: 25px; height: 25px" alt="mod" />
+                    </li>
+                    <li>
+                        moderator
+                    </li>
+            
+                    </text>
+                    } else {
+                    <text>
+                    <li>
+                        <span>@Model.commenterName  </span>
+                    </li>
+                    </text>
+                    }
+
+
+                    @if (User.IsInRole("Mod")) {        
+                        <text>
+                            <li>
+                                <small>@Model.commenterGuid.Substring(0, 8)</small>
+                                <a id="c@(Model.Id)" class="comment_hide">hide</a>
+                            </li>
+                        </text>
+                        }
+
+            </ul>
+
         </div>
 
         <div class="comment_date">

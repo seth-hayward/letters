@@ -487,7 +487,7 @@ a.voterLink:hover
 {
     border-bottom: 1px dotted black;
     padding-top: 10px;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .commenter_name
@@ -495,6 +495,19 @@ a.voterLink:hover
     float: left;
     font-weight: bold;
 }
+
+    div.commenter_name ul
+    {
+        margin-top: 0px;
+        list-style: none;
+        padding-left: 0px;
+    }
+
+        div.commenter_name ul li
+        {
+            padding-right: 5px;
+            float: left;
+        }
 
 a.comment_hide
 {

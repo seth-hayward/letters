@@ -85,7 +85,7 @@
             @using( Html.BeginForm() )
             {
                 
-
+                <text>
                 <h4 id="add">add comment</h4>
                 
                 <div class="comment_row">
@@ -104,13 +104,27 @@
                     <span class="comment_form">@Html.TextArea("comment")</span>                
                 </div>
 
+                </text>
+                
+                if (User.IsInRole("mod")) {
+                    <text>
+                    <div class="comment_row">
+                        <span class="comment_form">@Html.CheckBox("mod_mode")</span>                
+                        <label for="mod_mode">Display "moderator" as comment name:</label>
+                    </div>            
+                    </text>
+                }
+                
+                <text>
                 <div class="comment_row">
                     <span class="comment_form">
                         @Html.Hidden("letterId", Model.Id)
                         @Html.Hidden("mobile", "0")
+
                         <input type="submit" value="send" class="submit_button" />
                     </span>
                 </div>
+                </text>
             }
 
         </div>
