@@ -61,7 +61,7 @@ namespace letterstocrushes.Core.Services
             banned_ips.Add("100.2.225.62");
 
             if(banned_ips.Contains(comment.commenterIP)) {
-                _mailService.SendContact("Banned comment (ip): <br><br>" + comment.commenterName + " (" + comment.commenterGuid + "): " + comment.commentMessage, "seth.hayward@gmail.com"); 
+                _mailService.SendContact("Banned comment (ip, " + comment.commenterIP + "): <br><br>" + comment.commenterName + " (" + comment.commenterGuid + "): " + comment.commentMessage, "seth.hayward@gmail.com"); 
                 return;
             }
 
@@ -119,7 +119,7 @@ namespace letterstocrushes.Core.Services
 
             if (comment.commentMessage != null && comment.commentMessage.Contains("http://"))
             {
-                _mailService.SendContact("link shut down: <br/>" + comment.commentMessage, "seth.hayward@gmail.com");
+                //_mailService.SendContact("link shut down: <br/>" + comment.commentMessage, "seth.hayward@gmail.com");
                 return;
             }
 
