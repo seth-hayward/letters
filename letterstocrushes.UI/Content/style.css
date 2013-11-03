@@ -75,10 +75,11 @@ first child of the left and right table columns */
 page width. Or, you can specify an exact pixel width. */
 .page
 {
-    width: 700px;
+    width: 730px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    margin-top: 20px;
 }
 
 #ads
@@ -124,17 +125,30 @@ page width. Or, you can specify an exact pixel width. */
 
 div#title
 {
-	position: absolute;
-	left: 0;
-	bottom: 0;
 	font-size: 22px;
 	letter-spacing: 0.5px;
 	text-decoration: none;
 }
 
+ul#navigation
+{
+    clear: both;
+}
+
 div#title a 
 {
 	padding: 15px;
+}
+
+div#leftColumn
+{
+    text-align: left;
+    float: left;
+}
+
+div#rightColumn
+{
+    float: right;
 }
 
 #main
@@ -159,6 +173,7 @@ div#title a
 	width: 500px;
     margin-left: auto;
     margin-right: auto;
+    clear: both;
 }
 
 span#footer_center
@@ -420,7 +435,6 @@ a.voterLink:hover
 	width: 500px;
 	margin-left: auto;
 	margin-right: auto;
-	padding-top: 25px;
 	padding-bottom: 25px;
 	text-align: left;
 }
@@ -432,6 +446,11 @@ a.voterLink:hover
 	padding-top: 30px;
 	clear: both;
 	text-align: left;
+}
+
+.letterHeader
+{
+/*    border-bottom: 1px dotted #F59696; */
 }
 
 .letterBookContainer

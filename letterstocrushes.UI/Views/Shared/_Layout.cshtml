@@ -48,22 +48,21 @@ david foster wallace and elliott smith.
 
     <div class="page">
 
-        <div id="header">
+
+        <div id="leftColumn">
+
             <div id="title">
                 <a href="@Url.Content("/")">letters to crushes</a>
             </div>
 
-            <div id="menuContainer">
+            <ul id="navigation">
+                <li>@Html.ActionLink("send", "send", "Home")</li>
+                <li>@Html.ActionLink("more", "more", "Home")</li>
+            </ul>
 
-                <ul id="jsddm">
-                    <li>@Html.ActionLink("send", "send", "Home")</li>
-                    <li>@Html.ActionLink("more", "more", "Home")</li>
-                </ul>
-
-            </div>
         </div>
 
-        <div id="main">
+        <div id="rightColumn">
             @RenderBody()
 
         </div>
