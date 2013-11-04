@@ -109,7 +109,8 @@ else
                     <label for="comment">Comment:</label>
                     <textarea name="comment" id="comment"></textarea>
                 </div>
-
+            
+                @Html.Hidden("mod_mode", false)           
                 @Html.Hidden("letterId", Model.Id)
                 @Html.Hidden("mobile", "1")
                 <button type="submit">send comment</button>
