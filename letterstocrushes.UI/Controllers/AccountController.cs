@@ -24,20 +24,24 @@ namespace letterstocrushes.Controllers
         private readonly Core.Services.LetterService _letterService;
         private readonly Core.Services.BookmarkService _bookmarkService;
         private readonly Core.Services.MailService _mailService;
+        private readonly Core.Services.UserService _userService;
 
         public AccountController(Core.Services.LetterService letterService,
                                  Core.Services.BookmarkService bookmarkService,
-                                 Core.Services.MailService mailService)
+                                 Core.Services.MailService mailService,
+                                 Core.Services.UserService userService)
         {
             _letterService = letterService;
             _bookmarkService = bookmarkService;
             _mailService = mailService;
+            _userService = userService;
         }
 
         public AccountController()
             : this(new Core.Services.LetterService(new Infrastructure.Data.EfQueryLetters(), new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]), new Core.Services.BookmarkService(new Infrastructure.Data.EfQueryBookmarks()),
                 new Core.Services.BlockService(new Infrastructure.Data.EfQueryBlocks())),
-                   new Core.Services.BookmarkService(new Infrastructure.Data.EfQueryBookmarks()), new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]))
+                new Core.Services.BookmarkService(new Infrastructure.Data.EfQueryBookmarks()), new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]),
+                new Core.Services.UserService(new Infrastructure.Data.EfQueryUsersByEmail()))
         {
         }
 
@@ -500,7 +504,21 @@ namespace letterstocrushes.Controllers
 
             if (TestEmail(model.Email) == false)
             {
-                ModelState.AddModelError("UserName", "please enter a valid email address.");
+                ModelState.AddModelError("UserName", "Please enter a valid email address.");
+            }
+           
+            if (model.AcceptedTerms == false)
+            {
+                ModelState.AddModelError("acceptedTerms", "Please read and accept the letters to crushes' terms of use and privacy policy.");
+            }
+
+            if (model.ConfirmPassword != model.Password)
+            {
+                ModelState.AddModelError("ConfirmPassword", "Please enter your password again.");
+            }
+
+            if(_userService.getUserByEmail(model.UserName) != null) {
+                ModelState.AddModelError("UserName", "Someone has already registered this email address.");
             }
 
             if (ModelState.IsValid)
@@ -525,6 +543,7 @@ namespace letterstocrushes.Controllers
                 else
                 {
                     ModelState.AddModelError("", AccountValidation.ErrorCodeToString(createStatus));
+                    _mailService.SendContact("Signup error: " + AccountValidation.ErrorCodeToString(createStatus), "seth.hayward@gmail.com");
                 }
             }
             else {

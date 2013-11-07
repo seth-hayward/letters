@@ -758,7 +758,6 @@ input[type="password"].input-validation-error
 
 span.field-validation-error
 {
-	color: #333;	
 	clear: both;
 }
 
@@ -885,7 +884,6 @@ div#title
 .input-validation-error
 {
     border: 1px solid #ff0000;
-    background-color: #ffeeee;
 }
 
 .validation-summary-errors

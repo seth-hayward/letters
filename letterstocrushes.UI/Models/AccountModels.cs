@@ -52,7 +52,7 @@ namespace letterstocrushes.Models
 
     public class RegisterModel
     {
-        [Required]
+        [Required(ErrorMessage="Please enter your email address.")]
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
@@ -66,10 +66,14 @@ namespace letterstocrushes.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public Boolean AcceptedTerms { get; set; }
 
         public int? Mobile { get; set; }
     }
