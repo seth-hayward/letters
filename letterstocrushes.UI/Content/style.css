@@ -148,7 +148,7 @@ div#title a
 
 #footer
 {
-    color: #999;
+    color:black;
     padding: 1px 0 0 0;
     text-align: center;
     line-height: normal;
@@ -187,7 +187,7 @@ span#footer_right
 {
 	padding-left: 10px;
     padding-right: 10px;
-	color: #999;
+    color: #000;
 }
 
 #footer a:hover

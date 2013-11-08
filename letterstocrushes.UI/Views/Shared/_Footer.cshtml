@@ -25,9 +25,6 @@
                     @Html.ActionLink("mod letters", "ModLetters", "Home")                 
                     @Html.ActionLink("search", "search", "Home")     
                     @Html.ActionLink("chat", "Index", "chat")           
-                    <text>
-                    <a href="http://anonsong.com" target="_blank">anon song</a>
-                    </text>              
                                                      
                     }
                     else
@@ -36,19 +33,19 @@
                     @Html.ActionLink("bookmarks", "Index", "Account")                       
                     @Html.ActionLink("feedback", "contact", "Home")
                     @Html.ActionLink("search", "search", "Home")    
-                    <text>
-                    <a href="http://anonsong.com" target="_blank">anon song</a>
-                    </text>                                        
                     }
                 }
                 else
                 {
+                <text>
+                    <a href="@Url.Content("~/terms")" target="_blank">terms of use</a>
+                    <a href="@Url.Content("~/privacy")" target="_blank">privacy policy</a>
+                </text>
+                                
                 @Html.ActionLink("chat", "Index", "chat")                
                 @Html.ActionLink("feedback", "contact", "Home")
                 @Html.ActionLink("search", "search", "Home")
-                <text>
-                    <a href="http://anonsong.com" target="_blank">anon song</a>
-                </text>     
+
                 }
 
 
