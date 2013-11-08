@@ -41,7 +41,7 @@
             <div class="editor-label">
             </div>
             <div class="editor-field">
-                <input type="checkbox" id="acceptedTerms"  /> I have read and accept letters to crushes' <a href="~/terms" target="_blank">Terms of Use</a> and <a href="~/privacy" target="_blank">Privacy Policy</a>.
+                @Html.CheckBoxFor(m => m.AcceptedTerms) I have read and accept letters to crushes' <a href="~/terms" target="_blank">Terms of Use</a> and <a href="~/privacy" target="_blank">Privacy Policy</a>.
                 <p>
                     @Html.ValidationMessageFor(m => m.AcceptedTerms)
                 </p>
