@@ -123,6 +123,12 @@
                 }
                 
                 <text>
+
+                <small>
+                    Please read our <a href="@Url.Content("~/terms")" target="_blank">Terms of Use</a> 
+                    and <a href="@Url.Content("~/privacy")" target="_blank">Privacy Policy</a> before commenting.
+                </small>
+
                 <div class="comment_row">
                     <span class="comment_form">
                         @Html.Hidden("letterId", Model.Id)
