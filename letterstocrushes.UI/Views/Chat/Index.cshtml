@@ -14,7 +14,7 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
 
-    <link href="@Url.Content("~/Content/chat.css")?20130714" rel="stylesheet">
+    <link href="@Url.Content("~/Content/chat.css")?20131113" rel="stylesheet">
 
 	<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.date-format.js")"></script>
 
@@ -307,6 +307,16 @@
                     <label for="chat_name">name</label>
                     <input id="chat_name" class="text" type="text" name="nick" value=""/>                        
                     <input type="button" id="join" value="join chat"/>                                
+
+                    <p style="line-height: 15px">
+                        <small>
+                        Welcome to the chat! Please read our <a href="@Url.Content("~/terms")" target="_blank">Terms of Use</a> 
+                        and <a href="@Url.Content("~/privacy")" target="_blank">Privacy Policy</a> before joining.
+                       </small>
+
+                    </p>
+
+
                     </div>
                          
                 <div id="log" style="display: none;">
