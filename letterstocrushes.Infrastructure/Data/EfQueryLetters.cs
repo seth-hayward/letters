@@ -248,7 +248,11 @@ namespace letterstocrushes.Infrastructure.Data
         public Letter getLastLetterFromIP(string ip)
         {
             db_mysql db_mysql = new db_mysql();
-            letter letter = (from m in db_mysql.letters where m.senderIP.Contains(ip) && m.letterLevel == 0 orderby m.letterPostDate descending select m).FirstOrDefault();
+
+            var foo = db_mysql.letters.AsQueryable<letter>()
+                             .Where(last_letter => last_letter.senderIP.Contains(ip) && last_letter.letterLevel == 0).ToList(); 
+
+            letter letter = (from m in foo orderby m.letterPostDate descending select m).FirstOrDefault();
             return Mapper.Map<letter, Letter>(letter);
         }
 
