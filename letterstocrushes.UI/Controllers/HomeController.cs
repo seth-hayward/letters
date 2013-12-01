@@ -1091,110 +1091,131 @@ namespace letterstocrushes.Controllers
         public ActionResult Popular(int page=1)
         {
 
-            if (User.Identity.IsAuthenticated == false) {
-                return RedirectToAction("Index", "Account");
-            }
+          List<Core.Model.Letter> pagination = new List<Core.Model.Letter>();
 
-            if (User.IsInRole("Mod") == false)
+            try
+            {
+
+
+              if (User.Identity.IsAuthenticated == false)
+              {
+                return RedirectToAction("Index", "Account");
+              }
+
+              if (User.IsInRole("Mod") == false)
                 RedirectToAction("Index");
 
 
-            string cache_latest_front_page = "latest_front_page";
-            string cache_popular_page_count = "popular_page_count";
+              string cache_latest_front_page = "latest_front_page";
+              string cache_popular_page_count = "popular_page_count";
 
-            // NEW PLAN: dynamic
-            // i want to change how many letters i store on the meta pages.
-            int meta_page_letters = 1000;
-            int pages_per_meta_page = meta_page_letters / _pagesize;
+              // NEW PLAN: dynamic
+              // i want to change how many letters i store on the meta pages.
+              int meta_page_letters = 1000;
+              int pages_per_meta_page = meta_page_letters / _pagesize;
 
-            double current_popular_meta_page;
-            double page_calc = page / pages_per_meta_page;
-            current_popular_meta_page = Math.Ceiling(page_calc);
+              double current_popular_meta_page;
+              double page_calc = page / pages_per_meta_page;
+              current_popular_meta_page = Math.Ceiling(page_calc);
 
-            double position_on_meta_page;
+              double position_on_meta_page;
 
-            // page     meta page       position
-            // 1        1               1
-            // 2        1               2
-            // 3        1               3
-            // 10       2               
-            position_on_meta_page = (page % pages_per_meta_page);
+              // page     meta page       position
+              // 1        1               1
+              // 2        1               2
+              // 3        1               3
+              // 10       2               
+              position_on_meta_page = (page % pages_per_meta_page);
 
-            string cache_popular_page = "popular_page_" + current_popular_meta_page;
+              string cache_popular_page = "popular_page_" + current_popular_meta_page;
 
-            //
-            // Using the MVC Profiler to go wicked fast.
-            //
+              //
+              // Using the MVC Profiler to go wicked fast.
+              //
 
-            var profiler = MiniProfiler.Current;
+              var profiler = MiniProfiler.Current;
 
-            //
-            // Fetch the latest front page letter.
-            // Store this information in the cache for 1 hour.
-            // Fetch from cache if it exists there.
-            //
+              //
+              // Fetch the latest front page letter.
+              // Store this information in the cache for 1 hour.
+              // Fetch from cache if it exists there.
+              //
 
-            Core.Model.Letter latest_front_page;
+              Core.Model.Letter latest_front_page;
 
-            if (HttpContext.Cache[cache_latest_front_page] == null)
-            {
+              if (HttpContext.Cache[cache_latest_front_page] == null)
+              {
 
                 using (profiler.Step("Getting latest front page"))
                 {
-                    latest_front_page = _letterService.getLatestFrontPageLetter();
-                    HttpContext.Cache.Insert(cache_latest_front_page, latest_front_page, null, DateTime.UtcNow.AddHours(1), TimeSpan.Zero);
+                  latest_front_page = _letterService.getLatestFrontPageLetter();
+                  HttpContext.Cache.Insert(cache_latest_front_page, latest_front_page, null, DateTime.UtcNow.AddHours(1), TimeSpan.Zero);
                 }
 
-            }
-            else
-            {
+              }
+              else
+              {
                 latest_front_page = (Core.Model.Letter)HttpContext.Cache[cache_latest_front_page];
-            }
+              }
 
-            //
-            // Fetch the requested popular page.
-            // Store this information in the cache for 1 hour.
-            // Fetch from cache if it exists there.
-            //
+              //
+              // Fetch the requested popular page.
+              // Store this information in the cache for 1 hour.
+              // Fetch from cache if it exists there.
+              //
 
-            List<Core.Model.Letter> pagination = new List<Core.Model.Letter>();
-            int popular_page_count = 0;
+              int popular_page_count = 0;
 
-            if (HttpContext.Cache[cache_popular_page] == null)
-            {
+              if (HttpContext.Cache[cache_popular_page] == null)
+              {
 
                 using (profiler.Step("Getting popular page"))
                 {
 
-                    List<Core.Model.Letter> nada_surf = new List<Core.Model.Letter>();
-                    nada_surf = _letterService.getPopularLetters(latest_front_page);
+                  List<Core.Model.Letter> nada_surf = new List<Core.Model.Letter>();
+                  nada_surf = _letterService.getPopularLetters(latest_front_page);
 
-                    //
-                    // store the count in cache if it's not there...
-                    //
+                  //
+                  // store the count in cache if it's not there...
+                  //
 
-                    if (HttpContext.Cache[cache_popular_page_count] == null)
-                    {
-                        popular_page_count = nada_surf.Count;
-                        HttpContext.Cache.Insert(cache_popular_page_count, popular_page_count, null, DateTime.UtcNow.AddHours(1), TimeSpan.Zero);
-                    }
+                  if (HttpContext.Cache[cache_popular_page_count] == null)
+                  {
+                    popular_page_count = nada_surf.Count;
+                    HttpContext.Cache.Insert(cache_popular_page_count, popular_page_count, null, DateTime.UtcNow.AddHours(1), TimeSpan.Zero);
+                  }
 
-                    pagination = nada_surf.Skip((page - 1) * 100).Take(100).ToList();
+                  pagination = nada_surf.Skip((page - 1) * 100).Take(100).ToList();
 
-                    HttpContext.Cache.Insert(cache_popular_page, nada_surf, null, DateTime.UtcNow.AddHours(1), TimeSpan.Zero);
+                  HttpContext.Cache.Insert(cache_popular_page, nada_surf, null, DateTime.UtcNow.AddHours(1), TimeSpan.Zero);
                 }
-            }
-            else
-            {
+              }
+              else
+              {
                 List<Core.Model.Letter> pre_pagination = (List<Core.Model.Letter>)HttpContext.Cache[cache_popular_page];
                 pagination = pre_pagination.Skip((page - 1) * 100).Take(100).ToList();
-            }
-            
-            
-            ViewBag.CurrentPage = page;
-            ViewBag.Pages = popular_page_count;
+              }
 
-            return View(pagination);
+
+              ViewBag.CurrentPage = page;
+              ViewBag.Pages = popular_page_count;
+
+              return View(pagination);
+
+            }
+            catch (Exception ex)
+            {
+              String err = ex.Message;
+
+              if (ex.InnerException != null)
+              {
+                err = err + "<br />" + ex.InnerException.Message.ToString();
+              }
+              _mailService.SendContact("Popular page: <br />" + err, "seth.hayward@gmail.com");
+
+              return View(pagination);
+            }
+
         }
 
         #endregion

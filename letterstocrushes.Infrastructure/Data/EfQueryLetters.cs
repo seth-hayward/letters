@@ -213,10 +213,10 @@ namespace letterstocrushes.Infrastructure.Data
         public List<Core.Model.Letter> getPopularLetters(Core.Model.Letter latest_front_page)
         {
 
+            List<letter> results = new List<letter>();
+
             db_mysql db_mysql = new db_mysql();
             db_mssql db_mssql = new db_mssql();
-
-            List<letter> results = new List<letter>();
 
             List<TopListData_Result> top_votes = new List<TopListData_Result>();
             top_votes = (from l in db_mssql.TopListData() where l.hearts > 5 select l).ToList();
@@ -321,5 +321,6 @@ namespace letterstocrushes.Infrastructure.Data
             results = query.Skip((page - 1) * _pagesize).Take(_pagesize).ToList();
             return Mapper.Map<List<letter>, List<Letter>>(results);
         }
+
     }
 }
