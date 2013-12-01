@@ -223,9 +223,13 @@ namespace letterstocrushes.Infrastructure.Data
 
             List<long> top_votes_id = new List<long>();
             top_votes_id = (from l in top_votes select l.letterID).ToList();
+            //results = (from z in db_mysql.letters where top_votes_id.Contains(z.Id) && z.letterLevel == 0 && z.letterPostDate > latest_front_page.letterPostDate orderby z.letterPostDate ascending select z).Take(500).ToList();
 
-            results = (from z in db_mysql.letters where top_votes_id.Contains(z.Id) && z.letterLevel == 0 && z.letterPostDate > latest_front_page.letterPostDate orderby z.letterPostDate ascending select z).Take(500).ToList();
+            var foo = db_mysql.letters.AsQueryable<letter>()
+                             .Where(pop_letter => top_votes_id.Contains(pop_letter.Id) && pop_letter.letterLevel == 0 && pop_letter.letterPostDate > latest_front_page.letterPostDate).Take(500).ToList(); 
 
+            results = (from z in foo orderby z.letterPostDate ascending select z).ToList();
+          
             return Mapper.Map<List<letter>, List<Letter>>(results);
 
         }
