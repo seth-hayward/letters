@@ -1,21 +1,134 @@
-﻿@{
-    ViewBag.Title = "Archive";
+﻿@model IEnumerable<letterstocrushes.Core.Model.Letter>
+@using letterstocrushes
+
+@{
+    ViewBag.Title = "letters to crushes: archive";
+}
+    
+<div class="letterContainer" style="text-align: left">
+
+    <form action="@Url.Content("~/archive")">
+        <div>
+
+            <ul>
+                <li>
+                    year <select name="year">
+
+                    @for (int loop_year = ViewBag.CurrentYear; loop_year >= 2008; loop_year--)
+                    {
+                        <text>
+                            <option value="@loop_year">@loop_year</option>
+                        </text>
+                        
+                    }
+
+                    </select> 
+
+                </li>
+
+                <li>
+                    month
+                    <select name="month">
+                        <option value="1">january</option>
+                        <option value="2">february</option>
+                        <option value="3">march</option>
+                        <option value="4">april</option>
+                        <option value="5">may</option>
+                        <option value="6">june</option>
+                        <option value="7">july</option>
+                        <option value="8">august</option>
+                        <option value="9">september</option>
+                        <option value="10">october</option>
+                        <option value="11">november</option>
+                        <option value="12">december</option>
+                    </select>  
+                </li>
+
+                <li>
+                    day
+                    <select name="day">
+                        @for (int loop_day = 1; loop_day <= 31; loop_day++)
+                        {
+                            <text>
+                                <option value="@loop_day">@loop_day</option>
+                            </text>
+                        }
+
+                     </select>
+
+                </li>
+
+                <li>
+                    search terms <input type="text" value="@ViewBag.Terms" name="terms" />
+                </li>
+
+            </ul>
+
+            <input type="submit" value="search"/>                        
+            @{  if (ViewBag.Results > 0) { <text><span style="font-size: 0.8em">@ViewBag.Results letters.</span></text> } }
+            @{  if (ViewBag.NothingFound == true) { <text><span style="font-size: 0.8em">No letters from this date.</span></text> } }
+        </div>
+
+    </form>
+        
+    <br />
+
+    @{
+    
+        if (ViewBag.NothingFound == false)
+        {
+            
+            foreach (var item in Model) {
+                Html.RenderPartial("_LetterMoreListItem", item);
+            }
+
+            @Html.Raw(Helpers.SearchPager(ViewBag.CurrentPage, ViewBag.Results, Url.Content("~/search"), ViewBag.Terms));
+                
+        }
+
+    
+    }
+
+    
+</div>
+
+<div id="disqus_thread" class="letterComments" style="display: none"></div>
+
+@section Footer {
+    @Html.Partial("_Footer")
 }
 
-<h2>Archive</h2>
+<script type="text/javascript" src="http://disqus.com/forums/crushes/embed.js"></script>
+<script type="text/javascript">
 
-<div>
+    //<![CDATA[
+    (function () {
 
-    <span>
-        year
-    </span>
+        var links = document.getElementsByTagName('a');
+        var query = '?';
 
-    <span>
-        month
-    </span>
+        for (var i = 0; i < links.length; i++) {
+            if (links[i].href.indexOf('#disqus_thread') >= 0) {
+                query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+            }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/crushes/get_num_replies.js' + query + '"></' + 'script>');
 
-    <span>
-        day
-    </span>
+    })();
+    //]]>
 
-</div>
+</script>
+
+@Html.Partial("_LetterVoteListener")
+
+<script type="text/javascript" >
+
+    $(document).ready(function() {
+
+        var offset = new Date().getTimezoneOffset();
+        $.cookie('userTimeZone', offset/60, { expires: 365 });
+
+    });
+
+
+</script>

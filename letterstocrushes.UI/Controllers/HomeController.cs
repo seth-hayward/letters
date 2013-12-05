@@ -317,6 +317,11 @@ namespace letterstocrushes.Controllers
         [HttpGet]
         public ActionResult Archive()
         {
+
+            DateTime today = DateTime.UtcNow;
+
+            ViewBag.CurrentYear = today.Year;
+
             return View();
         }
 
