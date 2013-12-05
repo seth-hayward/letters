@@ -315,6 +315,12 @@ namespace letterstocrushes.Controllers
         }
 
         [HttpGet]
+        public ActionResult Archive()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult Terms()
         {
             return View();

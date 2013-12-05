@@ -300,6 +300,12 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "ArchiveRoute", // Route name
+                "archive/", // URL with parameters
+                new { controller = "Home", action = "Archive" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "TermsOfUse", // Route name
                 "terms/", // URL with parameters
                 new { controller = "Home", action = "Terms" } // Parameter defaults

@@ -494,6 +494,7 @@
     <Content Include="Scripts\web.config" />
     <Content Include="Views\Home\Terms.cshtml" />
     <Content Include="Views\Home\Privacy.cshtml" />
+    <Content Include="Views\Home\Archive.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
