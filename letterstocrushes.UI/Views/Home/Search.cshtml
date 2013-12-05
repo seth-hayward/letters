@@ -9,7 +9,11 @@
 
     <form action="@Url.Content("~/search")">
         <div>
-            <input type="text" style="font-size: 25px" value="@ViewBag.Terms" name="terms" /> <input type="submit" value="search"/>                        
+            <input type="text" style="font-size: 25px" value="@ViewBag.Terms" name="terms" /> <input type="submit" value="search"/>
+            <span>
+                or browse by date on the <a href="/archive">archive</a>
+            </span>
+             
             @{  if (ViewBag.Results > 0) { <text><span style="font-size: 0.8em">@ViewBag.Results letters.</span></text> } }
             @{  if (ViewBag.NothingFound == true) { <text><span style="font-size: 0.8em">No letters matched this query.</span></text> } }
         </div>
