@@ -16,9 +16,7 @@
 
                     @for (int loop_year = ViewBag.CurrentYear; loop_year >= 2008; loop_year--)
                     {
-                        <text>
-                            <option value="@loop_year">@loop_year</option>
-                        </text>
+                        <text><option value="@loop_year">@loop_year</option></text>
                         
                     }
 
@@ -49,9 +47,7 @@
                     <select name="day">
                         @for (int loop_day = 1; loop_day <= 31; loop_day++)
                         {
-                            <text>
-                                <option value="@loop_day">@loop_day</option>
-                            </text>
+                            <text><option value="@loop_day">@loop_day</option></text>
                         }
 
                      </select>
