@@ -314,15 +314,63 @@ namespace letterstocrushes.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult Archive()
+        public ActionResult Archive(FormCollection fc, int page = 1, string terms = "")
         {
 
             DateTime today = DateTime.UtcNow;
 
             ViewBag.CurrentYear = today.Year;
 
+
+            ViewBag.Results = 0;
+            ViewBag.Terms = terms;
+            int year;
+            
+            if(int.TryParse(fc["Year"], out year) == false) {
+                year = today.Year;
+            };
+            var profiler = MiniProfiler.Current;
+
+            string cached_search_result = "archive-year-" + year.ToString() + "-terms-" + terms;
+
+            List<Core.Model.Letter> results = new List<Core.Model.Letter>();
+
+            if (HttpContext.Cache[cached_search_result] == null)
+            {
+                // not in cache, so we search db for it
+                using (profiler.Step("SEARCH db1"))
+                {
+                    results = _letterService.search(terms);
+                }
+
+                HttpContext.Cache.Insert(cached_search_result, results, null, DateTime.UtcNow.AddSeconds(90), TimeSpan.Zero);
+            }
+            else
+            {
+                // found the search results in the cache
+                results = (List<Core.Model.Letter>)HttpContext.Cache[cached_search_result];
+            }
+
+            ViewBag.Results = results.Count();
+            results = results.Skip((page - 1) * _pagesize).Take(_pagesize).ToList();
+
+            if (ViewBag.Results == 0)
+            {
+                ViewBag.NothingFound = true;
+            }
+            else
+            {
+                ViewBag.NothingFound = false;
+            }
+
+            ViewBag.CurrentPage = page;
+            double pages = Math.Ceiling((double)ViewBag.Results / 10);
+            ViewBag.Pages = pages;
+
+            ViewData.Model = results;
+
             return View();
+
         }
 
         [HttpGet]
