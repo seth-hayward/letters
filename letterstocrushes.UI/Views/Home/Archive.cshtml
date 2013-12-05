@@ -16,8 +16,18 @@
 
                     @for (int loop_year = ViewBag.CurrentYear; loop_year >= 2008; loop_year--)
                     {
-                        <text><option value="@loop_year">@loop_year</option></text>
                         
+                        var year_selected = false;
+                        if (loop_year == ViewBag.Year)
+                        {
+                            year_selected = true;
+                        }
+                        else
+                        {
+                            year_selected = false;
+                        }
+                            
+                        <text><option value="@loop_year" selected="@year_selected">@loop_year</option></text>                        
                     }
 
                     </select> 
@@ -27,28 +37,45 @@
                 <li>
                     month
                     <select name="month">
-                        <option value="1">january</option>
-                        <option value="2">february</option>
-                        <option value="3">march</option>
-                        <option value="4">april</option>
-                        <option value="5">may</option>
-                        <option value="6">june</option>
-                        <option value="7">july</option>
-                        <option value="8">august</option>
-                        <option value="9">september</option>
-                        <option value="10">october</option>
-                        <option value="11">november</option>
-                        <option value="12">december</option>
+
+                    @for (int loop_month = 1; loop_month <= 12; loop_month++)
+                    {
+                        
+                        var month_selected = false;
+                        if (loop_month == ViewBag.Month)
+                        {
+                            month_selected = true;
+                        }
+                        else
+                        {
+                            month_selected = false;
+                        }
+                                              
+                        <text><option value="@loop_month" selected="@month_selected">@loop_month</option></text>                        
+                    }
+
+
                     </select>  
                 </li>
 
                 <li>
                     day
                     <select name="day">
-                        @for (int loop_day = 1; loop_day <= 31; loop_day++)
+                    @for (int loop_day = 1; loop_day <= 31; loop_day++)
+                    {
+                        
+                        var day_selected = false;
+                        if (loop_day == ViewBag.Day)
                         {
-                            <text><option value="@loop_day">@loop_day</option></text>
+                            day_selected = true;
                         }
+                        else
+                        {
+                            day_selected = false;
+                        }
+                                              
+                        <text><option value="@loop_day" selected="@day_selected">@loop_day</option></text>                        
+                    }
 
                      </select>
 

@@ -314,21 +314,29 @@ namespace letterstocrushes.Controllers
 
         }
 
-        public ActionResult Archive(FormCollection fc, int page = 1, string terms = "")
+        public ActionResult Archive(FormCollection fc, int year = 0, int month = 0, int day = 0, int page = 1, string terms = "")
         {
 
             DateTime today = DateTime.UtcNow;
 
             ViewBag.CurrentYear = today.Year;
 
+            if (year == 0)
+                year = today.Year;
+
+            if (month == 0)
+                month = today.Month;
+
+            if (day == 0)
+                day = today.Day;
 
             ViewBag.Results = 0;
             ViewBag.Terms = terms;
-            int year;
             
-            if(int.TryParse(fc["Year"], out year) == false) {
-                year = today.Year;
-            };
+            ViewBag.Year = year;
+            ViewBag.Month = month;
+            ViewBag.Day = day;
+
             var profiler = MiniProfiler.Current;
 
             string cached_search_result = "archive-year-" + year.ToString() + "-terms-" + terms;
