@@ -67,10 +67,17 @@
 
                 @if (User.Identity.IsAuthenticated == true)
                 {
+                    
+                    if(User.IsInRole("mod")) {
+                        <text>
+                            <li @{ if(Request.RawUrl.Contains("/mobile/mod")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mod")" data-ajax="false">Mod letters</a></li>
+                        </text>
+                        
+                    };
+                    
                     <text>
                         <li @{ if(Request.RawUrl.Contains("/mobile/bookmarks")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/bookmarks")">Bookmarks</a></li>
                         <li @{ if(Request.RawUrl.Contains("/logout/1")) { <text>class="selected" </text> } }><a href="@Url.Content("~/logout/1")">Logout</a></li>
-
                     </text>
                 } else {
                                         
