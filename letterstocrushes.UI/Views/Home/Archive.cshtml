@@ -10,6 +10,8 @@
     <form action="@Url.Content("~/archive")">
         <div>
 
+            <p>search for letters before ...</p>
+
             <ul>
                 <li>
                     year <select name="year">
@@ -102,10 +104,10 @@
         {
             
             foreach (var item in Model) {
-                Html.RenderPartial("_LetterMoreListItem", item);
+                Html.RenderPartial("_LetterArchiveListItem", item);
             }
 
-            @Html.Raw(Helpers.SearchPager(ViewBag.CurrentPage, ViewBag.Results, Url.Content("~/search"), ViewBag.Terms));
+            @Html.Raw(Helpers.ArchivePager(ViewBag.CurrentPage, ViewBag.Results, Url.Content("~/archive?year=" + ViewBag.Year + "&month=" + ViewBag.Month + "&day=" + ViewBag.Day), ViewBag.Terms));
                 
         }
 
