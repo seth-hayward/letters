@@ -339,7 +339,7 @@ namespace letterstocrushes.Controllers
 
             var profiler = MiniProfiler.Current;
 
-            string cached_search_result = "archive-year-" + year.ToString() + "-terms-" + terms;
+            string cached_search_result = "archive-" + year.ToString() + "-" + month.ToString() + "-" + day.ToString() + "-terms-" + terms;
 
             List<Core.Model.Letter> results = new List<Core.Model.Letter>();
 
@@ -348,7 +348,7 @@ namespace letterstocrushes.Controllers
                 // not in cache, so we search db for it
                 using (profiler.Step("SEARCH db1"))
                 {
-                    results = _letterService.search(terms);
+                    results = _letterService.searchByDate(terms, year, month, day);
                 }
 
                 HttpContext.Cache.Insert(cached_search_result, results, null, DateTime.UtcNow.AddSeconds(90), TimeSpan.Zero);

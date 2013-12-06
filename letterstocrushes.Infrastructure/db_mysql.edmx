@@ -91,6 +91,12 @@
         <Function Name="searchLetters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="shayward_mysql_letters">
           <Parameter Name="search_terms" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="searchLettersByDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="shayward_mysql_letters">
+          <Parameter Name="search_terms" Type="varchar" Mode="In" />
+          <Parameter Name="search_year" Type="int" Mode="In" />
+          <Parameter Name="search_month" Type="int" Mode="In" />
+          <Parameter Name="search_day" Type="int" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -103,7 +109,13 @@
           <EntitySet Name="songs" EntityType="db_mysqlModel.song" />
           <EntitySet Name="letters" EntityType="db_mysqlModel.letter" />
           <FunctionImport Name="quickSearch" EntitySet="letters" ReturnType="Collection(db_mysqlModel.letter)">
+          <Parameter Name="search_terms" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="searchLettersByDate" EntitySet="letters" ReturnType="Collection(db_mysqlModel.letter)">
             <Parameter Name="search_terms" Mode="In" Type="String" />
+            <Parameter Name="search_year" Mode="In" Type="Int32" />
+            <Parameter Name="search_month" Mode="In" Type="Int32" />
+            <Parameter Name="search_day" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="searchLetters_Result" />
@@ -183,6 +195,8 @@
           <Property Type="Int64" Name="toFacebookUID" />
           <Property Type="Int64" Name="fromFacebookUID" />
         </EntityType>
+        <ComplexType Name="searchLetersByDate_Result" />
+        <ComplexType Name="searchLettersByDate_Result" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -271,6 +285,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="quickSearch" FunctionName="db_mysqlModel.Store.searchLetters" />
+          <FunctionImportMapping FunctionImportName="searchLettersByDate" FunctionName="db_mysqlModel.Store.searchLettersByDate">
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

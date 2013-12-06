@@ -188,6 +188,12 @@
     <Compile Include="Queued.cs">
       <DependentUpon>db_mssql.tt</DependentUpon>
     </Compile>
+    <Compile Include="searchLetersByDate_Result.cs">
+      <DependentUpon>db_mysql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="searchLettersByDate_Result.cs">
+      <DependentUpon>db_mysql.tt</DependentUpon>
+    </Compile>
     <Compile Include="searchLetters_Result.cs">
       <DependentUpon>db_mysql.tt</DependentUpon>
     </Compile>

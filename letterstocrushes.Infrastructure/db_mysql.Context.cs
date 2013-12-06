@@ -52,5 +52,47 @@ namespace letterstocrushes.Infrastructure
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<letter>("quickSearch", mergeOption, search_termsParameter);
         }
+    
+        public virtual ObjectResult<letter> searchLettersByDate(string search_terms, Nullable<int> search_year, Nullable<int> search_month, Nullable<int> search_day)
+        {
+            var search_termsParameter = search_terms != null ?
+                new ObjectParameter("search_terms", search_terms) :
+                new ObjectParameter("search_terms", typeof(string));
+    
+            var search_yearParameter = search_year.HasValue ?
+                new ObjectParameter("search_year", search_year) :
+                new ObjectParameter("search_year", typeof(int));
+    
+            var search_monthParameter = search_month.HasValue ?
+                new ObjectParameter("search_month", search_month) :
+                new ObjectParameter("search_month", typeof(int));
+    
+            var search_dayParameter = search_day.HasValue ?
+                new ObjectParameter("search_day", search_day) :
+                new ObjectParameter("search_day", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<letter>("searchLettersByDate", search_termsParameter, search_yearParameter, search_monthParameter, search_dayParameter);
+        }
+    
+        public virtual ObjectResult<letter> searchLettersByDate(string search_terms, Nullable<int> search_year, Nullable<int> search_month, Nullable<int> search_day, MergeOption mergeOption)
+        {
+            var search_termsParameter = search_terms != null ?
+                new ObjectParameter("search_terms", search_terms) :
+                new ObjectParameter("search_terms", typeof(string));
+    
+            var search_yearParameter = search_year.HasValue ?
+                new ObjectParameter("search_year", search_year) :
+                new ObjectParameter("search_year", typeof(int));
+    
+            var search_monthParameter = search_month.HasValue ?
+                new ObjectParameter("search_month", search_month) :
+                new ObjectParameter("search_month", typeof(int));
+    
+            var search_dayParameter = search_day.HasValue ?
+                new ObjectParameter("search_day", search_day) :
+                new ObjectParameter("search_day", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<letter>("searchLettersByDate", mergeOption, search_termsParameter, search_yearParameter, search_monthParameter, search_dayParameter);
+        }
     }
 }
