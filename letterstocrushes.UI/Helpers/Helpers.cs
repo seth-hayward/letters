@@ -202,6 +202,59 @@ namespace letterstocrushes
             return response;
         }
 
+        public static string ArchivePager(double current_page, double items, string root, string terms)
+        {
+
+            if (current_page == 0) { current_page = 1; }
+
+            string response = "<div class='pager'>";
+            //double pages = Math.Round(items / 10, 0, MidpointRounding.AwayFromZero);
+            double pages = Math.Ceiling(items / 10);
+
+            // back button first
+            if (current_page == 1)
+            {
+                response += ArchiveButton("back", true, root, current_page - 1, terms);
+            }
+            else
+            {
+                response += ArchiveButton("back", false, root, current_page - 1, terms);
+            }
+
+            if (current_page == pages)
+            {
+                // next button, enabled
+                response += "&nbsp;" + ArchiveButton("next", true, root, current_page + 1, terms);
+            }
+            else
+            {
+                // next button, disabled
+                response += "&nbsp;" + ArchiveButton("next", false, root, current_page + 1, terms);
+            }
+
+            response += "</div>";
+
+            return response;
+        }
+
+        public static string ArchiveButton(string text, bool disabled, string url, double page, string terms)
+        {
+
+            string response = "";
+
+            if (disabled == true)
+            {
+                response = string.Format("<a class='disabled' onclick='$.post(this.href); return false;'>{0}</a>", text);
+            }
+            else
+            {
+                response = string.Format("<a class='back' href='{1}&page={2}'>{0}</a>", text, url, page, terms);
+            }
+
+            return response;
+
+        }
+
         public static string SearchButton(string text, bool disabled, string url, double page, string terms)
         {
 
