@@ -244,6 +244,16 @@ namespace letterstocrushes.Infrastructure.Data
             return Mapper.Map<List<letter>, List<Letter>>(results);
         }
 
+        public List<Letter> searchDate(string terms, int year, int month, int day)
+        {
+            db_mysql db_mysql = new db_mysql();
+
+            List<letter> results = new List<letter>();
+            results = db_mysql.searchLettersByDate(terms, year, month, day).ToList();
+
+            return Mapper.Map<List<letter>, List<Letter>>(results);
+        }
+
 
         public Letter getLastLetterFromIP(string ip)
         {
@@ -329,6 +339,7 @@ namespace letterstocrushes.Infrastructure.Data
             results = query.Skip((page - 1) * _pagesize).Take(_pagesize).ToList();
             return Mapper.Map<List<letter>, List<Letter>>(results);
         }
+
 
     }
 }

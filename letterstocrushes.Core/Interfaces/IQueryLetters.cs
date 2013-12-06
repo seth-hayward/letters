@@ -26,6 +26,7 @@ namespace letterstocrushes.Core.Interfaces
         Letter getLetterByTag(string guid);
         List<Letter> getPopularLetters(Letter latest_front_page);
         List<Letter> search(string terms);
+        List<Letter> searchDate(string terms, int year, int month, int day);
         void AddLetter(Letter letter);
     }
 }

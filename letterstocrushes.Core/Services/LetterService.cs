@@ -292,6 +292,13 @@ namespace letterstocrushes.Core.Services
             return _queryLetters.search(terms);
         }
 
+
+        public List<Letter> searchByDate(string terms, int year, int month, int day)
+        {
+            return _queryLetters.searchDate(terms, year, month, day);
+        }
+
+
         public List<Letter> getLetters(int greater_than_level, int page, int _pagesize)
         {
             return _queryLetters.getLetters(greater_than_level, page, _pagesize);
