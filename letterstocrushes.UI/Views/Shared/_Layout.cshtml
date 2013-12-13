@@ -46,30 +46,6 @@ david foster wallace and elliott smith.
 
 <body>
 
-    @{
-        var showTermsBar = Request.Cookies["hideTermsBar"] == null;
-        
-        if(showTermsBar == true) {
-         <text>
-            <div id="termsBar">
-
-               <p>Happy birthday, LTC! We turned 5 years old on November 10th. As we've grown older and more
-                   mature, we need to introduce a 
-                <a href="@Url.Content("~/terms")">Terms of Use</a> and
-                <a href="@Url.Content("~/privacy")">Privacy Policy</a>. 
-                Please take a moment to read them. These documents explain the rules that govern your use of the letters to crushes Site,
-                as well as how we collect and use the information you provide to us. <br />
-                   <a href="#" id="hideTerms">Hide this message</a>
-                </p>
-
-            </div>
-
-         </text>   
-        } 
-    }    
-
-
-
     <div class="page">
 
         <div id="header">
