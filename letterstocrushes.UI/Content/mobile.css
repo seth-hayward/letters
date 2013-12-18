@@ -318,3 +318,20 @@ span#footer_right
 {
 	color: #F59696;
 }
+
+
+div#errors 
+{
+	margin: 80px 50px 40px 40px;
+	padding: 20px;
+	border: 1px dotted #F59696;	
+    clear: both;
+}
+
+div#slow_down 
+{
+	margin: 80px 50px 40px 40px;
+	padding: 20px;
+	border: 1px dotted #F59696;	
+    clear: both;
+}
