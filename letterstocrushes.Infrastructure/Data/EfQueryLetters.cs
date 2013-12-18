@@ -340,6 +340,17 @@ namespace letterstocrushes.Infrastructure.Data
             return Mapper.Map<List<letter>, List<Letter>>(results);
         }
 
+        public List<Letter> getLastHoursLettersFromIP(string ip)
+        {
+            db_mysql db_mysql = new db_mysql();
 
+            DateTime hour_ago = DateTime.UtcNow.AddHours(-1);
+
+            var foo = db_mysql.letters.AsQueryable<letter>()
+                             .Where(last_letter => last_letter.senderIP.Contains(ip) && last_letter.letterLevel == 0 && last_letter.letterPostDate > hour_ago).ToList();
+
+            List<letter> letters = (from m in foo orderby m.letterPostDate descending select m).ToList();
+            return Mapper.Map<List<letter>, List<Letter>>(letters);
+        }
     }
 }

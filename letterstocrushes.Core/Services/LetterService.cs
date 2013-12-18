@@ -66,6 +66,11 @@ namespace letterstocrushes.Core.Services
             return _queryLetters.getLastLetterFromIP(ip);
         }
 
+        public List<Letter> getLastHoursLettersFromIp(string ip)
+        {
+            return _queryLetters.getLastHoursLettersFromIP(ip);
+        }
+
         public void AddLetter(Letter letter)
         {
             _queryLetters.AddLetter(letter);
@@ -143,6 +148,24 @@ namespace letterstocrushes.Core.Services
                 new_letter.letterTags = _guid;
 
                 new_letter.senderIP = user_ip;
+
+                //
+                // spam protection, december 2013
+                //
+
+                List<Letter> last_hour_of_letters_from_ip = getLastHoursLettersFromIp(user_ip);
+
+                if (last_hour_of_letters_from_ip.Count > 3)
+                {
+
+                    Letter first_letter = last_hour_of_letters_from_ip.First();
+                    TimeSpan wait = DateTime.UtcNow.Subtract(first_letter.letterPostDate);
+
+                    string message = "429: Please only post 3 letters an hour. In the past hour you sent " + last_hour_of_letters_from_ip.Count.ToString() + " letters. You'll need to wait another ";
+                    message += (60 - wait.Minutes).ToString() + " minutes before you can send again.";
+                    
+                    throw new Exception(message);
+                }
 
                 List<Block> blocked_ips = _blockService.getBlocks(blockType.blockIP, blockWhat.blockLetter);
 

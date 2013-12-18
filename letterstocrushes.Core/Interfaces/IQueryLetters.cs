@@ -24,6 +24,7 @@ namespace letterstocrushes.Core.Interfaces
         Letter getLastLetterSent();
         Letter getLastLetterFromIP(string ip);
         Letter getLetterByTag(string guid);
+        List<Letter> getLastHoursLettersFromIP(string ip);
         List<Letter> getPopularLetters(Letter latest_front_page);
         List<Letter> search(string terms);
         List<Letter> searchDate(string terms, int year, int month, int day);
