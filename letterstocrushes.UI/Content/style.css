@@ -750,6 +750,15 @@ div#errors
 	border: 1px dotted #F59696;	
 }
 
+div#slow_down 
+{
+	margin: 20px;
+	padding: 20px;
+	border: 1px dotted #F59696;	
+}
+
+
+
 div.validation-summary-errors
 {
 	font-size: 12px;
