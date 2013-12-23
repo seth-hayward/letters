@@ -10,7 +10,7 @@
     <form action="@Url.Content("~/archive")">
         <div>
 
-            <p>search for letters before ...</p>
+            <p>search for letters on...</p>
 
             <ul>
                 <li>
@@ -32,12 +32,7 @@
                         <text><option value="@loop_year" selected="@year_selected">@loop_year</option></text>                        
                     }
 
-                    </select> 
-
-                </li>
-
-                <li>
-                    month
+                    </select>, month 
                     <select name="month">
 
                     @for (int loop_month = 1; loop_month <= 12; loop_month++)
@@ -58,10 +53,7 @@
 
 
                     </select>  
-                </li>
-
-                <li>
-                    day
+                    , day
                     <select name="day">
                     @for (int loop_day = 1; loop_day <= 31; loop_day++)
                     {
@@ -84,7 +76,7 @@
                 </li>
 
                 <li>
-                    search terms <input type="text" value="@ViewBag.Terms" name="terms" />
+                    type a word to filter results (optional) <input type="text" value="@ViewBag.Terms" name="terms" />
                 </li>
 
             </ul>
