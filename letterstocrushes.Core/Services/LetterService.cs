@@ -315,12 +315,10 @@ namespace letterstocrushes.Core.Services
             return _queryLetters.search(terms);
         }
 
-
-        public List<Letter> searchByDate(string terms, int year, int month, int day)
+        public List<Letter> searchByDate(string terms, int year, int month, int day, int time_zone)
         {
-            return _queryLetters.searchDate(terms, year, month, day);
+            return _queryLetters.searchDate(terms, year, month, day, time_zone);
         }
-
 
         public List<Letter> getLetters(int greater_than_level, int page, int _pagesize)
         {

@@ -96,6 +96,7 @@
           <Parameter Name="search_year" Type="int" Mode="In" />
           <Parameter Name="search_month" Type="int" Mode="In" />
           <Parameter Name="search_day" Type="int" Mode="In" />
+          <Parameter Name="time_zone" Type="int" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -116,6 +117,7 @@
             <Parameter Name="search_year" Mode="In" Type="Int32" />
             <Parameter Name="search_month" Mode="In" Type="Int32" />
             <Parameter Name="search_day" Mode="In" Type="Int32" />
+            <Parameter Name="time_zone" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="searchLetters_Result" />

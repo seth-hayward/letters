@@ -343,12 +343,15 @@ namespace letterstocrushes.Controllers
 
             List<Core.Model.Letter> results = new List<Core.Model.Letter>();
 
+            string time_zone = getUserTimeZone();
+            int tz = int.Parse(time_zone);
+
             if (HttpContext.Cache[cached_search_result] == null)
             {
                 // not in cache, so we search db for it
                 using (profiler.Step("SEARCH db1"))
                 {
-                    results = _letterService.searchByDate(terms, year, month, day);
+                    results = _letterService.searchByDate(terms, year, month, day, tz);
                 }
 
                 HttpContext.Cache.Insert(cached_search_result, results, null, DateTime.UtcNow.AddSeconds(90), TimeSpan.Zero);
@@ -375,7 +378,6 @@ namespace letterstocrushes.Controllers
             double pages = Math.Ceiling((double)ViewBag.Results / 10);
             ViewBag.Pages = pages;
 
-            string time_zone = getUserTimeZone();
             ViewData.Model = _letterService.fixList(results, time_zone);
 
             return View();

@@ -27,7 +27,7 @@ namespace letterstocrushes.Core.Interfaces
         List<Letter> getLastHoursLettersFromIP(string ip);
         List<Letter> getPopularLetters(Letter latest_front_page);
         List<Letter> search(string terms);
-        List<Letter> searchDate(string terms, int year, int month, int day);
+        List<Letter> searchDate(string terms, int year, int month, int day, int time_zone);
         void AddLetter(Letter letter);
     }
 }

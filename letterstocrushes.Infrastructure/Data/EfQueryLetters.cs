@@ -244,12 +244,12 @@ namespace letterstocrushes.Infrastructure.Data
             return Mapper.Map<List<letter>, List<Letter>>(results);
         }
 
-        public List<Letter> searchDate(string terms, int year, int month, int day)
+        public List<Letter> searchDate(string terms, int year, int month, int day, int time_zone)
         {
             db_mysql db_mysql = new db_mysql();
 
             List<letter> results = new List<letter>();
-            results = db_mysql.searchLettersByDate(terms, year, month, day).ToList();
+            results = db_mysql.searchLettersByDate(terms, year, month, day, time_zone).ToList();
 
             return Mapper.Map<List<letter>, List<Letter>>(results);
         }

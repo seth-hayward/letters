@@ -53,7 +53,7 @@ namespace letterstocrushes.Infrastructure
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<letter>("quickSearch", mergeOption, search_termsParameter);
         }
     
-        public virtual ObjectResult<letter> searchLettersByDate(string search_terms, Nullable<int> search_year, Nullable<int> search_month, Nullable<int> search_day)
+        public virtual ObjectResult<letter> searchLettersByDate(string search_terms, Nullable<int> search_year, Nullable<int> search_month, Nullable<int> search_day, Nullable<int> time_zone)
         {
             var search_termsParameter = search_terms != null ?
                 new ObjectParameter("search_terms", search_terms) :
@@ -71,10 +71,14 @@ namespace letterstocrushes.Infrastructure
                 new ObjectParameter("search_day", search_day) :
                 new ObjectParameter("search_day", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<letter>("searchLettersByDate", search_termsParameter, search_yearParameter, search_monthParameter, search_dayParameter);
+            var time_zoneParameter = time_zone.HasValue ?
+                new ObjectParameter("time_zone", time_zone) :
+                new ObjectParameter("time_zone", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<letter>("searchLettersByDate", search_termsParameter, search_yearParameter, search_monthParameter, search_dayParameter, time_zoneParameter);
         }
     
-        public virtual ObjectResult<letter> searchLettersByDate(string search_terms, Nullable<int> search_year, Nullable<int> search_month, Nullable<int> search_day, MergeOption mergeOption)
+        public virtual ObjectResult<letter> searchLettersByDate(string search_terms, Nullable<int> search_year, Nullable<int> search_month, Nullable<int> search_day, Nullable<int> time_zone, MergeOption mergeOption)
         {
             var search_termsParameter = search_terms != null ?
                 new ObjectParameter("search_terms", search_terms) :
@@ -92,7 +96,11 @@ namespace letterstocrushes.Infrastructure
                 new ObjectParameter("search_day", search_day) :
                 new ObjectParameter("search_day", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<letter>("searchLettersByDate", mergeOption, search_termsParameter, search_yearParameter, search_monthParameter, search_dayParameter);
+            var time_zoneParameter = time_zone.HasValue ?
+                new ObjectParameter("time_zone", time_zone) :
+                new ObjectParameter("time_zone", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<letter>("searchLettersByDate", mergeOption, search_termsParameter, search_yearParameter, search_monthParameter, search_dayParameter, time_zoneParameter);
         }
     }
 }
