@@ -714,6 +714,37 @@ namespace letterstocrushes
 
             }
 
+            if (message.StartsWith("/help"))
+            {
+
+
+                chat_1.Nick = "chatbot:";
+                chat_1.Message = "Hey, friend! Welcome to the chat. Here's some secret commands you can do: ";
+                chat_1.ChatDate = DateTime.UtcNow;
+                chat_1.StoredInDB = false;
+                chat_1.Room = current_user.Room;
+
+                Clients.Caller.addMessage(chat_1);
+                Clients.Caller.addSimpleMessage(chat_1.Nick + " " + chat_1.Message);
+
+                chat_1.Message = "/help [type this to show this message]";
+
+                Clients.Caller.addMessage(chat_1);
+                Clients.Caller.addSimpleMessage(chat_1.Nick + " " + chat_1.Message);
+
+                chat_1.Message = "/join 2 [type this to join room 2, or any other numbered room]";
+
+                Clients.Caller.addMessage(chat_1);
+                Clients.Caller.addSimpleMessage(chat_1.Nick + " " + chat_1.Message);
+
+                chat_1.Message = "/ask Does she think about me? [ask the 8-ball a yes/no question :) ]";
+
+                Clients.Caller.addMessage(chat_1);
+                Clients.Caller.addSimpleMessage(chat_1.Nick + " " + chat_1.Message);
+
+                handled = true;
+            }
+
             if (message.StartsWith("/ask "))
             {
 
