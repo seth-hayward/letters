@@ -714,6 +714,56 @@ namespace letterstocrushes
 
             }
 
+            if (message.StartsWith("/w ")) {
+                // /w {username} message
+                // WHISPER TIME
+
+                string[] message_parameters = message.Split(' ');
+                string whisper_to = message_parameters[1];
+                string extracted_message = message.Replace("/w " + whisper_to + " ", "");
+
+                bool found_person = false;
+
+                chat_1.Nick = current_user.Handle + " *whisper*:";
+                chat_1.Message = extracted_message;
+                chat_1.ChatDate = DateTime.UtcNow;
+                chat_1.StoredInDB = false;
+                chat_1.Room = current_user.ConnectionId;
+
+                chat.ChatDate = DateTime.UtcNow;
+                chat.Nick = current_user.Handle + " *whispered to " + whisper_to + "*:";
+                chat.Message = extracted_message;
+                chat.StoredInDB = false;
+                chat.Room = current_user.ConnectionId;
+
+                foreach (ChatVisitor c in Visitors.Values)
+                {
+
+                    if (c.Handle == whisper_to)
+                    {
+                        found_person = true;
+
+                        Clients.Client(c.ConnectionId).addMessage(chat_1);
+                        Clients.Client(c.ConnectionId).addSimpleMessage(chat_1.Nick + " " + chat_1.Message);
+
+                        Clients.Caller.addMessage(chat);
+                        Clients.Caller.addSimpleMessage(chat.Nick + " " + chat.Message);
+                    }
+
+
+                }
+
+                if (found_person == false)
+                {
+                    chat_1.Nick = "chatbot:";
+                    chat_1.Message = "could not find this user: " + whisper_to;
+                    Clients.Caller.addMessage(chat_1);
+                    Clients.Caller.addSimpleMessage(chat_1.Nick + " " + chat_1.Message);
+                }
+
+                handled = true;
+            }
+
             if (message.StartsWith("/help"))
             {
 
@@ -738,6 +788,11 @@ namespace letterstocrushes
                 Clients.Caller.addSimpleMessage(chat_1.Nick + " " + chat_1.Message);
 
                 chat_1.Message = "/ask Does she think about me? [ask the 8-ball a yes/no question :) ]";
+
+                Clients.Caller.addMessage(chat_1);
+                Clients.Caller.addSimpleMessage(chat_1.Nick + " " + chat_1.Message);
+
+                chat_1.Message = "/w seth lol this is a whisper [send a private message to user seth, only seen by you and them]";
 
                 Clients.Caller.addMessage(chat_1);
                 Clients.Caller.addSimpleMessage(chat_1.Nick + " " + chat_1.Message);
