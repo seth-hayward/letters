@@ -375,7 +375,8 @@ namespace letterstocrushes.Controllers
             double pages = Math.Ceiling((double)ViewBag.Results / 10);
             ViewBag.Pages = pages;
 
-            ViewData.Model = results;
+            string time_zone = getUserTimeZone();
+            ViewData.Model = _letterService.fixList(results, time_zone);
 
             return View();
 
