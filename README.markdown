@@ -1072,7 +1072,7 @@ So, yeah, thanks in advance if you reply.
 "letters to crushes is a fantastic website.
 i love expressing my feelings on here to total strangers because the likes make me feel like ive been heard. but what would really be fantastic if the bookmarks page would work a little more smoothly... but everything else is really fantastic!!!!!" - e-----------@aim.com
 
-"I love your website. I just wish there were a way to recover my password, because I forget mine now. I forget how many letters I've written, but I know it's more than 10." - bailey_spurling@yahoo.com
+"I love your website. I just wish there were a way to recover my password, because I forget mine now. I forget how many letters I've written, but I know it's more than 10." - b----_s---@yahoo.com
 
 "I forgot my password, is there anyway you send it to me?" - d-----@gmail.com
 
