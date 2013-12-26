@@ -335,3 +335,15 @@ div#slow_down
 	border: 1px dotted #F59696;	
     clear: both;
 }
+
+img.hearts
+{
+    display: block;
+    float: right;
+}
+
+img.comments
+{
+    display: block;
+    float: right;
+}
