@@ -971,7 +971,11 @@ namespace letterstocrushes.Controllers
             List<Core.Model.Letter> queued_letters = _queueService.getQueuedLetters();
             ViewBag.Count = queued_letters.Count();
 
-            return View(queued_letters);
+            string time_zone = getUserTimeZone();
+            queued_letters = _letterService.fixList(queued_letters, time_zone);
+            ViewData.Model = queued_letters;
+
+            return View();
         }
 
         public ActionResult Dequeue(int id = 0)
