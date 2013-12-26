@@ -1274,7 +1274,9 @@ namespace letterstocrushes.Controllers
               ViewBag.CurrentPage = page;
               ViewBag.Pages = popular_page_count;
 
-              return View(pagination);
+              ViewData.Model = _letterService.fixList(pagination, getUserTimeZone());
+
+              return View();
 
             }
             catch (Exception ex)
