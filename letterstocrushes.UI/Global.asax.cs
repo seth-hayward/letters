@@ -101,6 +101,12 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "EditMobile", // Route name
+                "mobile/edit/{id}", // URL with parameters
+                new { controller = "Home", action = "MobileEdit" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "MoreMobile", // Route name
                 "mobile/more", // URL with parameters
                 new { controller = "Home", action = "More", mobile = 1 } // Parameter defaults

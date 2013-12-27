@@ -579,29 +579,7 @@ namespace letterstocrushes.Controllers
             Core.Model.Letter letterToView;
             letterToView = _letterService.getLetter(id).Clone();
 
-            // now, we need to remove/replace all html elements
-            // so that we can edit the device on iOS...
-            // elements to replace:
-            //    - <ul> </ul>
-            //    - <li> </li>
-            //    - <p> </p>
-            //    - <b> </b>
-            //    - <i> </i>
-
-            Dictionary<string, string> ignored_html_elements_with_replacements = new Dictionary<string, string>();
-            ignored_html_elements_with_replacements.Add("<ul>", "");
-            ignored_html_elements_with_replacements.Add("</ul>", "");
-            ignored_html_elements_with_replacements.Add("<p>", "");
-            ignored_html_elements_with_replacements.Add("</p>", "\n");
-            ignored_html_elements_with_replacements.Add("<i>", "");
-            ignored_html_elements_with_replacements.Add("</i>", "");
-            ignored_html_elements_with_replacements.Add("<b>", "");
-            ignored_html_elements_with_replacements.Add("</b>", "");
-
-            foreach (KeyValuePair<string, string> oops in ignored_html_elements_with_replacements)
-            {
-                letterToView.letterMessage = letterToView.letterMessage.Replace(oops.Key, oops.Value);
-            }
+            letterToView.letterMessage = cleanHTMLElementsFromLetter(letterToView.letterMessage);
 
             return Json(letterToView, JsonRequestBehavior.AllowGet);
         }
@@ -777,6 +755,33 @@ namespace letterstocrushes.Controllers
 
             return View();
             
+        }
+
+        public ActionResult MobileEdit(int id=1)
+        {
+
+            string time_zone_value = getUserTimeZone();
+            Core.Model.Letter letterToView = _letterService.getLetter(id);
+
+            if (letterToView == null)
+            {
+                return RedirectToAction("NotFound");
+            }
+
+            string letter_cookie_value = getLetterCookieValue(letterToView.letterTags);
+            Boolean able_to_edit = _letterService.canEdit(letter_cookie_value, User.IsInRole("mod"));
+            ViewBag.can_edit = able_to_edit;
+
+            if (able_to_edit == false)
+            {
+                return View("Security");
+            }
+
+            // remove html elements from the letter message so it can be edited
+            letterToView.letterMessage = cleanHTMLElementsFromLetter(letterToView.letterMessage);
+
+            ViewData.Model = letterToView;
+            return View("~/Views/Mobile/Edit.cshtml");
         }
 
         public ActionResult MobileSend()
@@ -1500,6 +1505,13 @@ namespace letterstocrushes.Controllers
 
                 int lucky_id = Convert.ToInt32(id);
 
+                if (mobile == "1")
+                {
+                    letterText = "<p>" + letterText;
+                    letterText = letterText.Replace(System.Environment.NewLine, "</p><p>");
+                    letterText = letterText + "</p>";
+                }
+
                 bool is_user_mod = User.IsInRole("Mod");
 
                 string userip = "anonymous letter sender";
@@ -1625,6 +1637,37 @@ namespace letterstocrushes.Controllers
 
             return Json(letter, JsonRequestBehavior.AllowGet);
             
+        }
+
+        public string cleanHTMLElementsFromLetter(string letter_message)
+        {
+
+            // now, we need to remove/replace all html elements
+            // so that we can edit the device on iOS...
+            // elements to replace:
+            //    - <ul> </ul>
+            //    - <li> </li>
+            //    - <p> </p>
+            //    - <b> </b>
+            //    - <i> </i>
+
+            Dictionary<string, string> ignored_html_elements_with_replacements = new Dictionary<string, string>();
+            ignored_html_elements_with_replacements.Add("<ul>", "");
+            ignored_html_elements_with_replacements.Add("</ul>", "");
+            ignored_html_elements_with_replacements.Add("<p>", "");
+            ignored_html_elements_with_replacements.Add("</p>", "\n");
+            ignored_html_elements_with_replacements.Add("<i>", "");
+            ignored_html_elements_with_replacements.Add("</i>", "");
+            ignored_html_elements_with_replacements.Add("<b>", "");
+            ignored_html_elements_with_replacements.Add("</b>", "");
+
+            foreach (KeyValuePair<string, string> oops in ignored_html_elements_with_replacements)
+            {
+                letter_message = letter_message.Replace(oops.Key, oops.Value);
+            }
+
+            return letter_message;
+
         }
 
         public string getUserTimeZone()

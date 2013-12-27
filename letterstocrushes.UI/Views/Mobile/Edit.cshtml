@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "letters to crushes: edit";
+}
+
+@{
+    Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+
+<div class="letterContainer" id="input">
+
+    <div id="sendLetterCopy">
+        <p style="float: left">Edit your letter.
+        </p>
+
+        <div style="float: right;">
+            <a id="btnSend" href="#" data-role="button" data-mini="true" data-inline="false" style="padding: 7px">Edit</a>
+        </div>
+    </div>
+
+    <div id="errors" style="display: none">
+        <p><b>there was an error (<span id="error_name"></span>).</b> something bad happened (<span id="error_message"></span>) and your letter was not sent. please send use a report using the @Html.ActionLink("contact page", "contact") if you see this again.</p>
+    </div>
+
+    <div id="slow_down" style="display: none">
+        <p>
+            <span id="slow_message"></span>
+        </p>
+    </div>
+
+        
+	<textarea id="letterMessage" rows="12" cols="12" style="width: 100%">@Html.Raw(Model.letterMessage)</textarea>
+
+
+	<br />
+		    
+    <div class="letterPostScript">            
+        <small>Please use initials or nicknames, it will be posted for others to see.</small>        
+    </div>            
+    		
+</div>
+
+<div class="letterContainer" id="output" style="display: none;">
+
+    <h2>your letter was edited.</h2>
+    <ul>
+        <li><span id="perm">here is it's permanent link</span></li>
+    </ul> 
+
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#btnSend").click(function () {
+
+            $("#btnSend").fadeOut('fast');
+            $("#errors").hide();
+
+            try {
+
+                var c;
+                c = "UNKNOWN";
+                var m = '<p>' + $('#letterMessage').val();
+                if (m == '') { $("#btnSend").fadeIn('fast'); return; };
+
+                var sendArgs = 'letterText=' + escape(m) + '&mobile=1&id=@Model.Id';
+
+                var linkid;
+
+                $.ajax(
+                {
+                    type: "post",
+                    url: "@Url.Content("~/Home/EditLetter")",
+                    data: sendArgs,
+                    dataType: "json",
+                    processData: false,
+                    success: function (result) {
+                        if (result.response == '1') {
+                            $.cookie(result.guid, 0, { expires: 365 });
+                            $("#perm").html("<a href='@Url.Content("~/mobile/letter/")" + @Model.Id + "' rel='external'>here is a permanent link</a>");
+
+                            $('#input').fadeOut(100, function () { $('#output').fadeIn(100); });
+                        }
+                        else {
+                            display_errors({ name: 'server error', message: result.message });
+                        }
+
+                    },
+                    error: function (req, status, error) {
+
+                        // this is shit code... why do i need an error handler here as well?
+                        // how can i fire an error to get this code to run in the first place?
+
+                        throw {
+                            name: 'delivery error',
+                            message: error
+                        };
+                    }
+
+                });
+
+            }
+            catch (err) {
+
+                display_errors(err);
+
+            }
+
+
+            function display_errors(err) {
+
+                if (err.message.indexOf("429") > -1) {
+                    var clean_message = err.message.substring(5, err.message.length);
+                    $("#slow_message").html(clean_message);
+                    $("#slow_down").fadeIn('fast');
+                } else {
+                    $("#error_name").html(err.name);
+                    $("#error_message").html(err.message);
+                    $("#errors").fadeIn('fast');
+                }
+
+                $("#btnSend").fadeIn('fast');
+            }
+
+        });
+
+    });
+
+</script>
