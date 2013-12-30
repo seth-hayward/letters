@@ -114,15 +114,10 @@ namespace letterstocrushes.Controllers
             // expire from cache in 90 seconds.
             //
 
-            var profiler = MiniProfiler.Current;
-
             if (HttpContext.Cache[cache_key_count] == null)
             {
 
-                using (profiler.Step("Getting count"))
-                {
-                    _all_letter_count = _letterService.getLetterCountHomePage(); 
-                }
+                _all_letter_count = _letterService.getLetterCountHomePage(); 
                 HttpContext.Cache.Insert(cache_key_count, _all_letter_count, null, DateTime.UtcNow.AddSeconds(90), TimeSpan.Zero);
             }
             else
@@ -140,10 +135,7 @@ namespace letterstocrushes.Controllers
             if (HttpContext.Cache[cache_key_list] == null)
             {
 
-                using (profiler.Step("Getting letters"))
-                {
-                    _letters = _letterService.getLetters(0, page, _pagesize).ToList(); 
-                }
+                _letters = _letterService.getLetters(0, page, _pagesize).ToList(); 
 
                 HttpContext.Cache.Insert(cache_key_list, _letters, null, DateTime.UtcNow.AddSeconds(30), TimeSpan.Zero);                
             }
@@ -186,14 +178,9 @@ namespace letterstocrushes.Controllers
             // Fetch from cache if it exists there.
             //
 
-            var profiler = MiniProfiler.Current;
-
             if (HttpContext.Cache[cache_key_count] == null)
             {
-                using (profiler.Step("Getting count"))
-                {
-                    _all_letter_count = _letterService.getLetterCountMorePage();
-                }
+                _all_letter_count = _letterService.getLetterCountMorePage();
                 HttpContext.Cache.Insert(cache_key_count, _all_letter_count, null, DateTime.UtcNow.AddSeconds(90), TimeSpan.Zero);
             }
             else
@@ -212,10 +199,7 @@ namespace letterstocrushes.Controllers
 
             if (HttpContext.Cache[cache_key_list] == null)
             {
-                using (profiler.Step("Getting letters"))
-                {
-                    _letters = _letterService.getLetters(-1, page, _pagesize).ToList();
-                }
+                _letters = _letterService.getLetters(-1, page, _pagesize).ToList();
                 HttpContext.Cache.Insert(cache_key_list, _letters, null, DateTime.UtcNow.AddSeconds(15), TimeSpan.Zero);
             }
             else
@@ -262,14 +246,9 @@ namespace letterstocrushes.Controllers
             // Fetch from cache if it exists there.
             //
 
-            var profiler = MiniProfiler.Current;
-
             if (HttpContext.Cache[cache_key_count] == null)
             {
-                using (profiler.Step("Getting count"))
-                {
-                    _all_letter_count = _letterService.getLetterCountModPage();
-                }
+                _all_letter_count = _letterService.getLetterCountModPage();
                 HttpContext.Cache.Insert(cache_key_count, _all_letter_count, null, DateTime.UtcNow.AddSeconds(90), TimeSpan.Zero);
             }
             else
@@ -288,10 +267,7 @@ namespace letterstocrushes.Controllers
 
             if (HttpContext.Cache[cache_key_list] == null)
             {
-                using (profiler.Step("Getting letters"))
-                {
-                    _letters = _letterService.getModLetters(page, _pagesize);
-                }
+                _letters = _letterService.getModLetters(page, _pagesize);
                 HttpContext.Cache.Insert(cache_key_list, _letters, null, DateTime.UtcNow.AddSeconds(15), TimeSpan.Zero);
             }
             else
@@ -400,13 +376,9 @@ namespace letterstocrushes.Controllers
         {
             string time_zone = getUserTimeZone();
 
-            var profiler = MiniProfiler.Current;
             Core.Model.Letter letterToView;
 
-            using (profiler.Step("Getting letter"))
-            {
-                letterToView = _letterService.getLetter(id, time_zone);
-            }
+            letterToView = _letterService.getLetter(id, time_zone);
 
             if (letterToView.letterLevel == -10)
             {

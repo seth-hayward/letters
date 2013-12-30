@@ -55,11 +55,12 @@ namespace letterstocrushes.Controllers
 
             if(ex.InnerException != null) {
                 msg.Message = msg.Message + "<br><br>" + ex.InnerException.Message.ToString();
+                ViewData["Inner"] = ex.InnerException.Message.ToString();
             }
 
             if (ex.StackTrace != null)
             {
-                msg.Message = msg.Message + "<br><br>Stack trace:<br/>" + ex.StackTrace.ToString();
+                msg.Message = msg.Message + "<br><br>Stack trace:<br/><code>" + ex.StackTrace.ToString() + "</code>";
             }
 
             if (handled == false)

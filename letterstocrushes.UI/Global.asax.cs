@@ -395,12 +395,6 @@ namespace letterstocrushes
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            // ignoring signalr items for now
-            var ignored = MiniProfiler.Settings.IgnoredPaths.ToList();
-            ignored.Add("/signalr/");
-            ignored.Add("/signalr");
-
-            MiniProfiler.Settings.IgnoredPaths = ignored.ToArray();
         }
 
         protected void Application_BeginRequest()
@@ -450,7 +444,6 @@ namespace letterstocrushes
         protected void Application_EndRequest()
         {
 
-          MiniProfiler.Stop();
 
         }
 
