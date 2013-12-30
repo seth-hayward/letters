@@ -27,14 +27,14 @@ namespace letterstocrushes.Controllers
             Exception ex = null;
             Boolean handled = false;
 
-            //try
-            //{
-            ex = (Exception)HttpContext.Application[Request.UserHostAddress.ToString()];
-            //}
-            //catch
-            //{
-            //    return View("Error");
-            //}
+            try
+            {
+                ex = (Exception)HttpContext.Application[Request.UserHostAddress.ToString()];
+            }
+            catch (Exception exa)
+            {
+                ex = new Exception("Unable to pull exception details.");
+            }
 
             // we want to ignore some errors, to prevent from being spammed ot all hell
             if (ex.Message.Contains("e8f6b078-0f35-11de-85c5-efc5ef23aa1f/aupm/notify.do") == true) { return View("Error"); }
