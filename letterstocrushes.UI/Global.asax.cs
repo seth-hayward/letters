@@ -131,6 +131,12 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "CommentsEditText", // Route name
+                "comments/commentText", // URL with parameters
+                new { controller = "Comment", action = "CommentText" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "CommentDetails", // Route name
                 "comment/{id}", // URL with parameters
                 new { controller = "Comment", action = "Details" } // Parameter defaults

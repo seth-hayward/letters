@@ -105,11 +105,24 @@ namespace letterstocrushes.Controllers
 
             String commenter_guid = getCommenterGuid();
 
-            Boolean edit_successful = _commentService.EditComment(commentText, id, commenter_guid, user_name, is_user_mod);
+            string basic_text = commentText;
+
+            // first, we make sure that the first line
+            // is a paragraph
+            basic_text = "<p>" + basic_text;
+
+            // then we make sure the last line closes it
+            basic_text = basic_text + "</p>";
+
+            // now all line breaks in the middle should
+            // start new paragraphs
+            basic_text = basic_text.Replace("\n", "</p><p>");
+
+            Boolean edit_successful = _commentService.EditComment(basic_text, id, commenter_guid, user_name, is_user_mod);
 
             if (edit_successful == true)
             {
-                return commentText;
+                return basic_text;
             }
             else
             {
@@ -117,6 +130,57 @@ namespace letterstocrushes.Controllers
             }
 
         }
+
+        [HttpGet]
+        [ValidateInput(false)]
+        public String CommentText(int id = 0)
+        {
+
+            if (id == 0)
+            {
+                return "Comment not found.";
+            }
+
+            bool is_user_mod = User.IsInRole("Mod");
+
+            string userip = "anonymous letter sender";
+            userip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (userip == null)
+                userip = Request.ServerVariables["REMOTE_ADDR"];
+
+            string user_name;
+            if (User.Identity.IsAuthenticated == true)
+            {
+                user_name = User.Identity.Name;
+            }
+            else
+            {
+                user_name = userip;
+            }
+
+            String commenter_guid = getCommenterGuid();
+
+            Comment c = _commentService.getComment(id);
+
+            // remove html...
+
+            c.commentMessage = c.commentMessage.Replace("</p>", "\n\n");
+            c.commentMessage = c.commentMessage.Replace("<p>", "");
+
+            // remove trailing line breaks now...
+            c.commentMessage = c.commentMessage.TrimEnd();
+
+            if (c.commentMessage.Length > 0)
+            {
+                return c.commentMessage;
+            }
+            else
+            {
+                return "Unable to edit comment. Please refresh and try again.";
+            }
+
+        }
+
 
         public string getCommenterGuid()
         {

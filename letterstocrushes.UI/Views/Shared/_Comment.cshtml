@@ -48,9 +48,7 @@
 
     </div>
 
-    <div id="@Model.Id" class="comment_message edit">
-        @Html.Raw(Model.commentMessage)
-    </div>
+    <div id="@Model.Id" class="comment_message edit">@Html.Raw(Model.commentMessage)</div>
 
 </div>
 
@@ -61,9 +59,13 @@
         @if (User.IsInRole("Mod")) {
             
             <text>
-            //$('.edit').editable("@Url.Content("~/comments/edit")", {
-            //    name: 'commentText'
-            //});
+        $('.edit').editable("@Url.Content("~/comments/edit")", {
+                loadurl: "@Url.Content("~/comments/commentText")",
+                type: 'textarea',
+                name: 'commentText',
+                cancel: 'cancel',
+                submit: 'save',
+            });
 
             $("#c@(Model.Id)").click(function (e) {
 

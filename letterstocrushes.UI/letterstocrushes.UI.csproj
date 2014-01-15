@@ -197,7 +197,6 @@
     <Content Include="Content\apple-touch-icon-76x76-precomposed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\channel.html" />
     <Content Include="Content\chat.css" />
     <Content Include="Content\comment.png" />
     <Content Include="Content\hamburger-retina.gif">
