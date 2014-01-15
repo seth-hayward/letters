@@ -268,7 +268,9 @@
     <Content Include="Scripts\jquery.hotkeys.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\jquery.jeditable.mini.js" />
+    <Content Include="Scripts\jquery.jeditable.mini.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\jquery.signalR-1.1.3.js" />
     <Content Include="Scripts\jquery.signalR-1.1.3.min.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
