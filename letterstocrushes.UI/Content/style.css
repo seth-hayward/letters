@@ -450,6 +450,7 @@ a.voterLink:hover
 	padding-top: 30px;
 	clear: both;
 	text-align: left;
+    word-wrap: break-word;
 }
 
 .letterBookContainer
