@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "letters to crushes - apps";
+}
+
+<div class="letterContainer">
+
+    <h2>our apps</h2>
+    <p>
+        iOS
+    </p>
+    <ul style="list-style: none">
+        <li>
+            <a href="https://itunes.apple.com/us/app/crushes/id670350082?ls=1&mt=8" target="_blank" style="border: 0px">
+                <img src="@Url.Content("~/Content/download.png")" alt="download on the app store" />
+            </a>
+        </li>
+    </ul>
+
+    <p>
+        Android
+    </p>
+    <ul style="list-style: none">
+        <li>
+        currently <span style="text-decoration:line-through">broken</span> in beta testing. sorry :( 
+
+        </li>
+    </ul>
+
+    <p>
+        <b>a note</b>: apps are expensive to develop. LTC does not have the resources
+        to pay for all the app development the community wants, so we have to work
+        with what we have. we're sorry things move slowly, please work with us by
+        using the <a href="@Url.Content("~/feedback")">feedback</a> function to let us
+        know what we should fix or focus on. thanks for your help!
+    </p>
+</div>
+
+@section Footer {
+    @Html.Partial("_Footer")
+}

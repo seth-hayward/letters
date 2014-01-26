@@ -222,6 +222,11 @@ namespace letterstocrushes.Controllers
 
         }
 
+        public ActionResult Apps()
+        {
+            return View();
+        }
+
         public ActionResult ModLetters(int page = 1, int mobile = 0)
         {
 

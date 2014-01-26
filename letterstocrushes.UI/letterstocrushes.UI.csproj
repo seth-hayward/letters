@@ -199,6 +199,9 @@
     </Content>
     <Content Include="Content\chat.css" />
     <Content Include="Content\comment.png" />
+    <Content Include="Content\download.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\hamburger-retina.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -498,6 +501,7 @@
     <Content Include="Views\Home\Archive.cshtml" />
     <Content Include="Views\Shared\_LetterArchiveListItem.cshtml" />
     <Content Include="Views\Mobile\Edit.cshtml" />
+    <Content Include="Views\Home\Apps.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

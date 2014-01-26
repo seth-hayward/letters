@@ -245,6 +245,12 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "AppsRoute", // Route name
+                "apps", // URL with parameters
+                new { controller = "Home", action = "Apps" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "Error", // Route name
                 "error/", // URL with parameters
                 new { controller = "Error", action = "HttpError" } // Parameter defaults
