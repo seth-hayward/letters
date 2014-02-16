@@ -6,7 +6,7 @@
 
             resp = $(this).attr("id").substring(1);
 
-            $.getJSON("@Url.Content("~/Home/Vote/")", { id: resp, c: $.connection.hub.id }, function (incomingLetter) {
+            $.getJSON("@Url.Content("~/Home/Vote/")", { id: resp, c: "" }, function (incomingLetter) {
 
                 $("#b" + resp).html(incomingLetter.letterUp);
                 $("#h" + resp).addClass("not_selectable");
