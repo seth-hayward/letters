@@ -77,7 +77,7 @@
 
         var visitor_update;
 
-        // first we want to get the user's name
+@*        // first we want to get the user's name
         // before we make the chat client
 
         // Proxy created on the fly          
@@ -92,7 +92,7 @@
         // Start the connection
         $.connection.hub.start().done(function () {
             visitor_update.server.join(@Html.Raw(Model.First().Id), @Html.Raw(Model.Last().Id), "more");
-        });
+        });*@
 
     });
 
