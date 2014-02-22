@@ -1554,34 +1554,34 @@ namespace letterstocrushes.Controllers
 
                 letter.letterUp = current_upvotes;
 
-                // announce the vote to the voting realtime service
-                if (c != "")
-                {
+                //// announce the vote to the voting realtime service
+                //if (c != "")
+                //{
 
-                    // create a new connection if one does not exist
-                    if (hubConnection == null || hubConnection.State == Microsoft.AspNet.SignalR.Client.ConnectionState.Disconnected)
-                    {
-                        hubConnection = new HubConnection(signalr_hub);
+                //    // create a new connection if one does not exist
+                //    if (hubconnection == null || hubconnection.state == microsoft.aspnet.signalr.client.connectionstate.disconnected)
+                //    {
+                //        hubconnection = new hubconnection(signalr_hub);
 
-                        // Create a proxy to the chat service
-                        hub = hubConnection.CreateHubProxy("visitorUpdate");
+                //        // create a proxy to the chat service
+                //        hub = hubconnection.createhubproxy("visitorupdate");
 
-                        // Start the connection
-                        hubConnection.Start().Wait();
+                //        // start the connection
+                //        hubconnection.start().wait();
 
-                    }
+                //    }
 
 
-                    if (hubConnection.State == Microsoft.AspNet.SignalR.Client.ConnectionState.Connected)
-                    {
+                //    if (hubconnection.state == microsoft.aspnet.signalr.client.connectionstate.connected)
+                //    {
 
-                        // Send the message
-                        hub.Invoke("Vote", id, c);
+                //        // send the message
+                //        hub.invoke("vote", id, c);
 
-                        hubConnection.Stop();
-                    }
+                //        hubconnection.stop();
+                //    }
 
-                }
+                //}
 
                 return Json(letter, JsonRequestBehavior.AllowGet);
 
