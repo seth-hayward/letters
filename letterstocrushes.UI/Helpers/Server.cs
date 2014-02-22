@@ -47,9 +47,27 @@ namespace letterstocrushes
     {
 
         private static DateTime started = DateTime.Now;
+        private static DateTime _chatStarted;
         private static int max;
         private static int global_connections;
         private static Hashtable connection_ids;
+
+        public static DateTime chatStarted
+        {
+            get
+            {
+                if (_chatStarted == null)
+                {
+                    _chatStarted = DateTime.Now;
+                }
+
+                return _chatStarted;
+            }
+            set
+            {
+                _chatStarted = value;
+            }
+        }
 
         public static DateTime Started
         {
@@ -306,7 +324,12 @@ namespace letterstocrushes
                         new_mgs.Message = msg.Message;
                         new_mgs.Nick = msg.Nick;
                         new_mgs.StoredInDB = true;
+
+                        // now, we only want to add chats to this list
+                        // if they are AFTER chatStarted... this allow us
+                        // to clear the log without updating the database
                         Messages.Add(new_mgs);
+
                     }
 
                     ChatMessage reboot = new ChatMessage();
@@ -392,7 +415,7 @@ namespace letterstocrushes
             // send a message to that group that the user has left
             ChatMessage chat = new ChatMessage();
             chat.ChatDate = DateTime.UtcNow;
-            chat.Message = current_user.Handle + " left this room and joined room #" + room + ". Type <b>/join " + room + "</b> to do the same.";
+            chat.Message = current_user.Handle + " left this room to go somewhere else.";
             chat.Room = current_user.Room;
             chat.Nick = "Left";
 
@@ -761,6 +784,46 @@ namespace letterstocrushes
                     Clients.Caller.addSimpleMessage(chat_1.Nick + " " + chat_1.Message);
                 }
 
+                handled = true;
+            }
+
+            if (message.StartsWith("/clear"))
+            {
+                if (HttpContext.Current.User.IsInRole("Mod"))
+                {
+
+
+                    ChatMessage reboot = new ChatMessage();
+
+                    // this has to be Now because the rest of the
+                    // uptime stuff uses Now instead of UtcNow
+
+                    DateTime lastChatDate = Messages.Last().ChatDate;
+                    chatStarted = lastChatDate;
+
+                    HttpContext.Current.Cache.Insert("startChatDate", lastChatDate, null, DateTime.UtcNow.AddDays(1), TimeSpan.Zero);
+
+                    // reset messages list
+                    Messages = new List<ChatMessage>();
+
+                    reboot.ChatDate = DateTime.UtcNow;
+                    reboot.Room = "1";
+                    reboot.Nick = "chatbot:";
+                    reboot.Message = "The chat log was cleared by a moderator.";
+                    reboot.StoredInDB = false;
+                    Clients.Caller.addMessage(reboot);
+                    Clients.Caller.addSimpleMessage(reboot.Nick + " " + reboot.Message);
+
+
+                }
+                else
+                {
+                    ChatMessage not_mod = new ChatMessage();
+                    not_mod.Nick = "chatbot:";
+                    not_mod.Message = "You must be logged into a mod account to run this command.";
+                    Clients.Caller.addMessage(not_mod);
+                    Clients.Caller.addSimpleMessage(not_mod.Nick + " " + not_mod.Message);
+                }
                 handled = true;
             }
 
