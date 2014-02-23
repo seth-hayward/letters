@@ -787,45 +787,45 @@ namespace letterstocrushes
                 handled = true;
             }
 
-            //if (message.StartsWith("/clear"))
-            //{
-            //    if (HttpContext.Current.User.IsInRole("Mod"))
-            //    {
+            if (message.StartsWith("/clear"))
+            {
+                if (HttpContext.Current.User.IsInRole("Mod"))
+                {
 
 
-            //        ChatMessage reboot = new ChatMessage();
+                    ChatMessage reboot = new ChatMessage();
 
-            //        // this has to be Now because the rest of the
-            //        // uptime stuff uses Now instead of UtcNow
+                    // this has to be Now because the rest of the
+                    // uptime stuff uses Now instead of UtcNow
 
-            //        DateTime lastChatDate = Messages.Last().ChatDate;
-            //        chatStarted = lastChatDate;
+                    DateTime lastChatDate = Messages.Last().ChatDate;
+                    chatStarted = lastChatDate;
 
-            //        HttpContext.Current.Cache.Insert("startChatDate", lastChatDate, null, DateTime.UtcNow.AddDays(1), TimeSpan.Zero);
+                    HttpContext.Current.Cache.Insert("startChatDate", lastChatDate, null, DateTime.UtcNow.AddDays(1), TimeSpan.Zero);
 
-            //        // reset messages list
-            //        Messages = new List<ChatMessage>();
+                    // reset messages list
+                    Messages = new List<ChatMessage>();
 
-            //        reboot.ChatDate = DateTime.UtcNow;
-            //        reboot.Room = "1";
-            //        reboot.Nick = "chatbot:";
-            //        reboot.Message = "The chat log was cleared by a moderator.";
-            //        reboot.StoredInDB = false;
-            //        Clients.Caller.addMessage(reboot);
-            //        Clients.Caller.addSimpleMessage(reboot.Nick + " " + reboot.Message);
+                    reboot.ChatDate = DateTime.UtcNow;
+                    reboot.Room = "1";
+                    reboot.Nick = "chatbot:";
+                    reboot.Message = "The chat log was cleared by a moderator.";
+                    reboot.StoredInDB = false;
+                    Clients.Caller.addMessage(reboot);
+                    Clients.Caller.addSimpleMessage(reboot.Nick + " " + reboot.Message);
 
 
-            //    }
-            //    else
-            //    {
-            //        ChatMessage not_mod = new ChatMessage();
-            //        not_mod.Nick = "chatbot:";
-            //        not_mod.Message = "You must be logged into a mod account to run this command.";
-            //        Clients.Caller.addMessage(not_mod);
-            //        Clients.Caller.addSimpleMessage(not_mod.Nick + " " + not_mod.Message);
-            //    }
-            //    handled = true;
-            //}
+                }
+                else
+                {
+                    ChatMessage not_mod = new ChatMessage();
+                    not_mod.Nick = "chatbot:";
+                    not_mod.Message = "You must be logged into a mod account to run this command.";
+                    Clients.Caller.addMessage(not_mod);
+                    Clients.Caller.addSimpleMessage(not_mod.Nick + " " + not_mod.Message);
+                }
+                handled = true;
+            }
 
             if (message.StartsWith("/help"))
             {
