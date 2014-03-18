@@ -507,6 +507,10 @@ namespace letterstocrushes
         public void Join(string name)
         {
 
+
+            HtmlUtility utility = HtmlUtility.Instance;
+            name = utility.SanitizeHtml(name);
+
             bool display_welcome = true;
 
             String user_ip = HttpContext.Current.Request.UserHostAddress;
@@ -655,6 +659,9 @@ namespace letterstocrushes
         public void SendChat(string message)
         {
             // chat message
+
+            HtmlUtility utility = HtmlUtility.Instance;
+            message = utility.SanitizeHtml(message);
             
             String user_ip = HttpContext.Current.Request.UserHostAddress;
 
