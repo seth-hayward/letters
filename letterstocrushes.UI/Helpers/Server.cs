@@ -661,7 +661,7 @@ namespace letterstocrushes
             // chat message
 
             HtmlUtility utility = HtmlUtility.Instance;
-            message = utility.SanitizeHtml(message);
+            message = utility.StripHtml(message);
             
             String user_ip = HttpContext.Current.Request.UserHostAddress;
 
