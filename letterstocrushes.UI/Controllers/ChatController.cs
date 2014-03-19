@@ -31,7 +31,14 @@ namespace letterstocrushes.Controllers
 
         public ActionResult Active()
         {
-            return View();
+            if (User.Identity.Name == "seth")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         public ActionResult History()
