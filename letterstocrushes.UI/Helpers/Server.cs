@@ -509,7 +509,7 @@ namespace letterstocrushes
 
 
             HtmlUtility utility = HtmlUtility.Instance;
-            name = utility.SanitizeHtml(name);
+            name = utility.StripHtml(name);
 
             bool display_welcome = true;
 
