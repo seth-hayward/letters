@@ -62,6 +62,20 @@
         }
     </ul>
 
+    <p>
+        letter subnet bans
+    </p>
+    <ul>
+        @foreach (letterstocrushes.Core.Model.Block b in ViewBag.IPsubnetban)
+        {
+            <text>
+                <li>@b.Value <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
+            </text>
+        }
+
+
+    </ul>
+
     
     <p>
         comment ip bans

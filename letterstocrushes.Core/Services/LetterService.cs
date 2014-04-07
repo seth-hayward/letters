@@ -167,6 +167,23 @@ namespace letterstocrushes.Core.Services
                     throw new Exception(message);
                 }
 
+                List<Block> subnet_blocks = _blockService.getBlocks(blockType.blockSubnet, blockWhat.blockLetter);
+                // now... we need to search through each blocked subnet,
+                // check to see if that is part of the problem...
+                // -- if yes, we block
+                // -- if no, continue to next
+
+                foreach (Block subnet in subnet_blocks)
+                {
+
+                    if(user_ip.Contains(subnet.Value)) {
+                        new_letter.letterLevel = -1;
+                        break;
+                    };
+
+                }
+
+
                 List<Block> blocked_ips = _blockService.getBlocks(blockType.blockIP, blockWhat.blockLetter);
 
                 List<string> banned_ips = new List<string>();
@@ -228,7 +245,7 @@ namespace letterstocrushes.Core.Services
                 }
 
 
-                if (banned_ips.Contains(user_ip) == true)
+                if (banned_ips.Contains(user_ip) == true || new_letter.letterLevel == -1)
                 {
                     Contact msg = new Contact();
                     msg.Email = "blocked " + user_ip;
