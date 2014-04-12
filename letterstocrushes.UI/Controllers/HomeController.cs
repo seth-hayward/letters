@@ -1408,7 +1408,7 @@ namespace letterstocrushes.Controllers
             String error_message = string.Empty;
             string userip = string.Empty;
             userip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            if (userip == null)
+            if (userip == null || userip == "127.0.0.1")
                 userip = Request.ServerVariables["REMOTE_ADDR"];
 
             string userid = null;
