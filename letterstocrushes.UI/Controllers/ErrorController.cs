@@ -26,10 +26,12 @@ namespace letterstocrushes.Controllers
         {
             Exception ex = null;
             Boolean handled = false;
+            string errorPage = "";
 
             try
             {
                 ex = (Exception)HttpContext.Application[Request.UserHostAddress.ToString()];
+                errorPage = (string)HttpContext.Application[Request.UserHostAddress.ToString() + "-address"];
             }
             catch (Exception exa)
             {
@@ -51,7 +53,10 @@ namespace letterstocrushes.Controllers
 
             Core.Model.Contact msg = new Core.Model.Contact();
             msg.Email = "seth.hayward@gmail.com";
-            msg.Message = ex.Message.ToString();
+
+            string errorMessage = String.Format("page: {0} <br /><br />{1}", errorPage, ex.Message.ToString());
+
+            msg.Message = errorMessage;
 
             if(ex.InnerException != null) {
                 msg.Message = msg.Message + "<br><br>" + ex.InnerException.Message.ToString();

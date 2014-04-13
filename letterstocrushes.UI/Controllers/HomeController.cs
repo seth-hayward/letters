@@ -487,7 +487,7 @@ namespace letterstocrushes.Controllers
 
             string userip = string.Empty;
             userip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            if (userip == null)
+            if (userip == null || userip == "127.0.0.1")
                 userip = Request.ServerVariables["REMOTE_ADDR"];
 
 
@@ -818,7 +818,7 @@ namespace letterstocrushes.Controllers
         {
 
             String userip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            if (userip == null)
+            if (userip == null || userip == "127.0.0.1")
                 userip = Request.ServerVariables["REMOTE_ADDR"];
 
             msg.Message = "Feedback received ( " + msg.Email + " ): <br /><br />" + msg.Message + "<br><br>sent from ip: " + userip;

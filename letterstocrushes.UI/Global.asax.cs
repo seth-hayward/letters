@@ -448,6 +448,7 @@ namespace letterstocrushes
 
             Exception ex = Server.GetLastError();
             Application[HttpContext.Current.Request.UserHostAddress.ToString()] = ex;
+            Application[HttpContext.Current.Request.UserHostAddress.ToString() + "-address"] = Request.Path;
             System.Diagnostics.Debug.Print(ex.Message.ToString());
 
         }
