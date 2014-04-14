@@ -87,7 +87,7 @@ namespace letterstocrushes.Core.Services
 
             List<string> ban_list_v2 = new List<String>();
 
-            foreach (Block b in blocked_ips)
+            foreach (Block b in blocked_subnet_ips)
             {
                 ban_list_v2.Add(b.Value);
             }
