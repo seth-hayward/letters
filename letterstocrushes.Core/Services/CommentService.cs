@@ -83,10 +83,28 @@ namespace letterstocrushes.Core.Services
             spammer_ips.Add("93.115.94");
             spammer_ips.Add("213.175.167");
 
+            List<Block> blocked_subnet_ips = _blockService.getBlocks(blockType.blockSubnet, blockWhat.blockComment);
+
+            List<string> ban_list_v2 = new List<String>();
+
+            foreach (Block b in blocked_ips)
+            {
+                ban_list_v2.Add(b.Value);
+            }
+
             if(comment.commenterIP != null && spammer_ips.Any(rax=>comment.commenterIP.StartsWith(rax))) {
                 //_mailService.SendContact("Spammer shut down, ip: " + comment.commenterIP, "seth.hayward@gmail.com");
                 return;
             }
+
+            if (comment.commenterIP != null && ban_list_v2.Any(rax => comment.commenterIP.StartsWith(rax)))
+            {
+                string subnet_ip = ban_list_v2.Any(rax => comment.commenterIP.StartsWith(rax)).ToString();
+                string blockedMsg = String.Format("blocked comment due to subnet (subnet: {0}, ip: {1}): <br /><br />{2}", subnet_ip, comment.commenterIP, comment.commentMessage);
+                _mailService.SendContact(blockedMsg, "seth.hayward@gmail.com");
+                return;
+            }
+
 
             if(comment.commentMessage != null && comment.commentMessage.Contains("mygardeningplace.com")) {
                 _mailService.SendContact("mygardeningplace spam shut down.", "seth.hayward@gmail.com");

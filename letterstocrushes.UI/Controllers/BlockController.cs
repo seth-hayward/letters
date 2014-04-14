@@ -33,6 +33,7 @@ namespace letterstocrushes.Controllers
             }
 
             ViewBag.commentsIPban = _blockService.getBlocks(Core.Model.blockType.blockIP, Core.Model.blockWhat.blockComment);
+            ViewBag.commentsIPsubnetban = _blockService.getBlocks(Core.Model.blockType.blockSubnet, Core.Model.blockWhat.blockComment);
             ViewBag.IPsubnetban = _blockService.getBlocks(Core.Model.blockType.blockSubnet, Core.Model.blockWhat.blockLetter);
             ViewBag.IPban = _blockService.getBlocks(Core.Model.blockType.blockIP, Core.Model.blockWhat.blockLetter);
             ViewBag.chatIPban = _blockService.getBlocks(Core.Model.blockType.blockIP, Core.Model.blockWhat.blockChat);
