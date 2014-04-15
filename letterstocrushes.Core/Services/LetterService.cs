@@ -178,6 +178,13 @@ namespace letterstocrushes.Core.Services
 
                     if(user_ip.Contains(subnet.Value)) {
                         new_letter.letterLevel = -1;
+
+                        Contact msg = new Contact();
+                        msg.Email = "blocked " + user_ip;
+                        msg.Message = string.Format("blocked (" + user_ip + ") due to subnet " + subnet.Value + ": \n{0}", new_letter.letterMessage.ToString());
+                        msg.Message = msg.Message + "\nmobile: " + mobile;
+                        _mailService.SendContact(msg.Message, msg.Email);
+
                         break;
                     };
 
@@ -245,15 +252,17 @@ namespace letterstocrushes.Core.Services
                 }
 
 
-                if (banned_ips.Contains(user_ip) == true || new_letter.letterLevel == -1)
+                if (banned_ips.Contains(user_ip) == true)
                 {
+
+                    new_letter.letterLevel = -1;
+
                     Contact msg = new Contact();
                     msg.Email = "blocked " + user_ip;
                     msg.Message = string.Format("blocked (" + user_ip + "): \n{0}", new_letter.letterMessage.ToString());
                     msg.Message = msg.Message + "\nmobile: " + mobile;
                     _mailService.SendContact(msg.Message, msg.Email);
 
-                    new_letter.letterLevel = -1;
                 }
 
                 AddLetter(new_letter);
