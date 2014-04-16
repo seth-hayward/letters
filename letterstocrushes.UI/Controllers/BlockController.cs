@@ -37,6 +37,7 @@ namespace letterstocrushes.Controllers
             ViewBag.IPsubnetban = _blockService.getBlocks(Core.Model.blockType.blockSubnet, Core.Model.blockWhat.blockLetter);
             ViewBag.IPban = _blockService.getBlocks(Core.Model.blockType.blockIP, Core.Model.blockWhat.blockLetter);
             ViewBag.chatIPban = _blockService.getBlocks(Core.Model.blockType.blockIP, Core.Model.blockWhat.blockChat);
+            ViewBag.chatIPsubnetban = _blockService.getBlocks(Core.Model.blockType.blockSubnet, Core.Model.blockWhat.blockChat);
 
             return View();
         }

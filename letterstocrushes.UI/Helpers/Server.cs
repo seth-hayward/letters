@@ -9,6 +9,7 @@ using System.Text;
 using System.Diagnostics;
 using letterstocrushes.Core.Model;
 using letterstocrushes.Core.Services;
+using System.Net.Mail;
 
 namespace letterstocrushes
 {
@@ -520,7 +521,28 @@ namespace letterstocrushes
             if ((from m in blocked_ips select m.Value).Contains(user_ip))
             {
                 Clients.Caller.errorMessage("You are in timeout.");
+
+                string blocked_ip = String.Format("chat ip blocked: {0}, {1}", user_ip, name);
+                sendEmail(blocked_ip);
+
                 return;
+            }
+
+            List<Block> blocked_subnet_ips = blockService.getBlocks(blockType.blockSubnet, blockWhat.blockChat);
+
+            foreach (Block subnet in blocked_subnet_ips)
+            {
+                if (user_ip.Contains(subnet.Value))
+                {
+
+                    Clients.Caller.errorMessage("You are in timeout.");
+
+                    string blocked_ip = String.Format("chat ip subnet blocked: {0} (subnet: {2}), {1}", user_ip, name, subnet.Value);
+                    sendEmail(blocked_ip);
+
+                    return;
+
+                }
             }
 
 
@@ -665,13 +687,15 @@ namespace letterstocrushes
             
             String user_ip = HttpContext.Current.Request.UserHostAddress;
 
-            List<Block> blocked_ips = blockService.getBlocks(blockType.blockIP, blockWhat.blockChat);
-
-            if ((from m in blocked_ips select m.Value).Contains(user_ip))
-            {
-                Clients.Caller.errorMessage("You are in timeout.");
-                return;
-            }
+            // this wasn't working / refreshing / allowing for a user to be 
+            // blocked and ignored mid-session
+            // -- removing this as it's slow...
+            //List<Block> blocked_ips = blockService.getBlocks(blockType.blockIP, blockWhat.blockChat);
+            //if ((from m in blocked_ips select m.Value).Contains(user_ip))
+            //{
+            //    Clients.Caller.errorMessage("You are in timeout.");
+            //    return;
+            //}
 
 
             ChatMessage error = new ChatMessage();
@@ -1032,6 +1056,33 @@ namespace letterstocrushes
 
             Clients.Caller.addSimpleBacklog(simple_chat_backlog.ToString());
 
+        }
+
+        public void sendEmail(string message)
+        {
+            // send email about it
+
+            MailMessage Message = new MailMessage();
+            SmtpClient Smtp = new SmtpClient();
+
+            string password = System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"];
+
+            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("noreply@letterstocrushes.com", password);
+
+            Message.From = new MailAddress("hello@selfies.io");
+            Message.To.Add(new MailAddress("seth.hayward@gmail.com"));
+            Message.IsBodyHtml = false;
+            Message.Subject = "chat";
+            Message.Body = message;
+            Message.Priority = MailPriority.Normal;
+            Smtp.EnableSsl = false;
+
+            Smtp.Credentials = SmtpUser;
+            Smtp.Host = "198.57.199.92";
+            Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            Smtp.Port = 26;
+
+            Smtp.Send(Message);
         }
     }
 }
