@@ -520,7 +520,7 @@ namespace letterstocrushes
 
             if ((from m in blocked_ips select m.Value).Contains(user_ip))
             {
-                Clients.Caller.errorMessage("You are in timeout.");
+                //Clients.Caller.errorMessage("You are in timeout.");
 
                 string blocked_ip = String.Format("chat ip blocked: {0}, {1}", user_ip, name);
                 sendEmail(blocked_ip);
@@ -535,7 +535,7 @@ namespace letterstocrushes
                 if (user_ip.Contains(subnet.Value))
                 {
 
-                    Clients.Caller.errorMessage("You are in timeout.");
+                    //Clients.Caller.errorMessage("You are in timeout.");
 
                     string blocked_ip = String.Format("chat ip subnet blocked: {0} (subnet: {2}), {1}", user_ip, name, subnet.Value);
                     sendEmail(blocked_ip);
