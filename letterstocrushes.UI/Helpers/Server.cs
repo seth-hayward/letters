@@ -451,6 +451,25 @@ namespace letterstocrushes
                 return;
             }
 
+
+            // check to see if the user is joining the mod room,
+            // make sure they are mod... if they are not, 
+            // send them to room 1?
+            if (room.Equals("4300"))
+            {
+                if (!HttpContext.Current.User.IsInRole("Mod"))
+                {
+                    ChatMessage not_mod = new ChatMessage();
+                    not_mod.Nick = "chatbot:";
+                    not_mod.Message = "You must be logged into a mod account to join room 4300.";
+                    JoinGroup("1", false);
+                    Clients.Caller.addMessage(not_mod);
+                    Clients.Caller.addSimpleMessage(not_mod.Nick + " " + not_mod.Message);
+                    return;
+                }
+            }
+
+
             // get the current user
             ChatVisitor current_user = Visitors[Context.ConnectionId];
             current_user.Room = room;
