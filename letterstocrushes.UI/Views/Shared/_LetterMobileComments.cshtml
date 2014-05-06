@@ -1,9 +1,26 @@
 ﻿@model letterstocrushes.Core.Model.Letter
 
-<li>
-    @if (Model.Id > 471085) {
-        <a href="@Url.Content("~/mobile/letter/" + Model.Id)" data-ajax="false">@(Model.letterComments)</a><a href="@Url.Content("~/mobile/letter/" + Model.Id)" data-ajax="false"><img src="@Url.Content("~/Content/comment.png")" style="border: 0px" class="comments" alt="comment" /></a>                                               
-    } else {
-        <a href="@Url.Content("~/mobile/letter/" + Model.Id + "#disqus_thread")" data-ajax="false">0</a><a href="@Url.Content("~/mobile/letter/" + Model.Id)" data-ajax="false"><img src="@Url.Content("~/Content/comment.png")" style="border: 0px" class="comments" alt="comment" /></a>                                               
+@if (Model.Id > 471085)
+{
+
+    // don't show the zero if there are no comments!!
+    if (Model.letterComments > 0)
+    {
+        <text>
+            <li>
+                <a href="@Url.Content("~/mobile/letter/" + Model.Id)" data-ajax="false">@(Model.letterComments)</a><a href="@Url.Content("~/mobile/letter/" + Model.Id)" data-ajax="false"><img src="@Url.Content("~/Content/comment.png")" style="border: 0px" class="comments" alt="comment" /></a>
+            </li>
+        </text>
     }
-</li>
+
+
+}
+else
+{
+    // don't know if it's zero or not, so show it...
+    <text>
+        <li>
+            <a href="@Url.Content("~/mobile/letter/" + Model.Id + "#disqus_thread")" data-ajax="false">0</a><a href="@Url.Content("~/mobile/letter/" + Model.Id)" data-ajax="false"><img src="@Url.Content("~/Content/comment.png")" style="border: 0px" class="comments" alt="comment" /></a>
+        </li>
+    </text>
+}
