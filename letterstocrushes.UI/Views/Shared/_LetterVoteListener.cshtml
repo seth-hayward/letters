@@ -15,6 +15,14 @@
             });
         });
 
+        $("div.letterEnvelopeContainer").hover(function () {
+            var letterId = $(this).attr("id").substring(7);
+            $("#showOnMouseOver-" + letterId).fadeIn('fast');
+        }, function () {
+            var letterId = $(this).attr("id").substring(7);
+            $("#showOnMouseOver-" + letterId).fadeOut('fast');
+        });
+
     });
 
 </script>

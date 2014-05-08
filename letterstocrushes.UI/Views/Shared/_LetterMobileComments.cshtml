@@ -12,6 +12,14 @@
             </li>
         </text>
     }
+    else
+    {
+        <text>
+            <li id="showOnMouseOver-@Model.Id">
+                <a href="@Url.Content("~/letter/" + Model.Id)" title="add comment"><img src="@Url.Content("~/Content/comment.png")" style="border: 0px" class="comments" alt="add comment" /></a>
+            </li>
+        </text>
+    }
 
 
 }
