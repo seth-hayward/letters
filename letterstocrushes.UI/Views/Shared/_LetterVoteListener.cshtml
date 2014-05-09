@@ -15,6 +15,38 @@
             });
         });
 
+
+        $("div.letterEnvelopeContainer").hover(function () {
+
+            fader($(this).attr("id"), "in");
+
+        }, function () {
+
+            fader($(this).attr("id"), "out");
+
+        });
+
+
+        function fader(id,fadeType) {
+
+            if (typeof id != 'undefined') {
+                var start = id.substring(0, 7);
+                if (start === "letter-") {
+                    var letterId = id.substring(7);
+
+                    if (fadeType == "in") {
+                        $("#showOnMouseOver-" + letterId).fadeIn('fast');
+                    } else {
+                        $("#showOnMouseOver-" + letterId).fadeOut('fast');
+                    }
+                    
+                };
+            };
+
+            
+
+        }
+
     });
 
 </script>

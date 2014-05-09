@@ -1,21 +1,21 @@
 ﻿@model letterstocrushes.Core.Model.Letter
 
-<div class="letterEnvelopeContainer">
+<div class="letterEnvelopeContainer" id="letter-@Model.Id">
 
-            <ul class="letterNav">
+    <ul class="letterNav">
 
-                @Html.Partial("_LetterVote", Model)
-                @Html.Partial("_LetterComments", Model)
+        @Html.Partial("_LetterVote", Model)
+        @Html.Partial("_LetterComments", Model)
 
-            </ul>
+    </ul>
 
-            <ul class="dateNav">
-                <li>
-                    <a href="/letter/@(Model.Id)">@(Model.letterPostDate.ToString("MMMM d"))</a>            
-                </li>
-            </ul>
+    <ul class="dateNav">
+        <li>
+            <a href="/letter/@(Model.Id)">@(Model.letterPostDate.ToString("MMMM d"))</a>
+        </li>
+    </ul>
 
-            
+
 
     <div class="letterContainer">
         @Html.Raw(Model.letterMessage)
