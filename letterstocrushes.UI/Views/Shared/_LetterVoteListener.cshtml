@@ -16,11 +16,23 @@
         });
 
         $("div.letterEnvelopeContainer").hover(function () {
-            var letterId = $(this).attr("id").substring(7);
-            $("#showOnMouseOver-" + letterId).fadeIn('fast');
+
+            try {
+                var letterId = $(this).attr("id").substring(7);
+                $("#showOnMouseOver-" + letterId).fadeIn('fast');
+            } catch (err) {
+
+            }
+
         }, function () {
-            var letterId = $(this).attr("id").substring(7);
-            $("#showOnMouseOver-" + letterId).fadeOut('fast');
+
+            try {
+                var letterId = $(this).attr("id").substring(7);
+                $("#showOnMouseOver-" + letterId).fadeOut('fast');
+            } catch (err) {
+
+            }
+
         });
 
     });
