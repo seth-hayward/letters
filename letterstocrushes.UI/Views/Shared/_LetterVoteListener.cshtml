@@ -6,8 +6,6 @@
 
             resp = $(this).attr("id").substring(1);
 
-            console.log(resp);
-
             $.getJSON("@Url.Content("~/Home/Vote/")", { id: resp, c: "" }, function (incomingLetter) {
 
                 $("#b" + resp).html(incomingLetter.letterUp);
@@ -15,20 +13,6 @@
                 $("#h" + resp).fadeOut(2500);
 
             });
-        });
-
-        $("div.letterEnvelopeContainer").hover(function () {
-            try {
-                var letterId = $(this).attr("id").substring(7);
-                $("#showOnMouseOver-" + letterId).fadeIn('fast');
-            } catch (err) {
-            }
-        }, function () {
-            try {
-                var letterId = $(this).attr("id").substring(7);
-                $("#showOnMouseOver-" + letterId).fadeOut('fast');
-            } catch (err) {
-            }
         });
 
     });
