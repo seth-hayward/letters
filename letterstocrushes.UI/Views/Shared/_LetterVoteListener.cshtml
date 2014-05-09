@@ -17,6 +17,20 @@
             });
         });
 
+        $("div.letterEnvelopeContainer").hover(function () {
+            try {
+                var letterId = $(this).attr("id").substring(7);
+                $("#showOnMouseOver-" + letterId).fadeIn('fast');
+            } catch (err) {
+            }
+        }, function () {
+            try {
+                var letterId = $(this).attr("id").substring(7);
+                $("#showOnMouseOver-" + letterId).fadeOut('fast');
+            } catch (err) {
+            }
+        });
+
     });
 
 </script>
