@@ -60,7 +60,7 @@ namespace letterstocrushes.Controllers
 
             // send a message
 
-            String contact_message = User.Identity.Name + " added a block: <br /><br />" + notes;
+            String contact_message = User.Identity.Name + " added a block: <br /><br />" + notes + "<br /><br />";
 
             string what_nice = "";
             switch (what)
