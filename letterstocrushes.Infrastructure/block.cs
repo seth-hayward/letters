@@ -18,5 +18,7 @@ namespace letterstocrushes.Infrastructure
         public Nullable<int> Type { get; set; }
         public string Value { get; set; }
         public Nullable<int> What { get; set; }
+        public string Notes { get; set; }
+        public System.DateTime Date { get; set; }
     }
 }

@@ -17,9 +17,9 @@ namespace letterstocrushes.Core.Services
             _queryBlocks = queryBlocks;
         }
 
-        public void Add(int type, int what, string value)
+        public void Add(int type, int what, string value, string notes)
         {
-            _queryBlocks.Add(type, value, what);
+            _queryBlocks.Add(type, value, what, notes);
         }
 
         public List<Block> getBlocks(blockType type, blockWhat what)

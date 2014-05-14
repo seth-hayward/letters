@@ -4,54 +4,48 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="db_mysqlModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="db_mysqlModelStoreContainer">
-          <EntitySet Name="blocks" EntityType="db_mysqlModel.Store.blocks" store:Type="Tables" Schema="shayward_mysql_letters" />
-          <EntitySet Name="chat_visitors" EntityType="db_mysqlModel.Store.chat_visitors" store:Type="Tables" Schema="shayward_mysql_letters" />
-          <EntitySet Name="chats" EntityType="db_mysqlModel.Store.chats" store:Type="Tables" Schema="shayward_mysql_letters" />
-          <EntitySet Name="comments" EntityType="db_mysqlModel.Store.comments" store:Type="Tables" Schema="shayward_mysql_letters" />
-          <EntitySet Name="letters" EntityType="db_mysqlModel.Store.letters" store:Type="Tables" Schema="shayward_mysql_letters" />
-          <EntitySet Name="songs" EntityType="db_mysqlModel.Store.songs" store:Type="Tables" Schema="shayward_mysql_letters" />
-        </EntityContainer>
+    <Schema Namespace="db_mysqlModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="blocks">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Type" Type="int" />
           <Property Name="Value" Type="mediumtext" />
           <Property Name="What" Type="int" />
+          <Property Name="Notes" Type="mediumtext" />
+          <Property Name="Date" Type="datetime" Precision="0" Nullable="false" />
         </EntityType>
         <EntityType Name="chat_visitors">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ip" Type="varchar" MaxLength="100" />
-          <Property Name="time" Type="timestamp" />
+          <Property Name="time" Type="timestamp" Precision="0" />
           <Property Name="nickname" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="chats">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Message" Type="mediumtext" />
           <Property Name="Nick" Type="varchar" MaxLength="255" />
-          <Property Name="ChatDate" Type="datetime" Nullable="false" />
+          <Property Name="ChatDate" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="IP" Type="varchar" MaxLength="255" />
-          <Property Name="Room" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="Room" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="comments">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="commentMessage" Type="mediumtext" Nullable="false" />
-          <Property Name="commenterName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="commenterName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="letterId" Type="int" Nullable="false" />
           <Property Name="sendEmail" Type="bool" Nullable="false" />
-          <Property Name="commentDate" Type="datetime" Nullable="false" />
+          <Property Name="commentDate" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="hearts" Type="int" Nullable="false" />
           <Property Name="commenterEmail" Type="varchar" MaxLength="255" />
           <Property Name="commenterIP" Type="varchar" MaxLength="255" />
@@ -65,7 +59,7 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="letterMessage" Type="mediumtext" />
           <Property Name="letterTags" Type="text" />
-          <Property Name="letterPostDate" Type="datetime" Nullable="false" />
+          <Property Name="letterPostDate" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="letterUp" Type="int" />
           <Property Name="letterLevel" Type="int" />
           <Property Name="letterLanguage" Type="varchar" MaxLength="10" />
@@ -83,9 +77,9 @@
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="hearts" Type="int" Nullable="false" />
-          <Property Name="youtube_id" Type="varchar" Nullable="false" MaxLength="45" />
-          <Property Name="date_posted" Type="datetime" Nullable="false" />
-          <Property Name="user_ip" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="youtube_id" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="date_posted" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="user_ip" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
         </EntityType>
         <Function Name="searchLetters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="shayward_mysql_letters">
@@ -98,6 +92,14 @@
           <Parameter Name="search_day" Type="int" Mode="In" />
           <Parameter Name="time_zone" Type="int" Mode="In" />
         </Function>
+        <EntityContainer Name="db_mysqlModelStoreContainer">
+          <EntitySet Name="blocks" EntityType="Self.blocks" Schema="shayward_mysql_letters" store:Type="Tables" />
+          <EntitySet Name="chat_visitors" EntityType="Self.chat_visitors" Schema="shayward_mysql_letters" store:Type="Tables" />
+          <EntitySet Name="chats" EntityType="Self.chats" Schema="shayward_mysql_letters" store:Type="Tables" />
+          <EntitySet Name="comments" EntityType="Self.comments" Schema="shayward_mysql_letters" store:Type="Tables" />
+          <EntitySet Name="letters" EntityType="Self.letters" Schema="shayward_mysql_letters" store:Type="Tables" />
+          <EntitySet Name="songs" EntityType="Self.songs" Schema="shayward_mysql_letters" store:Type="Tables" />
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -129,6 +131,8 @@
           <Property Type="Int32" Name="Type" />
           <Property Type="String" Name="Value" MaxLength="16777215" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="What" />
+          <Property Name="Notes" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
         </EntityType>
         <EntityType Name="chat_visitors">
           <Key>
@@ -208,6 +212,8 @@
           <EntitySetMapping Name="blocks">
             <EntityTypeMapping TypeName="db_mysqlModel.block">
               <MappingFragment StoreEntitySet="blocks">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="What" ColumnName="What" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
@@ -306,6 +312,7 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

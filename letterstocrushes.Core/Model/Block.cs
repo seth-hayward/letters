@@ -27,5 +27,7 @@ namespace letterstocrushes.Core.Model
         public Nullable<int> Type { get; set; }
         public string Value { get; set; }
         public Nullable<int> What { get; set; }
+        public DateTime Date { get; set; }
+        public string Notes { get; set; }
     }
 }

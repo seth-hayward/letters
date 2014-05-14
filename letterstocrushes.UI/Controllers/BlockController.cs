@@ -54,12 +54,13 @@ namespace letterstocrushes.Controllers
             String who = fc["who"].ToString();
             int what = int.Parse(fc["what"]);
             int style = int.Parse(fc["style"]);
+            string notes = fc["notes"].ToString();
 
-            _blockService.Add(style, what, who);
+            _blockService.Add(style, what, who, notes);
 
             // send a message
 
-            String contact_message = User.Identity.Name + " added a block: <br /><br />";
+            String contact_message = User.Identity.Name + " added a block: <br /><br />" + notes;
 
             string what_nice = "";
             switch (what)

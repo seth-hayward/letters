@@ -39,6 +39,13 @@
                         <input type="text" id="who" name="who" style="width: auto" />
                     </span>
                 </div>
+                
+                <div class="comment_row">
+                    <label for="notes">Notes:</label>
+                    <span class="comment_form">
+                        <textarea id="notes" name="notes" style="width: auto"></textarea>
+                    </span>
+                </div>
 
                 <div class="comment_row">
                     <span class="comment_form">
@@ -57,7 +64,7 @@
         @foreach (letterstocrushes.Core.Model.Block b in ViewBag.IPban)
         {
             <text>
-            <li>@b.Value <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
+            <li><b>@b.Value</b> <small>@b.Date.ToShortDateString()</small> @b.Notes <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
             </text>
         }
     </ul>
@@ -69,7 +76,7 @@
         @foreach (letterstocrushes.Core.Model.Block b in ViewBag.IPsubnetban)
         {
             <text>
-                <li>@b.Value <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
+            <li><b>@b.Value</b> <small>@b.Date.ToShortDateString()</small> @b.Notes <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
             </text>
         }
 
@@ -84,7 +91,7 @@
         @foreach (letterstocrushes.Core.Model.Block b in ViewBag.commentsIPban)
         {
             <text>
-            <li>@b.Value <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
+            <li><b>@b.Value</b> <small>@b.Date.ToShortDateString()</small> @b.Notes <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
             </text>
         }
     </ul>
@@ -96,7 +103,7 @@
         @foreach (letterstocrushes.Core.Model.Block b in ViewBag.commentsIPsubnetban)
         {
             <text>
-                <li>@b.Value <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
+            <li><b>@b.Value</b> <small>@b.Date.ToShortDateString()</small> @b.Notes <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
             </text>
         }
     </ul>
@@ -109,7 +116,7 @@
         @foreach (letterstocrushes.Core.Model.Block b in ViewBag.chatIPban)
         {
             <text>
-            <li>@b.Value <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
+            <li><b>@b.Value</b> <small>@b.Date.ToShortDateString()</small> @b.Notes <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
             </text>
         }
     </ul>
@@ -121,7 +128,7 @@
         @foreach (letterstocrushes.Core.Model.Block b in ViewBag.chatIPsubnetban)
         {
             <text>
-                <li>@b.Value <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
+            <li><b>@b.Value</b> <small>@b.Date.ToShortDateString()</small> @b.Notes <a href="@Url.Content("~/block/remove/" + @b.Id)">unban</a></li>
             </text>
         }
     </ul>

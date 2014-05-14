@@ -9,7 +9,7 @@ namespace letterstocrushes.Core.Interfaces
 {
     public interface IQueryBlocks
     {
-        void Add(int type, string value, int what);
+        void Add(int type, string value, int what, string notes);
         List<Block> getBlocks(blockType type, blockWhat what);
         void Remove(int id);
         Block getBlock(int id);

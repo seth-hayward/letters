@@ -36,12 +36,14 @@ namespace letterstocrushes.Infrastructure.Data
             Mapper.CreateMap<block, Block>();
         }
 
-        public void Add(int type, string value, int what)
+        public void Add(int type, string value, int what, string notes)
         {
             block b = new block();
             b.Type = type;
             b.Value = value;
             b.What = what;
+            b.Notes = notes;
+            b.Date = DateTime.UtcNow;
 
             db_mysql.blocks.Add(b);
             db_mysql.SaveChanges();
