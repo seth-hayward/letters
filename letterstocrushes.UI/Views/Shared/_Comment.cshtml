@@ -32,7 +32,7 @@
                 @if (User.IsInRole("Mod")) {
                     <text>
                         <li>
-                            <small>@if(@Model.commenterGuid != null) { @Model.commenterGuid.Substring(0, 8) }</small>
+                            <small>@if(@Model.commenterGuid != null) { @Model.commenterGuid.Substring(0, 8) } - @Model.commenterIP</small>
                             <a id="c@(Model.Id)" class="comment_hide">hide</a>
                         </li>
                     </text>
