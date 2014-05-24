@@ -10,8 +10,8 @@
 
     <ul class="letterNav">
 
-        @Html.Partial("_LetterComments", Model)
         @Html.Partial("_LetterVote", Model)
+        @Html.Partial("_LetterComments", Model)
 
         <li style="width: 50px">
             <a id='h@(Model.letterLanguage)' href='/#' onclick='$.post(this.href); return false;' class='hiderLink'>hide</a>        

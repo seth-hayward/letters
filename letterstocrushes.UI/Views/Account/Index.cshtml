@@ -81,24 +81,6 @@
 
         });
 
-        var visitor_update;
-
-        // first we want to get the user's name
-        // before we make the chat client
-
-        // Proxy created on the fly          
-        visitor_update = $.connection.visitorUpdate;
-
-        // Declare a function on the chat hub so the server can invoke it          
-        visitor_update.client.addMessage = function (message) {
-            var current_hearts = parseInt($("#b" + message).html());
-            $("#b" + message).html(current_hearts + 1);            
-        };
-
-        // Start the connection
-        $.connection.hub.start().done(function () {
-            visitor_update.server.join(@Html.Raw(ViewBag.Highest), @Html.Raw(ViewBag.Lowest), "more");
-        });
 
     });
     
