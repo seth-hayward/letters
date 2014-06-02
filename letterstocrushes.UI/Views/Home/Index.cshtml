@@ -12,7 +12,7 @@
    
 }
 
-@Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~")))
+@Html.Raw(Helpers.Pager(ViewBag.CurrentPage, ViewBag.Pages, Url.Content("~"), false))
 
 <div id="disqus_thread" class="letterComments" style="display: none"></div>
 
