@@ -67,10 +67,11 @@
 
                 var c;                                
                 c = "UNKNOWN";
-                var m = '<p>' + $('#letterMessage').val().replace(/\n\r?/g, '<br />') + '</p>';
+                var letterData = $("#letterMessage").val().replace(/\n\r?/g, '<br />');
+                var m = '<p>' + letterData + '</p>';
                 if (m == '') { $("#btnSend").fadeIn('fast'); return; };
                 
-                var sendArgs = 'letterText=' + escape(m) + '&letterCountry=' + escape(c) + '&mobile=0';
+                var sendArgs = 'letterText=' + encodeURI(m) + '&letterCountry=' + encodeURI(c) + '&mobile=0';
 
                 var linkid;
 
