@@ -118,7 +118,7 @@ namespace letterstocrushes.Controllers
             {
 
                 _all_letter_count = _letterService.getLetterCountHomePage(); 
-                HttpContext.Cache.Insert(cache_key_count, _all_letter_count, null, DateTime.UtcNow.AddSeconds(90), TimeSpan.Zero);
+                HttpContext.Cache.Insert(cache_key_count, _all_letter_count, null, DateTime.UtcNow.AddSeconds(180), TimeSpan.Zero);
             }
             else
             {
@@ -135,9 +135,26 @@ namespace letterstocrushes.Controllers
             if (HttpContext.Cache[cache_key_list] == null)
             {
 
-                _letters = _letterService.getLetters(0, page, _pagesize).ToList(); 
+                _letters = _letterService.getLetters(0, page, _pagesize).ToList();
 
-                HttpContext.Cache.Insert(cache_key_list, _letters, null, DateTime.UtcNow.AddSeconds(30), TimeSpan.Zero);                
+                double cacheTimeInSeconds = 30;
+
+                switch (page) {
+                    case 1:
+                        cacheTimeInSeconds = 30;
+                        break;
+                    case 2:
+                        cacheTimeInSeconds = 60*10;
+                        break;
+                    case 3:
+                        cacheTimeInSeconds = 60*15;
+                        break;
+                    default:
+                        cacheTimeInSeconds = 60 * 30;
+                        break;
+                }
+
+                HttpContext.Cache.Insert(cache_key_list, _letters, null, DateTime.UtcNow.AddSeconds(cacheTimeInSeconds), TimeSpan.Zero);                
             }
             else
             {
