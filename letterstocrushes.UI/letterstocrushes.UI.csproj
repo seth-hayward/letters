@@ -215,12 +215,6 @@
     <Content Include="Content\owl.ico" />
     <Content Include="Content\rainbow.JPG" />
     <Content Include="Content\readable.min.css" />
-    <Content Include="Content\responsive-nav-styles.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\responsive-nav.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\style.css" />
     <Content Include="Content\tinymce.css" />
     <Content Include="Content\apple-touch-icon-precomposed.png">
@@ -234,7 +228,9 @@
     <Content Include="Content\mobile.css" />
     <Content Include="Content\web.config" />
     <None Include="Properties\PublishProfiles\hostgator v2.pubxml" />
-    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.1.intellisense.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\bootstrap\css\bootstrap-responsive.css" />
     <Content Include="Scripts\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="Scripts\bootstrap\css\bootstrap.css" />
@@ -245,8 +241,12 @@
     <Content Include="Scripts\bootstrap\js\bootstrap.min.js" />
     <Content Include="Scripts\fb-frands.js" />
     <Content Include="Scripts\fb-login.js" />
-    <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\jquery-1.9.1.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\jquery.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\jquery-layout\jquery-ui-1.9.2.min.js" />
     <Content Include="Scripts\jquery-layout\jquery.layout-1.3.0.js" />
     <Content Include="Scripts\jquery-layout\layout-default-latest.css" />
@@ -262,17 +262,8 @@
     <Content Include="Scripts\jquery-mobile\jquery.mobile.custom.theme.css" />
     <Content Include="Scripts\jquery-mobile\jquery.mobile.custom.theme.min.css" />
     <Content Include="Scripts\jquery-mobile\seth.css" />
-    <Content Include="Scripts\jquery.cookie.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Scripts\jquery.date-format.js" />
     <Content Include="Scripts\jquery.dd.min.js" />
-    <Content Include="Scripts\jquery.hotkeys.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Scripts\jquery.jeditable.mini.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Scripts\jquery.signalR-1.1.3.js" />
     <Content Include="Scripts\jquery.signalR-1.1.3.min.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -295,6 +286,10 @@
     <Content Include="Content\msdropdown\sprite.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\LTC.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\LTCmobile.js" />
     <Content Include="Scripts\responsive-nav.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -467,7 +462,9 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <Content Include="Scripts\jquery.min.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\Shared\_LetterVoteListener.cshtml" />
     <Content Include="Views\Shared\_Comment.cshtml" />
     <Content Include="Views\Home\Unsubscribe.cshtml" />
