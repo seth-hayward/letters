@@ -141,7 +141,7 @@ namespace letterstocrushes.Controllers
 
                 switch (page) {
                     case 1:
-                        cacheTimeInSeconds = 30;
+                        cacheTimeInSeconds = 60*2;
                         break;
                     case 2:
                         cacheTimeInSeconds = 60*10;
