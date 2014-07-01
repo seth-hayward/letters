@@ -71,7 +71,7 @@
                 var m = '<p>' + letterData + '</p>';
                 if (m == '') { $("#btnSend").fadeIn('fast'); return; };
                 
-                var sendArgs = 'letterText=' + encodeURI(m) + '&letterCountry=' + encodeURI(c) + '&mobile=0';
+                var sendArgs = 'letterText=' + encodeURI(m) + '&letterCountry=' + encodeURI(c) + '&mobile=1';
 
                 var linkid;
 
@@ -102,9 +102,8 @@
                         // this is shit code... why do i need an error handler here as well?
                         // how can i fire an error to get this code to run in the first place?
 
-                        throw {
-                            name: 'delivery error',
-                            message: error};
+                        display_errors({name: 'server error', message: req.responseText});
+
                     }
 
                 });

@@ -1436,45 +1436,53 @@ namespace letterstocrushes.Controllers
                 userid = MemUser.ProviderUserKey.ToString();
             }
 
-            Core.Model.Letter letter = _letterService.Mail(Server.HtmlDecode(letterText), letterCountry, userip, userid, int.Parse(mobile), ref error_message);
+            Core.Model.Letter letter;
+            
+            try
+            {
+                letter = _letterService.Mail(Server.HtmlDecode(letterText), letterCountry, userip, userid, int.Parse(mobile), ref error_message);
+
+                if (User.Identity.IsAuthenticated == true && letter != null)
+                {
+                    // add an invisible comment so that the user will receive email notifications
+
+                    Comment invisa_comment = new Comment();
+                    invisa_comment.level = -2;
+                    invisa_comment.letterId = letter.Id;
+                    invisa_comment.sendEmail = true;
+                    invisa_comment.commentDate = DateTime.UtcNow;
+                    invisa_comment.commenterEmail = User.Identity.Name;
+                    invisa_comment.commenterGuid = System.Guid.NewGuid().ToString();
+                    invisa_comment.commenterName = "";
+
+                    // add comment, 
+                    // notify all users who are subscribed to that letter
+                    string host = "";
+
+                    switch (Request.Url.Port)
+                    {
+                        case 80:
+                            host = "http://" + Request.Url.Host + VirtualPathUtility.ToAbsolute("~/");
+                            break;
+                        default:
+                            host = "http://" + Request.Url.Host + ":" + Request.Url.Port + VirtualPathUtility.ToAbsolute("~/");
+                            break;
+                    }
+
+                    _commentService.AddComment(invisa_comment, host);
+
+                }
+            }
+            catch (Exception ex) {
+                letter = null;
+                error_message = ex.Message;
+            }
 
             // remove the more page
             // and mod page cache objects so they
             // get pulled again immedately with the new data
             HttpContext.Cache.Remove("mod-page-1");
             HttpContext.Cache.Remove("more-page-1");
-
-            if (User.Identity.IsAuthenticated == true)
-            {
-                // add an invisible comment so that the user will receive email notifications
-
-                Comment invisa_comment = new Comment();
-                invisa_comment.level = -2;
-                invisa_comment.letterId = letter.Id;
-                invisa_comment.sendEmail = true;
-                invisa_comment.commentDate = DateTime.UtcNow;
-                invisa_comment.commenterEmail = User.Identity.Name;
-                invisa_comment.commenterGuid = System.Guid.NewGuid().ToString();
-                invisa_comment.commenterName = "";
-
-                // add comment, 
-                // notify all users who are subscribed to that letter
-                string host = "";
-
-                switch (Request.Url.Port)
-                {
-                    case 80:
-                        host = "http://" + Request.Url.Host + VirtualPathUtility.ToAbsolute("~/");
-                        break;
-                    default:
-                        host = "http://" + Request.Url.Host + ":" + Request.Url.Port + VirtualPathUtility.ToAbsolute("~/");
-                        break;
-                }
-
-                _commentService.AddComment(invisa_comment, host);
-
-            }
-
 
             if (letter != null)
             {
