@@ -1674,18 +1674,27 @@ namespace letterstocrushes.Controllers
 
         public string getUserTimeZone()
         {
-            HttpCookie time_zone = Request.Cookies["userTimeZone"];
+            HttpCookie time_zone;
             string time_zone_value = null;
 
-            if (time_zone == null)
+            try
             {
+                time_zone = Request.Cookies["userTimeZone"];
+
+                if (time_zone == null)
+                {
+                    time_zone_value = "0";
+                }
+                else
+                {
+                    time_zone_value = time_zone.Value;
+                }
+
+            }
+            catch (Exception ex) {
                 time_zone_value = "0";
             }
-            else
-            {
-                time_zone_value = time_zone.Value;
-            }
-
+                
             return time_zone_value;
         }
 
