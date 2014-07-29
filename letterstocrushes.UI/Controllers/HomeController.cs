@@ -170,7 +170,6 @@ namespace letterstocrushes.Controllers
                 ViewBag.CurrentPage = page;
                 ViewBag.Pages = _all_letter_count;
 
-
             } catch(Exception ex) {
 
                 string foundErr = "index err: <br />" + ex.Message.ToString() + "<br />";

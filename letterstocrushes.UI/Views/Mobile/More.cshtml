@@ -53,20 +53,20 @@
 		    $.mobile.changePage("@Html.Raw(ViewBag.PageLocation)" + next_page, { transition: "slide" });
 	    }
 
-        // Bind the swipeleftHandler callback function to the swipe event on div.box
-	    $('div.container').on( 'swipeleft', swipeleftHandler );
-	    $('div.container').on( 'swiperight', swiperightHandler );
+        //// Bind the swipeleftHandler callback function to the swipe event on div.box
+	    //$('div.container').on( 'swipeleft', swipeleftHandler );
+	    //$('div.container').on( 'swiperight', swiperightHandler );
  
-        // Callback function references the event target and adds the 'swipeleft' class to it
-	    function swipeleftHandler(event){
-	        event.stopImmediatePropagation();
-	        next_page();
-	    }
+        //// Callback function references the event target and adds the 'swipeleft' class to it
+	    //function swipeleftHandler(event){
+	    //    event.stopImmediatePropagation();
+	    //    next_page();
+	    //}
 
-	    function swiperightHandler(event){
-	        event.stopImmediatePropagation();
-	        previous_page();
-	    }
+	    //function swiperightHandler(event){
+	    //    event.stopImmediatePropagation();
+	    //    previous_page();
+	    //}
 
     });
 
