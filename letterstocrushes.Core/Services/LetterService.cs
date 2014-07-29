@@ -449,6 +449,10 @@ namespace letterstocrushes.Core.Services
 
                 int offset = 0;
                 offset = Convert.ToInt32(time_zone);
+                if (Int32.TryParse(time_zone, out offset) == false)
+                {
+                    offset = 0;
+                }
 
                 foreach (Letter letter in letters)
                 {

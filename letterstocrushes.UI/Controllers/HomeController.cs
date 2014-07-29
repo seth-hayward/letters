@@ -98,72 +98,91 @@ namespace letterstocrushes.Controllers
         [CompressFilter]
         public ActionResult Index(int page = 1, int mobile = 0)
         {
-            string time_zone = getUserTimeZone();
-           
-            int _all_letter_count = 0;
-            int _pages_db = 0;
 
-            List<Core.Model.Letter> _letters = new List<Core.Model.Letter>();
-
-            string cache_key_list = "home-page-" + page;
-            string cache_key_count = "home-page-count-db1";
-
-            //
-            // Get total number of items in db. Insert into cache
-            // if this number is not already there. This will
-            // expire from cache in 90 seconds.
-            //
-
-            if (HttpContext.Cache[cache_key_count] == null)
+            try
             {
 
-                _all_letter_count = _letterService.getLetterCountHomePage(); 
-                HttpContext.Cache.Insert(cache_key_count, _all_letter_count, null, DateTime.UtcNow.AddSeconds(180), TimeSpan.Zero);
-            }
-            else
-            {
-              _all_letter_count = (int)HttpContext.Cache[cache_key_count];
+                string time_zone = getUserTimeZone();
 
-            }
+                int _all_letter_count = 0;
+                int _pages_db = 0;
 
-            _pages_db = (int)Math.Ceiling((double)_all_letter_count / _pagesize);
+                List<Core.Model.Letter> _letters = new List<Core.Model.Letter>();
 
-            //
-            // Store the actual list of letters in the cache
-            //
+                string cache_key_list = "home-page-" + page;
+                string cache_key_count = "home-page-count-db1";
 
-            if (HttpContext.Cache[cache_key_list] == null)
-            {
+                //
+                // Get total number of items in db. Insert into cache
+                // if this number is not already there. This will
+                // expire from cache in 90 seconds.
+                //
 
-                _letters = _letterService.getLetters(0, page, _pagesize).ToList();
+                if (HttpContext.Cache[cache_key_count] == null)
+                {
 
-                double cacheTimeInSeconds = 30;
+                    _all_letter_count = _letterService.getLetterCountHomePage();
+                    HttpContext.Cache.Insert(cache_key_count, _all_letter_count, null, DateTime.UtcNow.AddSeconds(180), TimeSpan.Zero);
+                }
+                else
+                {
+                    _all_letter_count = (int)HttpContext.Cache[cache_key_count];
 
-                switch (page) {
-                    case 1:
-                        cacheTimeInSeconds = 60*2;
-                        break;
-                    case 2:
-                        cacheTimeInSeconds = 60*10;
-                        break;
-                    case 3:
-                        cacheTimeInSeconds = 60*15;
-                        break;
-                    default:
-                        cacheTimeInSeconds = 60 * 30;
-                        break;
                 }
 
-                HttpContext.Cache.Insert(cache_key_list, _letters, null, DateTime.UtcNow.AddSeconds(cacheTimeInSeconds), TimeSpan.Zero);                
-            }
-            else
-            {
-                _letters = (List<Core.Model.Letter>)HttpContext.Cache[cache_key_list];
-            }
+                _pages_db = (int)Math.Ceiling((double)_all_letter_count / _pagesize);
 
-            ViewData.Model = _letterService.fixList(_letters, time_zone);
-            ViewBag.CurrentPage = page;
-            ViewBag.Pages = _all_letter_count;
+                //
+                // Store the actual list of letters in the cache
+                //
+
+                if (HttpContext.Cache[cache_key_list] == null)
+                {
+
+                    _letters = _letterService.getLetters(0, page, _pagesize).ToList();
+
+                    double cacheTimeInSeconds = 30;
+
+                    switch (page)
+                    {
+                        case 1:
+                            cacheTimeInSeconds = 60 * 2;
+                            break;
+                        case 2:
+                            cacheTimeInSeconds = 60 * 10;
+                            break;
+                        case 3:
+                            cacheTimeInSeconds = 60 * 15;
+                            break;
+                        default:
+                            cacheTimeInSeconds = 60 * 30;
+                            break;
+                    }
+
+                    HttpContext.Cache.Insert(cache_key_list, _letters, null, DateTime.UtcNow.AddSeconds(cacheTimeInSeconds), TimeSpan.Zero);
+                }
+                else
+                {
+                    _letters = (List<Core.Model.Letter>)HttpContext.Cache[cache_key_list];
+                }
+
+                ViewData.Model = _letterService.fixList(_letters, time_zone);
+                ViewBag.CurrentPage = page;
+                ViewBag.Pages = _all_letter_count;
+
+
+            } catch(Exception ex) {
+
+                string foundErr = "index err: <br />" + ex.Message.ToString() + "<br />";
+
+                if (ex.InnerException != null)
+                {
+                    foundErr = foundErr + "inner: " + ex.InnerException.Message.ToString();
+                }
+
+                _mailService.SendContact(foundErr, "seth.hayward@gmail.com");
+
+            }
 
             if (mobile == 0)
             {
