@@ -350,7 +350,7 @@ I figured I'd send this email now because my boyfriend has known about the site 
 So, Mr. Hayward, (or Seth, whichever you prefer random strangers calling you), thank you for making Letters to Crushes. It's helped me vent whenever I need to, and reading the stories other people post always makes me happy, even if the letters aren't necessarily the cheeriest. It's a website that makes a lot of people happy.
 
 With much admiration,
-Mia Barger
+Mia B.
 
 P.S. My boyfriend says the hidden message in the source code is nice, and that it's good of you to not put ads on the website. And I have to agree with him.
 
