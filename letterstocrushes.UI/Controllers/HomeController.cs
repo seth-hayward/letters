@@ -440,6 +440,15 @@ namespace letterstocrushes.Controllers
             ViewBag.display_pretty_box = false;
             ViewBag.can_edit = false;
 
+            if (letterToView.letterLevel == -1)
+            {
+                ViewBag.show_hide = false;
+            }
+            else
+            {
+                ViewBag.show_hide = true;
+            }
+
             if (letter_cookie != null)
             {
                 // if they have this cookie, we assume that they are
@@ -1349,7 +1358,7 @@ namespace letterstocrushes.Controllers
 
             if (hidden == true)
             {
-                ViewBag.Header = "Letter hidden.";
+                ViewBag.Header = "hidden";
                 ViewBag.Message = "This letter has been successfully hidden.";
             }
             else
@@ -1357,6 +1366,8 @@ namespace letterstocrushes.Controllers
                 ViewBag.Header = "Unable to hide letter.";
                 ViewBag.Message = "The letter was not found or you are not authorized to make this change.";
             }
+
+            ViewData.Model = lucky;
 
             if (mobile == 0)
             {
@@ -1401,9 +1412,11 @@ namespace letterstocrushes.Controllers
 
             Boolean hidden = _letterService.unhideLetter(lucky_id, userip, check_value, user_name, is_user_mod);
 
+            ViewData.Model = lucky;
+
             if (hidden == true)
             {
-                ViewBag.Header = "Letter shown again.";
+                ViewBag.Header = "shown again.";
                 ViewBag.Message = "This letter will now appear on the more pages again.";
             }
             else

@@ -1,9 +1,20 @@
-﻿@{
+﻿@model letterstocrushes.Core.Model.Letter
+@{
     ViewBag.Title = "letters to crushes";
 }
 
 <div class="letterEnvelopeContainer">
-    <h2>@ViewBag.Header</h2>
-    <p>@ViewBag.Message</p>
+    <h2><a href="/letter/@Model.Id">Letter #@Model.Id</a> @ViewBag.Header</h2>
+    <p>@ViewBag.Message
+    
+        @if (Model.letterLevel == 0)
+        {
+            <text>You can <a href="~/unhide/@Model.Id/0">unhide this letter</a> if it was a mistake.</text>
+        }
+        else
+        {
+            <text>You can <a href="~/hide/@Model.Id/0">hide this letter</a> if it was a mistake.</text>            
+        }
+    </p>
 </div>
 

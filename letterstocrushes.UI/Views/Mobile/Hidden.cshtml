@@ -4,8 +4,21 @@
 }
 
 <div class="letterContainer">
-    <h2>@ViewBag.Header</h2>
-    <p>@ViewBag.Message</p>
+
+    <h2><a href="~/mobile/letter/@Model.Id" data-ajax="false">Letter #@Model.Id</a> @ViewBag.Header</h2>
+    <p>
+        @ViewBag.Message
+
+    @if (Model.letterLevel == 0)
+    {
+        <text>You can <a href="~/unhide/@Model.Id/1" data-ajax="false">unhide this letter</a> if it was a mistake.</text>
+    }
+    else
+    {
+        <text>You can <a href="~/hide/@Model.Id/1" data-ajax="false">hide this letter</a> if it was a mistake.</text>
+    }
+    </p>
+
     <p>Continue on to the <a href="@Url.Content("~/mobile/more")" data-ajax="false">more page</a>.</p>
 </div>
 

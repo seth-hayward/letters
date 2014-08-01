@@ -31,7 +31,15 @@
                 @if (Convert.ToBoolean(ViewBag.can_edit) == true)
                 {
                     @Html.ActionLink("edit letter", "edit", new {id = Model.Id, mobile=0 })
-                    <a href="@Url.Content("~/hide/" + Model.Id + "/0")">hide</a>
+                                        
+                    if(Convert.ToBoolean(ViewBag.show_hide) == true) {
+                         <text><a href="@Url.Content("~/hide/" + Model.Id + "/0")">hide</a></text>                    
+                    }
+                    else
+                    {
+                         <text><a href="@Url.Content("~/unhide/" + Model.Id + "/0")">unhide</a></text>                                            
+                    }
+                                        
                 }
                 @if (User.IsInRole("Mod") == true)
                 {
