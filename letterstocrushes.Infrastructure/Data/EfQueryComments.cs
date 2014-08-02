@@ -206,5 +206,55 @@ namespace letterstocrushes.Infrastructure.Data
 
 
         }
+
+        public bool unhideComment(int id, string commenter_guid, string user_name)
+        {
+
+            db_mysql db_mysql = new db_mysql();
+            db_mssql db_mssql = new db_mssql();
+
+            Comment lucky_comment = getComment(id);
+            comment comment = Mapper.Map<Comment, comment>(lucky_comment);
+
+            letter letter = (from m in db_mysql.letters where m.Id.Equals(lucky_comment.letterId) select m).FirstOrDefault();
+
+            HtmlUtility utility = HtmlUtility.Instance;
+
+            edit new_edit = new edit();
+
+            new_edit.editComment = "Comment un-hidden by " + user_name;
+            new_edit.editor = user_name;
+
+            new_edit.editDate = DateTime.Now;
+
+            new_edit.newLetter = lucky_comment.commentMessage;
+
+            new_edit.previousLetter = lucky_comment.commentMessage;
+            new_edit.status = "accepted";
+            new_edit.letterID = lucky_comment.letterId;
+            new_edit.editDate = DateTime.UtcNow;
+
+            db_mssql.edits.Add(new_edit);
+
+            db_mysql.comments.Attach(comment);
+            db_mysql.letters.Attach(letter);
+
+            var comment_var = db_mysql.Entry(comment);
+            var letter_var = db_mysql.Entry(letter);
+
+            comment_var.Property(e => e.level).IsModified = true;
+            comment.level = 0;
+
+            letter_var.Property(e => e.letterComments).IsModified = true;
+            letter.letterComments = letter.letterComments + 1;
+
+            db_mysql.SaveChanges();
+            db_mssql.SaveChanges();
+
+            return true;
+
+
+        }
+
     }
 }

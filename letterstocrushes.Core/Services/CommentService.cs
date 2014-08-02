@@ -266,6 +266,24 @@ namespace letterstocrushes.Core.Services
             
         }
 
+        public Boolean unhideComment(int id, string commenter_guid, string user_name, bool is_user_mod)
+        {
+
+            // only allow editing if the user is a mod,
+            // OR, their guid matches the guid on the comment
+
+            Comment comment = _queryComments.getComment(id);
+            if (commenter_guid == comment.commenterGuid || is_user_mod == true)
+            {
+                return _queryComments.unhideComment(id, commenter_guid, user_name);
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
         public Boolean EditComment(string commentText, int id, string commenter_guid, string user_name, bool is_user_mod)
         {
             // che

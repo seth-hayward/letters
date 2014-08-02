@@ -223,11 +223,31 @@ div.letterComments
     overflow: auto;
 }
 
+.comment_level_-1
+{
+    background-color: #eee;
+    border-left: solid 1px #000;
+}
+
+
 .commenter_name
 {
     float: left;
     font-weight: bold;
 }
+
+    div.commenter_name ul
+    {
+        margin-top: 0px;
+        list-style: none;
+        padding-left: 0px;
+    }
+
+        div.commenter_name ul li
+        {
+            padding-right: 5px;
+            float: left;
+        }
 
 a.comment_hide
 {

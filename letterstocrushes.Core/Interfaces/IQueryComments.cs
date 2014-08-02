@@ -16,6 +16,8 @@ namespace letterstocrushes.Core.Interfaces
         Boolean Unsubscribe(string email, int letter_id);
         Boolean editComment(string commentText, int id, string commenter_guid, string user_name);
         Boolean hideComment(int id, string commenter_guid, string user_name);
+        Boolean unhideComment(int id, string commenter_guid, string user_name);
+
         int getCommentCount();
     }
 }

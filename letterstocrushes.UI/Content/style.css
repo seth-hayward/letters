@@ -590,6 +590,7 @@ a.comment_hide:hover
 .comment_level_-1
 {
     background-color: #eee;
+    border-left: solid 1px #000;
 }
 
 

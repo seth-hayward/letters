@@ -1,42 +1,66 @@
 ﻿@model letterstocrushes.Core.Model.Comment
 
-<div id="comment-@Model.Id" class="comment">
+<div id="comment-@Model.Id" class="comment comment_level_@Model.level">
 
     <div class="comment_header">
-        
+
         <div class="commenter_name">
 
             <ul>
 
-                @if (@Model.commenterGuid != null) {
-                    if (Model.commenterGuid.StartsWith("mod")) {
-                    <text>
-                    <li>
-                        <img src="@Url.Content("~/content/apple-touch-icon-72x72-precomposed.png")" style="margin-bottom: -7px; width: 25px; height: 25px" alt="mod" />
-                    </li>
-                    <li>
-                        moderator
-                    </li>
-            
-                    </text>
-                    } else {
-                    <text>
-                    <li>
-                        <span>@Model.commenterName  </span>
-                    </li>
-                    </text>
+                @if (@Model.commenterGuid != null)
+                {
+                    if (Model.commenterGuid.StartsWith("mod"))
+                    {
+                        <text>
+                            <li>
+                                <img src="@Url.Content("~/content/apple-touch-icon-72x72-precomposed.png")" style="margin-bottom: -7px; width: 25px; height: 25px" alt="mod" />
+                            </li>
+                            <li>
+                                moderator
+                            </li>
+
+                        </text>
+                    }
+                    else
+                    {
+                        <text>
+                            <li>
+                                <span>@Model.commenterName  </span>
+                            </li>
+                        </text>
                     }
                 }
 
 
-                @if (User.IsInRole("Mod")) {
-                    <text>
-                        <li>
-                            <small>@if(@Model.commenterGuid != null) { @Model.commenterGuid.Substring(0, 8) } - @Model.commenterIP</small>
-                            <a id="c@(Model.Id)" class="comment_hide">hide</a>
-                        </li>
-                    </text>
+                @if (User.IsInRole("Mod"))
+                {
+
+                    if (@Model.level == 0)
+                    {
+
+                        <text>
+                            <li>
+                                <small>@if (@Model.commenterGuid != null)
+                                { @Model.commenterGuid.Substring(0, 8) } - @Model.commenterIP</small>
+                                <a id="c@(Model.Id)" class="comment_hide">hide</a>
+                            </li>
+                        </text>
+
                     }
+                    else
+                    {
+                        <text>
+                            <li>
+                                <small>@if (@Model.commenterGuid != null)
+                                { @Model.commenterGuid.Substring(0, 8) } - @Model.commenterIP</small>
+                                <a id="cx@(Model.Id)" class="comment_hide">unhide</a>
+                            </li>
+                        </text>
+
+                    }
+
+                }
 
             </ul>
 
@@ -69,6 +93,9 @@
 
             $("#c@(Model.Id)").click(function (e) {
 
+                $("#c@(Model.Id)").fadeOut();
+
+
                 $.ajax(
                 {
                     type: "get",
@@ -82,6 +109,25 @@
                 });
 
             });
+
+        $("#cx@(Model.Id)").click(function (e) {
+
+            $("#cx@(Model.Id)").fadeOut();
+
+            $.ajax(
+            {
+                type: "get",
+                url: "@Url.Content("~/comment/unhide/" + Model.Id)",
+                success: function (result) {
+                    $("#comment-@(Model.Id)").removeClass("comment_level_-1");
+                    $("#comment-@(Model.Id)").addClass("comment_level_0");
+                },
+            error: function (req, status, error) {
+                alert("Sorry! There was an error. We could not unhide this comment. Please email letters.to.crushes@gmail.com if this happens again. (" + error + ")");
+            }
+        });
+
+    });
 
             </text>                 
                        

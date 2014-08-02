@@ -77,6 +77,39 @@ namespace letterstocrushes.Controllers
 
         }
 
+        public JsonResult Unhide(int id = 0)
+        {
+
+            if (id == 0)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+            bool is_user_mod = User.IsInRole("Mod");
+
+            string userip = "anonymous letter sender";
+            userip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (userip == null)
+                userip = Request.ServerVariables["REMOTE_ADDR"];
+
+            string user_name;
+            if (User.Identity.IsAuthenticated == true)
+            {
+                user_name = User.Identity.Name;
+            }
+            else
+            {
+                user_name = userip;
+            }
+
+            String commenter_guid = getCommenterGuid();
+
+            Boolean edit_successful = _commentService.unhideComment(id, commenter_guid, user_name, is_user_mod);
+
+            return Json(edit_successful, JsonRequestBehavior.AllowGet);
+
+        }
+
         [HttpPost]
         [ValidateInput(false)]
         public String Edit(string commentText, int id = 0)

@@ -461,6 +461,11 @@ namespace letterstocrushes.Controllers
             {
                 // all mods can edit all letters
                 ViewBag.can_edit = true;
+                ViewBag.comments = _commentService.getComments(id, true);
+            }
+            else
+            {
+                ViewBag.comments = _commentService.getComments(id, false);
             }
 
             if (User.Identity.IsAuthenticated == true)
@@ -473,7 +478,6 @@ namespace letterstocrushes.Controllers
                 ViewBag.display_pretty_box = true;
             }
 
-            ViewBag.comments = _commentService.getComments(id, false);
 
             if (User.Identity.IsAuthenticated == true)
             {
