@@ -257,6 +257,11 @@ namespace letterstocrushes.Controllers
 
         }
 
+        public ActionResult About()
+        {
+            return View();
+        }
+
         public ActionResult Apps()
         {
             return View();

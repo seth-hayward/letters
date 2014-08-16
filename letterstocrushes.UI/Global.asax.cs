@@ -161,6 +161,12 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "About", // Route name
+                "about/", // URL with parameters
+                new { controller = "Home", action = "About" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "Send", // Route name
                 "send/", // URL with parameters
                 new { controller = "Home", action = "Send" } // Parameter defaults
