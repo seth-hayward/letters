@@ -680,6 +680,12 @@ span.permLink a
 	text-decoration: underline;
 }
 
+div#about ul li {
+    margin-right: 100px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
 /* PAGER
 ----------------------------------------------------------*/
 
