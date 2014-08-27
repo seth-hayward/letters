@@ -257,9 +257,16 @@ namespace letterstocrushes.Controllers
 
         }
 
-        public ActionResult About()
+        public ActionResult About(int mobile = 0)
         {
-            return View();
+            if (mobile == 0)
+            {
+                return View();
+            }
+            else
+            {
+                return View("~/Views/Mobile/About.cshtml");
+            }
         }
 
         public ActionResult Apps()

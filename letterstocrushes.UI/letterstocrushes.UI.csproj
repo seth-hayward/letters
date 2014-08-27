@@ -499,6 +499,8 @@
     <Content Include="Views\Shared\_LetterArchiveListItem.cshtml" />
     <Content Include="Views\Mobile\Edit.cshtml" />
     <Content Include="Views\Home\Apps.cshtml" />
+    <Content Include="Views\Mobile\About.cshtml" />
+    <Content Include="Views\Shared\_About.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

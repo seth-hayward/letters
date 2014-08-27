@@ -52,6 +52,7 @@
                 <li @{ if(Request.RawUrl.Contains("/mobile/page")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/page/1")">Home</a></li>
                 <li @{ if(Request.RawUrl.Contains("/mobile/more") || Request.RawUrl.Contains("/mobile/letter")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/more")">More</a></li>
                 <li @{ if(Request.RawUrl.Contains("/mobile/send")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/send")">Send</a></li>
+                <li @{ if(Request.RawUrl.Contains("/mobile/about")) { <text> class="selected" </text>  } }><a href="@Url.Content("~/mobile/about")">About</a></li>
                 <li @{ if(Request.RawUrl.Contains("/mobile/search")) { <text>class="selected" </text> } }><a href="@Url.Content("~/mobile/search")">Search</a></li>
                 <li @{ if(Request.RawUrl.Contains("/chat")) { <text>class="selected" </text> } }><a href="@Url.Content("~/chat")" target="_blank">Chat</a></li>
 
