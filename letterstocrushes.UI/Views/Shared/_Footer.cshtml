@@ -9,9 +9,14 @@
             
             try
             {
+                
+                <text>
+                    <a href="@Url.Content("~/about")">about</a>
+                </text>
 
-                @Html.ActionLink("about", "About", "Home")                                                            
-                                
+            
+                                       
+             
                 @Html.Partial("_LogOnPartial")
                 
                 if (User.Identity.IsAuthenticated == true)

@@ -169,7 +169,7 @@ namespace letterstocrushes
             routes.MapRoute(
                 "About", // Route name
                 "about/", // URL with parameters
-                new { controller = "Home", action = "About" } // Parameter defaults
+                new { controller = "Home", action = "About", mobile = 0 } // Parameter defaults
             );
 
             routes.MapRoute(
