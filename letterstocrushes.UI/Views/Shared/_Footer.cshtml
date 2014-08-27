@@ -9,9 +9,10 @@
             
             try
             {
-                
-                @Html.Partial("_LogOnPartial")
 
+                @Html.ActionLink("about", "About", "Home")                                                            
+                                
+                @Html.Partial("_LogOnPartial")
                 
                 if (User.Identity.IsAuthenticated == true)
                 {
@@ -26,9 +27,9 @@
                     @Html.ActionLink("apps", "apps", "Home")                
                     @Html.ActionLink("search", "search", "Home")     
                     @Html.ActionLink("chat", "Index", "chat")           
-                    @Html.ActionLink("feedback", "contact", "Home")                                                     
+                    @Html.ActionLink("feedback", "contact", "Home")                                                                 
                     }
-                    else
+                    else                    
                     {
                     <text>
                         <a href="@Url.Content("~/terms")" target="_blank">terms of use</a>
@@ -44,6 +45,7 @@
                 }
                 else
                 {
+                                        
                 <text>
                     <a href="@Url.Content("~/terms")" target="_blank">terms of use</a>
                     <a href="@Url.Content("~/privacy")" target="_blank">privacy policy</a>
