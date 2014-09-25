@@ -90,7 +90,7 @@
                     {                                
                         // but what happens if it returns a fail from the server here?
                         if (result.response == '1') {
-                            $.cookie(result.guid, 0, { expires: 365 });
+                            $.cookie(result.guid, 0, { expires: 365, path: '/' });
                             $("#perm").html("<a href='@Url.Content("~/mobile/letter/")" + result.message + "' rel='external'>here is a permanent link</a>");
 
                             $('#input').fadeOut(100, function () { $('#output').fadeIn(100); });
