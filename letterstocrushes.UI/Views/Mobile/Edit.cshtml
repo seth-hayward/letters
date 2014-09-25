@@ -64,7 +64,7 @@
                 var m = '<p>' + $('#letterMessage').val();
                 if (m == '') { $("#btnSend").fadeIn('fast'); return; };
 
-                var sendArgs = 'letterText=' + encodeURI(m) + '&letterCountry=' + encodeURI(c) + '&mobile=1&id=@Model.Id';
+                var sendArgs = 'letterText=' + encodeURI(m) + '&mobile=1&id=@Model.Id';
 
                 var linkid;
 

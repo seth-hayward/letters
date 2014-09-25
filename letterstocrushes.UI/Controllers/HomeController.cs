@@ -1552,7 +1552,7 @@ namespace letterstocrushes.Controllers
         {
 
             Boolean edit_successful = false;
-            String fail_message = "";
+            String fail_message = "msg: " + letterText + ",id: " + id + ", mobile: " + mobile + "\n\n";
 
             try
             {
