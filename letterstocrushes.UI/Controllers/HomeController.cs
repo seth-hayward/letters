@@ -1552,7 +1552,7 @@ namespace letterstocrushes.Controllers
         {
 
             Boolean edit_successful = false;
-            String fail_message = "msg: " + letterText + ",id: " + id + ", mobile: " + mobile + "\n\n";
+            String fail_message = ""; // "msg: " + letterText + ",id: " + id + ", mobile: " + mobile + "\n\n";
 
             try
             {
@@ -1591,6 +1591,8 @@ namespace letterstocrushes.Controllers
                 {
                     check_value = check_cookie.Value;
                 }
+
+                fail_message = "msg: " + Server.HtmlDecode(letterText) + ",lucky_id: " + lucky_id + ", userip: " + userip + ",check_value: " + check_value + ", user_name: " + user_name + ", is_user_mod: " + is_user_mod + ", mobile: " + int.Parse(mobile) + "\n\n";
 
                 edit_successful = _letterService.editLetter(lucky_id, Server.HtmlDecode(letterText), userip, check_value, user_name, is_user_mod, int.Parse(mobile));
 
