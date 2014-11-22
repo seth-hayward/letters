@@ -92,7 +92,7 @@
 
         <div class="letterCommentsForm">
 
-            @using (Html.BeginForm())
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addCommentForm" }))
             {
                 
                 <text>
@@ -107,6 +107,11 @@
                     <label for="commenterEmail">Email:</label>
                     <span class="comment_form">@Html.TextBox("commenterEmail", (string)ViewBag.email)</span>
                      <small>Email is optional and never shown. Leave yours if you want email notifications on new comments for this letter.</small>
+                </div>
+
+                <div class="comment_row" id="robotTestForm">
+                    <label for="robotTest">Please type the word 'love' to prove you are not a robot</label>
+                    <span class="comment_form"><input type="text" id="robotTest" /></span>
                 </div>
 
                 <div class="comment_row">
@@ -142,7 +147,7 @@
                         @Html.Hidden("letterId", Model.Id)
                         @Html.Hidden("mobile", "0")
 
-                        <input type="submit" value="send" class="submit_button" />
+                        <input type="button" value="send" id="sendComment" class="submit_button" />
                     </span>
                 </div>
                 </text>
@@ -169,6 +174,26 @@
 
         var offset = new Date().getTimezoneOffset();
         $.cookie('userTimeZone', offset/60, { expires: 365 });
+
+        var isRobot = $.cookie('robotTest');
+
+        if (isRobot == 'love') {
+            $("#robotTest").val("love");
+            $("#robotTestForm").hide();
+        }
+
+        $("#sendComment").click(function () {
+
+            var robotTest = $("#robotTest").val();
+
+            if (robotTest == "love") {
+                $.cookie('robotTest', "love", { expires: 365 * 10 });
+                $("#addCommentForm").submit();
+            } else {
+                alert('Cannot post this comment. You need to type the word love into the robot test form.');
+            }
+
+        });
 
         $("a.bookmarkLink").click(function(e) {
 
