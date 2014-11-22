@@ -265,7 +265,6 @@ namespace letterstocrushes.Controllers
             return Json(comments, JsonRequestBehavior.AllowGet);
         }
 
-        [Authorize]
         [HttpPost]
         [ValidateInput(false)]
         public JsonResult Add(int letterId, string comment, string commenterName, string commenterEmail)

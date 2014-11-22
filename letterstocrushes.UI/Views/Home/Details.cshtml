@@ -146,6 +146,7 @@
                     <span class="comment_form">
                         @Html.Hidden("letterId", Model.Id)
                         @Html.Hidden("mobile", "0")
+                        @Html.Hidden("robotTestCookie", "0")
 
                         <input type="button" value="send" id="sendComment" class="submit_button" />
                     </span>
@@ -179,6 +180,7 @@
 
         if (isRobot == 'love') {
             $("#robotTest").val("love");
+            $("#robotTestCookie").val("love");
             $("#robotTestForm").hide();
         }
 

@@ -116,6 +116,7 @@ else
                     <textarea name="comment" id="comment"></textarea>
                 </div>
             
+                @Html.Hidden("robotTestCookie", "0");
                 @Html.Hidden("mod_mode", false)           
                 @Html.Hidden("letterId", Model.Id)
                 @Html.Hidden("mobile", "1")
@@ -145,6 +146,7 @@ else
 
         if (isRobot == 'love') {
             $("#robotTest").val("love");
+            $("#robotTestCookie").val("love");
             $("#robotTestForm").hide();
         }
 
