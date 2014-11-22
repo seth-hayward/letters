@@ -561,7 +561,7 @@ namespace letterstocrushes.Controllers
 
                 Contact msg = new Contact();
 
-                msg.Message = "HomeController caught a robot: " + msg.Email + ": <br /><br />" + msg.Message + "<br><br>sent from ip: " + userip;
+                msg.Message = "HomeController caught a robot: " + email + ": <br /><br />" + message + "<br><br>sent from ip: " + userip;
 
                 _mailService.SendContact(msg.Message, msg.Email);
 
