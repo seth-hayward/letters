@@ -12,13 +12,16 @@ namespace letterstocrushes.Controllers
     {
 
         private readonly CommentService _commentService;
+        private readonly MailService _mailService;
 
-        public CommentController(CommentService commentService)
+        public CommentController(CommentService commentService, MailService mailService)
         {
             _commentService = commentService;
+            _mailService = mailService;
         }
 
-        public CommentController() : this(new CommentService(new Infrastructure.Data.EfQueryLetters(), new Infrastructure.Data.EfQueryComments(), new MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]), new Core.Services.BlockService(new Infrastructure.Data.EfQueryBlocks())))
+        public CommentController() : this(new CommentService(new Infrastructure.Data.EfQueryLetters(), new Infrastructure.Data.EfQueryComments(), new MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]), new Core.Services.BlockService(new Infrastructure.Data.EfQueryBlocks())),
+            new Core.Services.MailService(System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"]))
         {
         }
 
@@ -262,6 +265,7 @@ namespace letterstocrushes.Controllers
             return Json(comments, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateInput(false)]
         public JsonResult Add(int letterId, string comment, string commenterName, string commenterEmail)
@@ -308,6 +312,12 @@ namespace letterstocrushes.Controllers
                     host = "http://" + Request.Url.Host + ":" + Request.Url.Port + VirtualPathUtility.ToAbsolute("~/");
                     break;
             }
+
+            Contact msg = new Contact();
+
+            msg.Message = "CommentController add comment: " + msg.Email + ": <br /><br />" + msg.Message + "<br><br>sent from ip: " + userip;
+
+            _mailService.SendContact(msg.Message, msg.Email);
 
             _commentService.AddComment(comm, host);
 
