@@ -190,6 +190,7 @@
 
             if (robotTest == "love") {
                 $.cookie('robotTest', "love", { expires: 365 * 10 });
+                $("#robotTestCookie").val("love");
                 $("#addCommentForm").submit();
             } else {
                 alert('Cannot post this comment. You need to type the word love into the robot test form.');

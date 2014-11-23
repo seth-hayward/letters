@@ -156,6 +156,7 @@ else
 
             if (robotTest == "love") {
                 $.cookie('robotTest', "love", { expires: 365 * 10 });
+                $("#robotTestCookie").val("love");
                 $("#addCommentForm").submit();
 
             } else {
