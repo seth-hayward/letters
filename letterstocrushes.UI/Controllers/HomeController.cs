@@ -559,11 +559,11 @@ namespace letterstocrushes.Controllers
             if (fc["robotTestCookie"] != "love")
             {
 
-                Contact msg = new Contact();
+                //Contact msg = new Contact();
 
-                msg.Message = "HomeController caught a robot: " + email + ": <br /><br />" + message + "<br><br>sent from ip: " + userip;
+                //msg.Message = "HomeController caught a robot: " + email + ": <br /><br />" + message + "<br><br>sent from ip: " + userip;
 
-                _mailService.SendContact(msg.Message, msg.Email);
+                //_mailService.SendContact(msg.Message, msg.Email);
 
                 return View();
             }
