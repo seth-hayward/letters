@@ -135,11 +135,11 @@ namespace letterstocrushes.Core.Services
                 return;
             }
 
-            if (comment.commentMessage != null && comment.commentMessage.Contains("http://"))
-            {
-                //_mailService.SendContact("link shut down: <br/>" + comment.commentMessage, "seth.hayward@gmail.com");
-                return;
-            }
+            //if (comment.commentMessage != null && comment.commentMessage.Contains("http://"))
+            //{
+            //    //_mailService.SendContact("link shut down: <br/>" + comment.commentMessage, "seth.hayward@gmail.com");
+            //    return;
+            //}
 
             // /connect.masslive.com
 

@@ -312,12 +312,6 @@ namespace letterstocrushes.Controllers
                     break;
             }
 
-            Contact msg = new Contact();
-
-            msg.Message = "CommentController add comment: " + msg.Email + ": <br /><br />" + msg.Message + "<br><br>sent from ip: " + userip;
-
-            _mailService.SendContact(msg.Message, msg.Email);
-
             _commentService.AddComment(comm, host);
 
             return Json(comm, JsonRequestBehavior.AllowGet);
