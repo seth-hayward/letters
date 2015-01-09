@@ -1,0 +1,23 @@
+﻿@model IEnumerable<letterstocrushes.Core.Model.Letter>
+@using letterstocrushes.Core.Model
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Book</title>
+</head>
+<body>
+    <div>
+        
+        @foreach (Letter letter in Model) {
+            Html.RenderPartial("_LetterBookListItem", letter);
+        }
+        
+    </div>
+</body>
+</html>

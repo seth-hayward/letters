@@ -234,6 +234,33 @@ namespace letterstocrushes.Infrastructure.Data
 
         }
 
+        public List<Core.Model.Letter> getBookLetters()
+        {
+
+            List<letter> results = new List<letter>();
+
+            db_mysql db_mysql = new db_mysql();
+            db_mssql db_mssql = new db_mssql();
+
+            List<TopListData_Result> top_votes = new List<TopListData_Result>();
+            top_votes = (from l in db_mssql.TopListData() where l.hearts > 5 select l).ToList();
+
+            List<long> top_votes_id = new List<long>();
+            top_votes_id = (from l in top_votes select l.letterID).ToList();
+            //results = (from z in db_mysql.letters where top_votes_id.Contains(z.Id) && z.letterLevel == 0 && z.letterPostDate > latest_front_page.letterPostDate orderby z.letterPostDate ascending select z).Take(500).ToList();
+
+            DateTime legalDate = DateTime.Parse("2012-11-13T00:00:00");
+
+            var foo = db_mysql.letters.AsQueryable<letter>()
+                             .Where(pop_letter => top_votes_id.Contains(pop_letter.Id) && pop_letter.letterLevel == 0 && pop_letter.letterPostDate > legalDate).Take(2000).ToList();
+
+            results = (from z in foo orderby z.letterPostDate ascending select z).ToList();
+
+            return Mapper.Map<List<letter>, List<Letter>>(results);
+
+        }
+
+
         public List<Core.Model.Letter> search(string terms)
         {
             db_mysql db_mysql = new db_mysql();

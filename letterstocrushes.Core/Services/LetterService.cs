@@ -356,6 +356,11 @@ namespace letterstocrushes.Core.Services
             return _queryLetters.getModLetters(page, _pagesize);
         }
 
+        public List<Letter> getBookLetters()
+        {
+            return _queryLetters.getBookLetters();
+        }
+
         public List<Letter> getPopularLetters(Letter latest_front_page)
         {
             return _queryLetters.getPopularLetters(latest_front_page);

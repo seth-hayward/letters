@@ -257,6 +257,44 @@ namespace letterstocrushes.Controllers
 
         }
 
+        public ActionResult Book()
+        {
+
+            bool is_user_mod = User.IsInRole("Mod");
+            if (is_user_mod == false)
+            {
+                return RedirectToAction("Index");
+            }
+
+            string time_zone = getUserTimeZone();
+
+            List<Core.Model.Letter> _letters = new List<Core.Model.Letter>();
+
+            string cache_key_list = "book-page-1";
+
+            //
+            // Now... let's get our letters.
+            // We're basically using offsets. 
+            // We don't care about the ID. 
+            // It is meaningless to us.
+            //
+
+            if (HttpContext.Cache[cache_key_list] == null)
+            {
+                _letters = _letterService.getBookLetters();
+                HttpContext.Cache.Insert(cache_key_list, _letters, null, DateTime.UtcNow.AddDays(1), TimeSpan.Zero);
+            }
+            else
+            {
+                _letters = (List<Core.Model.Letter>)HttpContext.Cache[cache_key_list];
+            }
+
+            ViewData.Model = _letters;
+
+            return View();
+
+        }
+
         public ActionResult About(int mobile = 0)
         {
             if (mobile == 0)
