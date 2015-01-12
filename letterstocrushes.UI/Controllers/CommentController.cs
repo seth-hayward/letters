@@ -31,9 +31,17 @@ namespace letterstocrushes.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-            ViewBag.CurrentPage = page;
-            ViewBag.Pages = _commentService.getCommentCount();
-            return View(_commentService.getRecentComments(page));
+
+            try
+            {
+                ViewBag.CurrentPage = page;
+                ViewBag.Pages = _commentService.getCommentCount();
+                ViewData.Model = _commentService.getRecentComments(page);
+            } catch (Exception e) {
+                _mailService.SendContact("Comment page error: " + e.Message.ToString(), "seth.hayward@gmail.com");
+            }
+
+            return View();
         }
 
         public ActionResult Details(int id = 0)
