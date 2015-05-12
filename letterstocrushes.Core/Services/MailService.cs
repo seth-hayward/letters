@@ -23,7 +23,7 @@ namespace letterstocrushes.Core.Services
             SmtpClient Smtp = new SmtpClient();
             System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("no-reply@letterstocrushes.com", l_mail_password);
 
-            Message.From = new MailAddress("noreply@letterstocrushes.com");
+            Message.From = new MailAddress("no-reply@letterstocrushes.com");
             Message.To.Add(new MailAddress(email_address));
             Message.Bcc.Add(new MailAddress("seth.hayward@gmail.com"));
             Message.IsBodyHtml = false;
@@ -48,7 +48,7 @@ namespace letterstocrushes.Core.Services
 
             message_body = "<html><head></head><body>" + message_body + "</body></html>";
 
-            Message.From = new MailAddress("noreply@letterstocrushes.com");
+            Message.From = new MailAddress("no-reply@letterstocrushes.com");
             Message.To.Add(new MailAddress("seth.hayward@gmail.com"));
             Message.IsBodyHtml = true;
             Message.Subject = "feedback: " + email_address;

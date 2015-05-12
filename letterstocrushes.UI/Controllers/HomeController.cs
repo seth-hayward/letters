@@ -1089,13 +1089,13 @@ namespace letterstocrushes.Controllers
             if (published == null)
             {
 
-                msg.Email = "noreply@letterstocrushes.com";
+                msg.Email = "no-reply@letterstocrushes.com";
                 msg.Message = "Tried to publish from queue but it was empty.";
                 _mailService.SendContact(msg.Message,msg.Email);
             }
             else
             {
-                msg.Email = "noreply@letterstocrushes.com";
+                msg.Email = "no-reply@letterstocrushes.com";
                 msg.Message = "Published:\r\n " + published.letterMessage;
                 _mailService.SendContact(msg.Message, msg.Email);
             }
