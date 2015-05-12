@@ -21,7 +21,7 @@ namespace letterstocrushes.Core.Services
         {
             MailMessage Message = new MailMessage();
             SmtpClient Smtp = new SmtpClient();
-            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("noreply@letterstocrushes.com", l_mail_password);
+            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("no-reply@letterstocrushes.com", l_mail_password);
 
             Message.From = new MailAddress("noreply@letterstocrushes.com");
             Message.To.Add(new MailAddress(email_address));
@@ -44,7 +44,7 @@ namespace letterstocrushes.Core.Services
         {
             MailMessage Message = new MailMessage();
             SmtpClient Smtp = new SmtpClient();
-            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("noreply@letterstocrushes.com", l_mail_password);
+            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("no-reply@letterstocrushes.com", l_mail_password);
 
             message_body = "<html><head></head><body>" + message_body + "</body></html>";
 
@@ -57,7 +57,7 @@ namespace letterstocrushes.Core.Services
             Smtp.EnableSsl = false;
 
             Smtp.Credentials = SmtpUser;
-            Smtp.Host = "198.57.199.92";
+            Smtp.Host = "mail.letterstocrushes.com";
             Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             Smtp.Port = 26;
 
@@ -72,7 +72,7 @@ namespace letterstocrushes.Core.Services
 
             MailMessage Message = new MailMessage();
             SmtpClient Smtp = new SmtpClient();
-            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("noreply@letterstocrushes.com", l_mail_password);
+            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("no-reply@letterstocrushes.com", l_mail_password);
 
             message_body = "<html><head></head><body>" + message_body + "</body></html>";
 
@@ -88,7 +88,7 @@ namespace letterstocrushes.Core.Services
                 return;
             }
 
-            Message.From = new MailAddress("noreply@letterstocrushes.com");
+            Message.From = new MailAddress("no-reply@letterstocrushes.com");
             Message.To.Add(user_to_notify);
             //Message.Bcc.Add(new MailAddress("seth.hayward@gmail.com"));
             Message.IsBodyHtml = true;
@@ -98,7 +98,7 @@ namespace letterstocrushes.Core.Services
             Smtp.EnableSsl = false;
 
             Smtp.Credentials = SmtpUser;
-            Smtp.Host = "198.57.199.92";
+            Smtp.Host = "mail.letterstocrushes.com";
             Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             Smtp.Port = 26;
 

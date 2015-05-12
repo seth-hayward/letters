@@ -1086,9 +1086,9 @@ namespace letterstocrushes
 
             string password = System.Web.Configuration.WebConfigurationManager.AppSettings["MailPassword"];
 
-            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("noreply@letterstocrushes.com", password);
+            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("no-reply@letterstocrushes.com", password);
 
-            Message.From = new MailAddress("hello@selfies.io");
+            Message.From = new MailAddress("no-reply@letterstocrushes.com");
             Message.To.Add(new MailAddress("seth.hayward@gmail.com"));
             Message.IsBodyHtml = false;
             Message.Subject = "chat";
