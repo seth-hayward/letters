@@ -231,9 +231,6 @@
     <Content Include="Content\mobile.css" />
     <Content Include="Content\web.config" />
     <None Include="Properties\PublishProfiles\hostgator v2.pubxml" />
-    <Content Include="Scripts\bundle.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Scripts\jquery-1.9.1.intellisense.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
