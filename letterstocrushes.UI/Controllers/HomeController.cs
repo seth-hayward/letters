@@ -839,12 +839,6 @@ namespace letterstocrushes.Controllers
         public ActionResult Send()
         {
 
-            string useragent = HttpContext.Request.UserAgent.ToLower();
-
-            if(useragent.Contains("iphone") | useragent.Contains("ipod") | useragent.Contains("ipad") | useragent.Contains("android") | useragent.Contains("blackberry")) {
-                return RedirectToAction("MobileSend");
-            }
-
             return View();
             
         }

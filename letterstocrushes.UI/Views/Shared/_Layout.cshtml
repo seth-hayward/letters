@@ -39,11 +39,14 @@ http://www.return-on-development.com
     <link rel="apple-touch-icon" sizes="120x120" href="@Url.Content("~/Content/apple-touch-icon-120x120-precomposed.png")" />
     <link rel="apple-touch-icon" sizes="144x144" href="@Url.Content("~/Content/apple-touch-icon-144x144-precomposed.png")" />
 
-    <link href="@Url.Content("~/Content/style.css?v=20140817")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/style.css?v=20150701")" rel="stylesheet" type="text/css" />
 
     <script src="@Url.Content("~/Scripts/jquery.min.js")" type="text/javascript"></script>
 
     <script src="@Url.Content("~/Scripts/LTC.js")" type="text/javascript"></script>
+
+    @RenderSection("Header", required: false)
+
 
 </head>
 

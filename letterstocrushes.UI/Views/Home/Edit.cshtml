@@ -4,6 +4,12 @@
     ViewBag.Title = "letters to crushes: edit your letter";
 }
 
+@section Header {
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/quill.snow.css")" />
+    <script src="@Url.Content("~/Scripts/quill.min.js")"></script>
+
+}
 
 <div class="letterContainer" id="input">
 
@@ -15,10 +21,20 @@
     <div id="errors" style="display: none">
         <p><b>there was an error (<span id="error_name"></span>).</b> something bad happened (<span id="error_message"></span>) and your letter was not sent. please send use a report using the @Html.ActionLink("contact page", "contact") if you see this again.</p>
     </div>
-        
-	<textarea id="letterMessage" rows="12" cols="12" style="width: 100%">
+
+    <div id="letterMessage" style="border: 1px solid #eee;">
         @Html.Raw(Model.letterMessage)
-    </textarea>
+    </div>
+        
+    <div id="toolbar" style="padding: 10px; border-left: 1px solid #eee; border-top: 1px solid #eee; border-right: 1px solid #eee;text-align: right">
+        <button class="ql-bold"><strong>B</strong></button>
+        <button class="ql-italic"><em>I</em></button>
+        <button class="ql-strike"><span style="text-decoration: line-through">S</span></button>
+        <button class="ql-underline">U</button>
+        <button class="ql-list">List</button>
+        <button class="ql-bullet">Bullet</button>
+    </div>
+
 		        	
 	<br />
 		    
@@ -40,16 +56,12 @@
             </ul> 
 
 </div>
-
-
-<script src="@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
     
 <script src="http://www.google.com/jsapi?key=ABQIAAAAldASRj6IH3Y9p1O31t-C9RQCeCEsZXDSZbVjp8UFZVicfsCyEBQ2EQnGirJm-6SOzGyiESqsoOB2eA" type="text/javascript"></script>
 
 <script type="text/javascript">
    
-tinyMCE.init({
+@*tinyMCE.init({
     theme: "advanced",
     mode: "textareas",
     plugins: "preview",
@@ -58,7 +70,26 @@ tinyMCE.init({
 	theme_advanced_buttons3 : "",
     invalid_elements : "background-color,img,a,font-family,border,font-family,margin,background-image",
 	content_css : "@Url.Content("~/Content/tinymce.css")"
-});
+});*@
+
+    // Initialize Quill editor
+
+    //var editor = new Quill('#letterMessage', {
+    //    modules: {
+    //        'toolbar': { container: '#toolbar' },
+    //    },
+    //    theme: 'snow'
+    //});
+
+    // test: 
+    //     invalid_elements : "background-color,img,a,font-family,border,font-family,margin,background-image",
+
+    var editor = new Quill('#letterMessage');
+    editor.addModule('toolbar', {
+        container: '#toolbar'     // Selector for toolbar container
+    });
+
+    editor.focus();
 
 </script>
 
@@ -78,14 +109,12 @@ tinyMCE.init({
                 if(google.loader.ClientLocation) { c = google.loader.ClientLocation.address.country_code.toUpperCase(); }
                 else { c = "UNKNOWN"; }
                 
-                var m = $('#letterMessage').tinymce().getContent();                
+                var m = editor.getHTML();
                 //if (m == '') { $("#btnSend").fadeIn('fast'); return; };
                 
                 var sendArgs = 'letterText=' + escape(m) + '&id=@Model.Id';
 
                 var linkid;
-
-                //alert(sendArgs);
                 
                 $.ajax(
                 {

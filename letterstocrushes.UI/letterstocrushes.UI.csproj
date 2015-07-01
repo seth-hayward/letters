@@ -213,6 +213,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\owl.ico" />
+    <Content Include="Content\quill.snow.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\rainbow.JPG" />
     <Content Include="Content\readable.min.css" />
     <Content Include="Content\style.css" />
@@ -290,6 +293,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\LTCmobile.js" />
+    <Content Include="Scripts\quill.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\responsive-nav.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
