@@ -69,9 +69,6 @@
             </ul> 
 
 </div>
-
-<script src="@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
     
 <script src="http://www.google.com/jsapi?key=ABQIAAAAldASRj6IH3Y9p1O31t-C9RQCeCEsZXDSZbVjp8UFZVicfsCyEBQ2EQnGirJm-6SOzGyiESqsoOB2eA" type="text/javascript"></script>
 
@@ -121,6 +118,10 @@
                 else { c = "UNKNOWN"; }
                                 
                 var m = editor.getHTML();
+
+                m = m.replace("<div>", "<p>");
+                m = m.replace("</div>", "</p>");
+
                 if (m == '') { $("#btnSend").fadeIn('fast'); return; };
                 
                 var sendArgs = 'letterText=' + escape(m) + '&letterCountry=' + encodeURI(c) + '&mobile=0';
