@@ -447,6 +447,10 @@ div#letterMessage {
     min-height: 100px;
 }
 
+div.ql-line {
+    padding-bottom: 15px !important;
+}
+
 /* letter options menu ... adapted from jsddm */
 
 ul.letterNav
