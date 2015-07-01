@@ -119,8 +119,8 @@
                                 
                 var m = editor.getHTML();
 
-                m = m.replace("<div>", "<p>");
-                m = m.replace("</div>", "</p>");
+                m = m.replace(/<div>/g, "<p>");
+                m = m.replace(/<\/div>/g, "</p>");
 
                 if (m == '') { $("#btnSend").fadeIn('fast'); return; };
                 

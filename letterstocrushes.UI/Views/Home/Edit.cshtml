@@ -99,6 +99,10 @@
                 else { c = "UNKNOWN"; }
                 
                 var m = editor.getHTML();
+
+                m = m.replace(/<div>/g, "<p>");
+                m = m.replace(/<\/div>/g, "</p>");
+
                 //if (m == '') { $("#btnSend").fadeIn('fast'); return; };
                 
                 var sendArgs = 'letterText=' + escape(m) + '&id=@Model.Id';
