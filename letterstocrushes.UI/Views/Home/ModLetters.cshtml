@@ -5,7 +5,15 @@
     ViewBag.Title = "letters to crushes: mod letters";
 }
 
-<div class="letterContainer" id="input" style="padding: 20px; border: 1px dotted #eee">
+@section Header {
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/quill.snow.css")" />
+    <script src="@Url.Content("~/Scripts/quill.min.js")"></script>
+
+}
+
+
+<div class="letterContainer" id="input" style="border-bottom: 1px dotted #eee">
 
     <div id="sendLetterCopy">
     	<input type="button" class="submit_button" value="send" id="btnSend" style="float: right" />
@@ -19,7 +27,18 @@
         <p><b>there was an error (<span id="error_name"></span>).</b> something bad happened (<span id="error_message"></span>) and your letter was not sent. please send use a report using the @Html.ActionLink("feedback page", "Contact") if you see this again.</p>
     </div>
         
-	<textarea id="letterMessage" rows="12" cols="12" style="width: 100%"></textarea>
+    <div id="letterMessage" style="border: 1px solid #eee;">
+        <p></p>
+    </div>
+
+    <div id="toolbar">
+        <button class="ql-bold"><strong>B</strong></button>
+        <button class="ql-italic"><em>I</em></button>
+        <button class="ql-strike"><span style="text-decoration: line-through">S</span></button>
+        <button class="ql-underline">U</button>
+        <button class="ql-list">List</button>
+        <button class="ql-bullet">Bullet</button>
+    </div>
 		        	
 	<br />
 		    
@@ -39,21 +58,14 @@
 
 <!-- begin add mod letter tinymce stuff -->
 
-    <script src="@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
    
     <script type="text/javascript">
    
-        tinyMCE.init({
-            theme: "advanced",
-            mode: "textareas",
-            plugins: "preview",
-            theme_advanced_buttons1 : "charmap,separator,bold,italic,underline,strikethrough,separator,bullist,numlist,separator,preview",
-            theme_advanced_buttons2 : "",
-            theme_advanced_buttons3 : "",
-            invalid_elements : "background-color,img,a,font-family,border,font-family,margin,background-image",
-            content_css : "@Url.Content("~/Content/tinymce.css")"
+        var editor = new Quill('#letterMessage');
+        editor.addModule('toolbar', {
+            container: '#toolbar'     // Selector for toolbar container
         });
+
 
     </script>
 
@@ -106,7 +118,7 @@
 
             try {
                                 
-                var m = $('#letterMessage').tinymce().getContent();                
+                var m = editor.getHTML();
                 if (m == '') { $("#btnSend").fadeIn('fast'); return; };
                 
                 var sendArgs = 'letterText=' + escape(m) + '&letterCountry=UNKNOWN&mobile=-10';

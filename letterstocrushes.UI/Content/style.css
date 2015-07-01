@@ -443,6 +443,10 @@ span#footer_right
     font-size: 11px;
 }
 
+div#letterMessage {
+    min-height: 100px;
+}
+
 /* letter options menu ... adapted from jsddm */
 
 ul.letterNav
