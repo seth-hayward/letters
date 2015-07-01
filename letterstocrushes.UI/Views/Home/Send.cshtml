@@ -195,7 +195,6 @@
 
         $(window).bind('beforeunload', function () {
             var letter = editor.getText();
-            alert('bye: ' + letter);
             $.cookie("letterDraft", letter, { expires: 365 });
         });
 
