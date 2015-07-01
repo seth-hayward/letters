@@ -6,6 +6,10 @@
             width: 100% !important;
         }
 
+        #jsddm li a {
+            width: 50px !important;
+        }
+
         .letterEnvelopeContainer {
             margin-right: auto !important;
             margin-left: auto !important;
@@ -61,6 +65,11 @@
             width: 100% !important;
         }
 
+        #jsddm li a {
+            width: 50px !important;
+        }
+
+
         span#footer_left, span#footer_right, span#pretty_box_left, span#pretty_box_right {
             display: none;
         }
@@ -103,6 +112,11 @@
             width: 100% !important;
             max-width: 700px !important;
         }
+
+        #jsddm li a {
+            width: 75px !important;
+        }
+
 
         .letterEnvelopeContainer {
             margin-right: auto !important;
@@ -519,8 +533,6 @@ ul.dateNav li a:hover
 	#jsddm li
 	{	float: left;
 		list-style: none;
-		font: 10px;
-		
 		}
 
 	#jsddm li a
