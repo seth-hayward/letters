@@ -24,19 +24,25 @@
             <span id="slow_message"></span>
         </p>
     </div>
-        
-    <div id="letterMessage" style="border: 1px solid #eee;">
-    </div>
 
-    <div id="toolbar">
-        <button class="ql-bold"><strong>B</strong></button>
-        <button class="ql-italic"><em>I</em></button>
-        <button class="ql-strike"><span style="text-decoration: line-through">S</span></button>
-        <button class="ql-underline">U</button>
-        <button class="ql-list">List</button>
-        <button class="ql-bullet">Bullet</button>
+    <div class="quill-wrapper">
+
+        <div id="letterMessage" class="editor" style="border: 1px solid #eee;">
+            <div></div>
+        </div>
+
+        <div id="toolbar" class="toolbar">
+            <button class="ql-bold"><strong>B</strong></button>
+            <button class="ql-italic"><em>I</em></button>
+            <button class="ql-strike"><span style="text-decoration: line-through">S</span></button>
+            <button class="ql-underline">U</button>
+            <button class="ql-list">List</button>
+            <button class="ql-bullet">Bullet</button>
+        </div>
+
+
     </div>
-		        	
+        		        	
 	<br />
 
     <div id="letterTerms">
@@ -96,6 +102,8 @@
     }
 
     editor.focus();
+
+
 </script>
 
 <script type="text/javascript">
@@ -103,6 +111,7 @@
     var letter_id = 0;
 
     $(document).ready(function () {
+
 
         $("#btnSend").click(function() {
 

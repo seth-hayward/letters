@@ -27,17 +27,21 @@
         <p><b>there was an error (<span id="error_name"></span>).</b> something bad happened (<span id="error_message"></span>) and your letter was not sent. please send use a report using the @Html.ActionLink("feedback page", "Contact") if you see this again.</p>
     </div>
         
-    <div id="letterMessage" style="border: 1px solid #eee;">
-        <p></p>
-    </div>
+    <div class="quill-wrapper">
 
-    <div id="toolbar">
-        <button class="ql-bold"><strong>B</strong></button>
-        <button class="ql-italic"><em>I</em></button>
-        <button class="ql-strike"><span style="text-decoration: line-through">S</span></button>
-        <button class="ql-underline">U</button>
-        <button class="ql-list">List</button>
-        <button class="ql-bullet">Bullet</button>
+        <div id="letterMessage" class="editor" style="border: 1px solid #eee;">
+            <div></div>
+        </div>
+
+        <div id="toolbar" class="toolbar">
+            <button class="ql-bold"><strong>B</strong></button>
+            <button class="ql-italic"><em>I</em></button>
+            <button class="ql-strike"><span style="text-decoration: line-through">S</span></button>
+            <button class="ql-underline">U</button>
+            <button class="ql-list">List</button>
+            <button class="ql-bullet">Bullet</button>
+        </div>
+
     </div>
 		        	
 	<br />
