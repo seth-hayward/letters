@@ -1475,7 +1475,17 @@ namespace letterstocrushes.Controllers
                 check_value = check_cookie.Value;
             }
 
-            Boolean hidden = _letterService.unhideLetter(lucky_id, userip, check_value, user_name, is_user_mod);
+            Boolean hidden = false;
+
+            // if a letter has been set to -10, only allow mods to unhide it
+            if (lucky.letterLevel == -10 && is_user_mod == false)
+            {
+                hidden = false;
+            }
+            else
+            {
+                hidden = _letterService.unhideLetter(lucky_id, userip, check_value, user_name, is_user_mod);
+            }
 
             ViewData.Model = lucky;
 
