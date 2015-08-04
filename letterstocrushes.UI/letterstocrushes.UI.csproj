@@ -230,6 +230,9 @@
     <Content Include="robots.txt" />
     <Content Include="Content\mobile.css" />
     <Content Include="Content\web.config" />
+    <Content Include="Content\pre-release-draft-v2015-08-04.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\hostgator v2.pubxml" />
     <Content Include="Scripts\jquery-1.9.1.intellisense.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
