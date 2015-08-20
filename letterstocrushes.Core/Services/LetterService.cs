@@ -255,11 +255,11 @@ namespace letterstocrushes.Core.Services
                 if (banned_ips.Contains(user_ip) == true)
                 {
 
-                    new_letter.letterLevel = -10;
+                    new_letter.letterLevel = -11;
 
                     Contact msg = new Contact();
                     msg.Email = "blocked " + user_ip;
-                    msg.Message = string.Format("blocked (" + user_ip + "), letterLevel set to -10: \n{0}", new_letter.letterMessage.ToString());
+                    msg.Message = string.Format("blocked (" + user_ip + "), letterLevel set to -11: \n{0}", new_letter.letterMessage.ToString());
                     msg.Message = msg.Message + "\nmobile: " + mobile;
                     _mailService.SendContact(msg.Message, msg.Email);
 
