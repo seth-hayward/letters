@@ -199,6 +199,7 @@
     </Content>
     <Content Include="Content\chat.css" />
     <Content Include="Content\comment.png" />
+    <Content Include="Content\cover-cropped-v2015-10-10.jpg" />
     <Content Include="Content\download.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -233,6 +234,7 @@
     <Content Include="Content\pre-release-draft-v2015-08-04.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\fourth-draft-v2015.09.19.pdf" />
     <None Include="Properties\PublishProfiles\hostgator v2.pubxml" />
     <Content Include="Scripts\jquery-1.9.1.intellisense.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -512,6 +514,8 @@
     <Content Include="Views\Shared\_About.cshtml" />
     <Content Include="Views\Home\NoStyleAbout.cshtml" />
     <Content Include="Views\Home\Book.cshtml" />
+    <Content Include="Views\Home\About-Book.cshtml" />
+    <Content Include="Views\Shared\_AboutBook.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

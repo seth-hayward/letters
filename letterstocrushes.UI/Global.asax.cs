@@ -263,6 +263,13 @@ namespace letterstocrushes
             );
 
             routes.MapRoute(
+                "AboutBookRoute", // Route name
+                "book", // URL with parameters
+                new { controller = "Home", action = "Book" } // Parameter defaults
+            );
+
+
+            routes.MapRoute(
                 "Error", // Route name
                 "error/", // URL with parameters
                 new { controller = "Error", action = "HttpError" } // Parameter defaults
