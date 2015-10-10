@@ -199,7 +199,9 @@
     </Content>
     <Content Include="Content\chat.css" />
     <Content Include="Content\comment.png" />
-    <Content Include="Content\cover-cropped-v2015-10-10.jpg" />
+    <Content Include="Content\cover-cropped-v2015-10-10.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\download.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -219,6 +221,9 @@
     </Content>
     <Content Include="Content\rainbow.JPG" />
     <Content Include="Content\readable.min.css" />
+    <Content Include="Content\small-cover.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\style.css" />
     <Content Include="Content\tinymce.css" />
     <Content Include="Content\apple-touch-icon-precomposed.png">
@@ -234,7 +239,9 @@
     <Content Include="Content\pre-release-draft-v2015-08-04.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\fourth-draft-v2015.09.19.pdf" />
+    <Content Include="Content\fourth-draft-v2015.09.19.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\hostgator v2.pubxml" />
     <Content Include="Scripts\jquery-1.9.1.intellisense.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
