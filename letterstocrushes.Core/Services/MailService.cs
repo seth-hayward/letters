@@ -30,12 +30,12 @@ namespace letterstocrushes.Core.Services
             Message.Subject = "letters to crushes password request";
             Message.Body = message_body;
             Message.Priority = MailPriority.Normal;
-            Smtp.EnableSsl = false;
+            Smtp.EnableSsl = true;
 
             Smtp.Credentials = SmtpUser;
-            Smtp.Host = "mail.letterstocrushes.com";
+            Smtp.Host = "email-smtp.us-west-2.amazonaws.com";
             Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            Smtp.Port = 26;
+            Smtp.Port = 587;
 
             Smtp.Send(Message);
         }
@@ -44,7 +44,7 @@ namespace letterstocrushes.Core.Services
         {
             MailMessage Message = new MailMessage();
             SmtpClient Smtp = new SmtpClient();
-            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("no-reply@letterstocrushes.com", l_mail_password);
+            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("AKIAJQB35KXBWAUZAPRQ", l_mail_password);
 
             message_body = "<html><head></head><body>" + message_body + "</body></html>";
 
@@ -54,12 +54,12 @@ namespace letterstocrushes.Core.Services
             Message.Subject = "feedback: " + email_address;
             Message.Body = message_body;
             Message.Priority = MailPriority.Normal;
-            Smtp.EnableSsl = false;
+            Smtp.EnableSsl = true;
 
             Smtp.Credentials = SmtpUser;
-            Smtp.Host = "mail.letterstocrushes.com";
+            Smtp.Host = "email-smtp.us-west-2.amazonaws.com";
             Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            Smtp.Port = 26;
+            Smtp.Port = 587;
 
             List<string> ignore_phrases = new List<string>();
             ignore_phrases.Add("url=http:");
@@ -72,7 +72,13 @@ namespace letterstocrushes.Core.Services
 
             MailMessage Message = new MailMessage();
             SmtpClient Smtp = new SmtpClient();
-            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("no-reply@letterstocrushes.com", l_mail_password);
+            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("AKIAJQB35KXBWAUZAPRQ", l_mail_password);
+
+            Smtp.Credentials = SmtpUser;
+            Smtp.Host = "email-smtp.us-west-2.amazonaws.com";
+            Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            Smtp.Port = 587;
+
 
             message_body = "<html><head></head><body>" + message_body + "</body></html>";
 
@@ -95,12 +101,12 @@ namespace letterstocrushes.Core.Services
             Message.Subject = "New letters to crushes comment";
             Message.Body = message_body;
             Message.Priority = MailPriority.Normal;
-            Smtp.EnableSsl = false;
+            Smtp.EnableSsl = true;
 
             Smtp.Credentials = SmtpUser;
-            Smtp.Host = "mail.letterstocrushes.com";
+            Smtp.Host = "email-smtp.us-west-2.amazonaws.com";
             Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            Smtp.Port = 26;
+            Smtp.Port = 587;
 
             Smtp.Send(Message);
 
