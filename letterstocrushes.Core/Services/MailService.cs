@@ -21,7 +21,7 @@ namespace letterstocrushes.Core.Services
         {
             MailMessage Message = new MailMessage();
             SmtpClient Smtp = new SmtpClient();
-            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("no-reply@letterstocrushes.com", l_mail_password);
+            System.Net.NetworkCredential SmtpUser = new System.Net.NetworkCredential("AKIAJQB35KXBWAUZAPRQ", l_mail_password);
 
             Message.From = new MailAddress("no-reply@letterstocrushes.com");
             Message.To.Add(new MailAddress(email_address));
