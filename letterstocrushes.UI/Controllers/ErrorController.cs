@@ -51,6 +51,10 @@ namespace letterstocrushes.Controllers
                 handled = true;
             }
 
+            if (ex.Message.Contains("The controller for path '/Joomla/administrator/index.php")) {
+                return View("Error");
+            }            
+            
             Core.Model.Contact msg = new Core.Model.Contact();
             msg.Email = "seth.hayward@gmail.com";
 
