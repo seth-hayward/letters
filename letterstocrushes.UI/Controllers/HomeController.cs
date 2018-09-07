@@ -1436,6 +1436,16 @@ namespace letterstocrushes.Controllers
             }
 
             Core.Model.Letter lucky = _letterService.getLetter(lucky_id);
+            
+            if (lucky.letterLevel == -11)
+            {
+                // mod letter, mod eyes only
+                if (User.IsInRole("Mod") == false)
+                {
+                    return RedirectToAction("Index");
+                }
+
+            }            
 
             HttpCookie check_cookie = Request.Cookies[lucky.letterTags];
             string check_value = null;
