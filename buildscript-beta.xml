@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+        <SolutionFile>$(SolutionName).sln</SolutionFile>
+        <ProjectFile>$(ProjectName)\$(ProjectName).csproj</ProjectFile>
+    </PropertyGroup>
+
+    <Target Name="Build" DependsOnTargets="BuildPackage;CopyOutput" />
+
+    <Target Name="BuildPackage">
+      <ItemGroup>
+          <_CopyItems Include="C:\Users\Administrator\Desktop\Config\Web.Release.Beta.config" />
+      </ItemGroup>
+      <Copy
+          SourceFiles="@(_CopyItems)"
+          DestinationFolder="$(ProjectName)\%(RecursiveDir)"
+          />        
+        <MSBuild Projects="$(SolutionFile)" ContinueOnError="false" Targets="Rebuild" Properties="Configuration=$(Configuration)" />
+        <MSBuild Projects="$(ProjectFile)" ContinueOnError="false" Targets="Package" Properties="Configuration=$(Configuration)" />
+    </Target>
+
+    <Target Name="CopyOutput">
+        <ItemGroup>
+            <PackagedFiles Include="$(ProjectName)\obj\$(Configuration)\Package\PackageTmp\**\*.*"/>
+        </ItemGroup>
+        <Copy SourceFiles="@(PackagedFiles)" DestinationFiles="@(PackagedFiles->'c:\inetpub\vhosts\beta.letterstocrushes.com\httpdocs\%(RecursiveDir)%(Filename)%(Extension)')"/>
+    </Target>
+</Project>
