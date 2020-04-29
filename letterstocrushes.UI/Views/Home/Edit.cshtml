@@ -95,9 +95,10 @@
             try {
 
                 var c;                                
-                if(google.loader.ClientLocation) { c = google.loader.ClientLocation.address.country_code.toUpperCase(); }
-                else { c = "UNKNOWN"; }
-                
+                //if(google.loader.ClientLocation) { c = google.loader.ClientLocation.address.country_code.toUpperCase(); }
+                //else { c = "UNKNOWN"; }
+                c = "UNKNOWN";
+
                 var m = editor.getHTML();
 
                 m = m.replace(/<div>/g, "<p>");
